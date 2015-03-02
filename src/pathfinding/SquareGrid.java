@@ -30,7 +30,7 @@ public class SquareGrid implements WeightedGraph {
 	this.width = width;
 	this.height = height;
     }
-    
+
     public boolean inBounds(Location id){
 	return 0<= id.x && id.x < width
 	       && 0<= id.y && id.y < height;
