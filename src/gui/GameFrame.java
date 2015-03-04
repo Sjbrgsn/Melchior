@@ -15,46 +15,45 @@ public class GameFrame extends JFrame {
     private GameComponent component;
 
     public GameFrame() throws HeadlessException {
-	super("Melchior");
+        super("Melchior");
 
-	this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
-	this.setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout());
 
-	component = new GameComponent();
-	createMenus();
-	// TODO add GameComponent
-	this.add(component);
+        component = new GameComponent();
+        createMenus();
+        this.add(component);
 
-	this.setBackground(new Color(85, 161, 196)); // Arbitary background color
-	this.pack();
-	this.setVisible(true);
+        this.setBackground(new Color(85, 161, 196)); // Arbitary background color
+        this.pack();
+        this.setVisible(true);
 
     }
 
 
     private void createMenus(){
-	final JMenu file = new JMenu("File");
+        final JMenu file = new JMenu("File");
 
-	file.addSeparator();
-	final JMenuItem exit = new JMenuItem("Exit");
-	exit.addActionListener(new ActionListener()
-	{
-	    @Override public void actionPerformed(final ActionEvent e) {
-		System.exit(0); // Kill program
-	    }
-	});
+        file.addSeparator();
+        final JMenuItem exit = new JMenuItem("Exit");
+        exit.addActionListener(new ActionListener()
+        {
+            @Override public void actionPerformed(final ActionEvent e) {
+                System.exit(0); // Kill program
+            }
+        });
 
-	file.add(exit);
+        file.add(exit);
 
-	final JMenuBar menuBar = new JMenuBar();
-	menuBar.add(file);
-	this.setJMenuBar(menuBar);
+        final JMenuBar menuBar = new JMenuBar();
+        menuBar.add(file);
+        this.setJMenuBar(menuBar);
 
     }
 
     public static void main(String[] args) {
-	new GameFrame();
+        new GameFrame();
     }
 }
