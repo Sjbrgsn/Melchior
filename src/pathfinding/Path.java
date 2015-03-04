@@ -14,7 +14,7 @@ public class Path {
 	return path.get(path.keySet().toArray()[0]);
     }
 
-    public Location next(Location currentLocation){
+    public Location getNext(Location currentLocation){
 	return path.get(currentLocation);
     }
 
