@@ -19,4 +19,11 @@ public class Location {
     @Override public boolean equals(final Object obj) {
 	return hashCode() == obj.hashCode();
     }
+
+    @Override public String toString() {
+	return "Location{" +
+	       "x=" + x +
+	       ", y=" + y +
+	       '}';
+    }
 }

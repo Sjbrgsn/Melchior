@@ -27,8 +27,8 @@ public class AStarSearch {
      */
     public AStarSearch(WeightedGraph graph, Location start, Location goal) {
 
-        cameFrom = new HashMap<Location, Location>();
-        costSoFar = new HashMap<Location, Integer>();
+        cameFrom = new HashMap<>();
+        costSoFar = new HashMap<>();
         this.start = start;
         this.goal = goal;
 
@@ -42,7 +42,7 @@ public class AStarSearch {
 
             Location current = frontier.dequeue(); // Continue with the Location with the lowest priority value
             if (current.equals(goal)){
-                break; // Reached goal, stop search
+                break;
             }
 
             for (Location next : graph.neighbors(current)){
@@ -57,5 +57,20 @@ public class AStarSearch {
                 }
             }
         }
+    }
+
+    public Path createPath(){
+
+	Location current = goal;
+	HashMap<Location, Location> pathMap = new HashMap<>();
+	pathMap.put(goal, null);
+
+	while (!current.equals(start)){
+	    //System.out.println("Location: " + current.x + ", " + current.y);
+	    pathMap.put(cameFrom.get(current), current);
+	    current = cameFrom.get(current);
+	}
+
+	return new Path(pathMap);
     }
 }
