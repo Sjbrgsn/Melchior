@@ -23,6 +23,7 @@ public class GameFrame extends JFrame {
 	this.setLayout(new BorderLayout());
 
 	component = new GameComponent();
+	createMenus();
 	// TODO add GameComponent
 	this.add(component);
 
