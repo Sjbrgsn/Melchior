@@ -3,6 +3,8 @@ package enemies;
 import pathfinding.Location;
 
 import java.awt.*;
+import java.util.*;
+
 import pathfinding.Path;
 
 /**
@@ -17,7 +19,11 @@ public abstract class AbstractEnemy implements Enemy{
 
     private Path currentPath;
 
+    private java.util.List<EnemyListener> listeners;
+
     protected AbstractEnemy(Path path, int cellSize) {
+        listeners = new ArrayList<EnemyListener>();
+
         this.cellSize = cellSize;
         this.currentPath = path;
 
@@ -30,7 +36,7 @@ public abstract class AbstractEnemy implements Enemy{
     public void moveStep() {
         Point targetInPixels = locationToPixels(target);
         if (position.equals(targetInPixels)){
-            // TODO
+            target = currentPath.getNext(target);
         }
         if (position.x < targetInPixels.x)
             position.x += movementSpeed;
@@ -54,7 +60,30 @@ public abstract class AbstractEnemy implements Enemy{
         return position;
     }
 
-    private void notifyKilled(){
+    @Override
+    public void takeDamage(int damage) {
+        health -= damage;
+        if (!isAlive())
+            notifyKilled();
+    }
 
+    @Override
+    public void addEnemyListener(EnemyListener el) {
+        listeners.add(el);
+    }
+
+    @Override
+    public int getHealth() {
+        return health;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return 0 >= health;
+    }
+
+    private void notifyKilled(){
+        for (EnemyListener el : listeners)
+            el.onEnemyKilled();
     }
 }
