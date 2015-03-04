@@ -21,10 +21,8 @@ public class GameFrame extends JFrame {
 
 
         this.setLayout(new BorderLayout());
-
         component = new GameComponent();
         createMenus();
-        this.add(component);
 
         this.setBackground(new Color(85, 161, 196)); // Arbitary background color
         this.pack();
