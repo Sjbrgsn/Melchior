@@ -12,13 +12,15 @@ import java.util.Map;
 public class Path {
 
     private Map<Location, Location> path;
+    private Location startLocation;
 
-    public Path(final HashMap<Location, Location> path) {
+    public Path(final HashMap<Location, Location> path, Location start) {
 	this.path = path;
+	this.startLocation = start;
     }
 
     public Location getFirst(){
-	return path.get(path.keySet().toArray()[0]);
+	return startLocation;
     }
 
     public Location getNext(Location currentLocation){

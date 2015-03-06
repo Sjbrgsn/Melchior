@@ -71,6 +71,6 @@ public class AStarSearch {
 	    current = cameFrom.get(current);
 	}
 
-	return new Path(pathMap);
+	return new Path(pathMap, start);
     }
 }
