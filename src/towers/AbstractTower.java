@@ -12,29 +12,29 @@ public abstract class AbstractTower implements Tower{
     private int upgradeCost = 100;
 
     public AbstractTower(final Location location) {
-	this.location = location;
+        this.location = location;
     }
 
     @Override public int sell() {
-	return (int)(upgradeCost * 0.75);
+        return (int)(upgradeCost * 0.75);
     }
 
     @Override public void upgrade() {
-	upgradeLevel++;
-	upgradeCost += 200; // Arbritary increase per level
+        upgradeLevel++;
+        upgradeCost += 200; // Arbritary increase per level
     }
 
     @Override
     public Location getLocation() {
-	return location;
+        return location;
     }
 
     @Override
     public int getUpgradeLevel() {
-	return upgradeLevel;
+        return upgradeLevel;
     }
 
     @Override public int getUpgradeCost() {
-	return upgradeCost;
+        return upgradeCost;
     }
 }

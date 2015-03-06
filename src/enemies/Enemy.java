@@ -11,7 +11,4 @@ public interface Enemy {
 
     public void addEnemyListener(EnemyListener el);
 
-
-
-
 }

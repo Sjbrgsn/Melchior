@@ -26,7 +26,7 @@ public abstract class AbstractEnemy implements Enemy{
         listeners = new ArrayList<>();
 
         this.currentPath = path;
-	setPosition(currentPath.getFirst());
+        setPosition(currentPath.getFirst());
 
         this.target = currentPath.getNext(currentPath.getFirst());
 
@@ -35,35 +35,35 @@ public abstract class AbstractEnemy implements Enemy{
     @Override
     public void moveStep() {
 
-	int targetX = target.x;
-	int targetY = target.y;
+        int targetX = target.x;
+        int targetY = target.y;
 
-	if ((int) x == targetX && (int) y == targetY)
-	    target = currentPath.getNext(target);
+        if ((int) x == targetX && (int) y == targetY)
+            target = currentPath.getNext(target);
 
-  	if (x < targetX)
-	    x += movementSpeed;
+        if (x < targetX)
+            x += movementSpeed;
 
-	else if (x > targetX)
-	    x -= movementSpeed;
+        else if (x > targetX)
+            x -= movementSpeed;
 
-	else if (y < targetX)
-	    y -= movementSpeed;
-	else
-	    y += movementSpeed;
+        else if (y < targetX)
+            y -= movementSpeed;
+        else
+            y += movementSpeed;
     }
 
     private void setPosition(Location location){
-	this.x = location.x;
-	this.y = location.y;
+        this.x = location.x;
+        this.y = location.y;
     }
 
     public double getPositionX(){
-	return x;
+        return x;
     }
 
     public double getPositionY(){
-	return y;
+        return y;
     }
 
     @Override

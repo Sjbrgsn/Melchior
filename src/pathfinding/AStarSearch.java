@@ -65,16 +65,16 @@ public class AStarSearch {
      */
     public Path createPath(){
 
-	Location current = goal;
-	HashMap<Location, Location> pathMap = new HashMap<>();
-	pathMap.put(goal, null);
+        Location current = goal;
+        HashMap<Location, Location> pathMap = new HashMap<>();
+        pathMap.put(goal, null);
 
-	while (!current.equals(start)){
-	    //System.out.println("Location: " + current.x + ", " + current.y);
-	    pathMap.put(cameFrom.get(current), current);
-	    current = cameFrom.get(current);
-	}
+        while (!current.equals(start)){
+            //System.out.println("Location: " + current.x + ", " + current.y);
+            pathMap.put(cameFrom.get(current), current);
+            current = cameFrom.get(current);
+        }
 
-	return new Path(pathMap, start);
+        return new Path(pathMap, start);
     }
 }

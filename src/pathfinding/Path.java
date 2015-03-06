@@ -15,19 +15,19 @@ public class Path {
     private Location startLocation;
 
     public Path(final HashMap<Location, Location> path, Location start) {
-	this.path = path;
-	this.startLocation = start;
+        this.path = path;
+        this.startLocation = start;
     }
 
     public Location getFirst(){
-	return startLocation;
+        return startLocation;
     }
 
     public Location getNext(Location currentLocation){
-	return path.get(currentLocation);
+        return path.get(currentLocation);
     }
 
     public boolean isGoal(Location currentLocation){
-	return path.get(currentLocation) == null;
+        return path.get(currentLocation) == null;
     }
 }

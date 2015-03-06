@@ -12,14 +12,14 @@ public class PriorityQueue<T>{
     private List<Tuple<T, Integer>> elements = new ArrayList<Tuple<T, Integer>>();
 
     public int count(){
-	return elements.size();
+        return elements.size();
     }
 
     /**
      * Adds an element to the queue with a given priority.
      */
     public void enqueue(T item, int priority){
-	elements.add(new Tuple<T, Integer>(item, priority));
+        elements.add(new Tuple<>(item, priority));
     }
 
     /**
@@ -27,15 +27,15 @@ public class PriorityQueue<T>{
      * in the queue.
      */
     public T dequeue(){
-	int bestIndex = 0; // Assume the first element is the smallest
+        int bestIndex = 0; // Assume the first element is the smallest
 
-	for (int i = 0; i < count(); i++) {
-	    if (elements.get(i).b < elements.get(bestIndex).b) // Compare priorities
-		bestIndex = i;
-	}
+        for (int i = 0; i < count(); i++) {
+            if (elements.get(i).b < elements.get(bestIndex).b) // Compare priorities
+                bestIndex = i;
+        }
 
-	T bestItem = elements.get(bestIndex).a;
-	elements.remove(bestIndex);
-	return bestItem;
+        T bestItem = elements.get(bestIndex).a;
+        elements.remove(bestIndex);
+        return bestItem;
     }
 }
