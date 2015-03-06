@@ -2,8 +2,8 @@ package enemies;
 
 import pathfinding.Location;
 
-import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 import pathfinding.Path;
 
@@ -12,52 +12,56 @@ import pathfinding.Path;
  */
 public abstract class AbstractEnemy implements Enemy{
     private int health;
-    private int movementSpeed;
-    private int cellSize;
-    private Point position;
+    private double movementSpeed = 0.1; // Defualt speed
+    private double x, y;
     private Location target;
 
     private Path currentPath;
 
-    private java.util.List<EnemyListener> listeners;
+    private List<EnemyListener> listeners;
 
-    protected AbstractEnemy(Path path, int cellSize) {
-        listeners = new ArrayList<EnemyListener>();
+    protected AbstractEnemy(Path path) {
+        listeners = new ArrayList<>();
 
-        this.cellSize = cellSize;
         this.currentPath = path;
+	setPosition(currentPath.getFirst());
 
-        this.position = locationToPixels(currentPath.getFirst());
         this.target = currentPath.getNext(currentPath.getFirst());
 
     }
 
     @Override
     public void moveStep() {
-        Point targetInPixels = locationToPixels(target);
-        if (position.equals(targetInPixels)){
-            target = currentPath.getNext(target);
-        }
-        if (position.x < targetInPixels.x)
-            position.x += movementSpeed;
 
-        else if (position.x > targetInPixels.x)
-            position.x -= movementSpeed;
+	int targetX = target.x;
+	int targetY = target.y;
 
-        else if (position.y < targetInPixels.y)
-            position.y += movementSpeed;
+	if ((int) x == targetX && (int) y == targetY)
+	    target = currentPath.getNext(target);
 
-        else
-            position.y -= movementSpeed;
+  	if (x < targetX)
+	    x += movementSpeed;
 
+	else if (x > targetX)
+	    x -= movementSpeed;
+
+	else if (y < targetX)
+	    y -= movementSpeed;
+	else
+	    y += movementSpeed;
     }
 
-    private Point locationToPixels(Location location){
-        return new Point(location.x * cellSize + cellSize/2, location.y * cellSize + cellSize/2);
+    private void setPosition(Location location){
+	this.x = location.x;
+	this.y = location.y;
     }
 
-    public Point getPosition(){
-        return position;
+    public double getPositionX(){
+	return x;
+    }
+
+    public double getPositionY(){
+	return y;
     }
 
     public void takeDamage(int damage) {
