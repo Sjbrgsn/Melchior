@@ -59,6 +59,10 @@ public class AStarSearch {
         }
     }
 
+    /**
+     * Reconstructs the optimal sequence of Locations
+     * by returning an instance of Path
+     */
     public Path createPath(){
 
 	Location current = goal;
