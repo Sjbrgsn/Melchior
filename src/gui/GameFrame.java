@@ -22,6 +22,7 @@ public class GameFrame extends JFrame {
 
         this.setLayout(new BorderLayout());
         component = new GameComponent();
+        this.add(component);
         createMenus();
 
         this.setBackground(new Color(85, 161, 196)); // Arbitary background color
@@ -35,8 +36,7 @@ public class GameFrame extends JFrame {
 
         file.addSeparator();
         final JMenuItem exit = new JMenuItem("Exit");
-        exit.addActionListener(new ActionListener()
-        {
+        exit.addActionListener(new ActionListener() {
             @Override public void actionPerformed(final ActionEvent e) {
                 System.exit(0); // Kill program
             }

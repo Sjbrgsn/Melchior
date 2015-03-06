@@ -30,7 +30,7 @@ public class GameComponent extends JComponent{
             }
         }
 
-        AStarSearch search = new AStarSearch(grid, new Location(0, 0), new Location(10, 12));
+        AStarSearch search = new AStarSearch(grid, new Location(0, 0), new Location(6, 12));
         path = search.createPath();
     }
 
@@ -70,10 +70,6 @@ public class GameComponent extends JComponent{
         Location next = path.getNext(current);
 
         while (next != null){
-
-            System.out.println(current);
-            System.out.println((int) ((current.x + 0.5) * cellSize));
-            System.out.println((int) ((current.y + 0.5) * cellSize));
             g2d.drawLine((int) ((current.x + 0.5) * cellSize), (int) ((current.y + 0.5) * cellSize),
                     (int) ((next.x + 0.5) * cellSize), (int) ((next.y + 0.5) * cellSize));
 
