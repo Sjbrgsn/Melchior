@@ -64,12 +64,14 @@ public abstract class AbstractEnemy implements Enemy{
 	return y;
     }
 
+    @Override
     public void takeDamage(int damage) {
         health -= damage;
         if (!isAlive())
             notifyKilled();
     }
 
+    @Override
     public void addEnemyListener(EnemyListener el) {
         listeners.add(el);
     }

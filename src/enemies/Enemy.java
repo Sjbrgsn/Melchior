@@ -7,9 +7,9 @@ public interface Enemy {
     public int getHealth();
     public boolean isAlive();
     public void moveStep();
-    public void takeDamage();
+    public void takeDamage(int damage);
 
-    public void addEnemyListener();
+    public void addEnemyListener(EnemyListener el);
 
 
 
