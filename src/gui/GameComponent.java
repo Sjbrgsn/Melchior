@@ -52,19 +52,17 @@ public class GameComponent extends JComponent{
         drawGrid(g2d);
         drawPath(g2d);
         drawWalls(g2d);
-
     }
 
     private void drawWalls(final Graphics2D g2d) {
         g2d.setColor(Color.YELLOW);
 
-        for(Location wall : grid.getWalls()){
+        for (Location wall : grid.getWalls()) {
             g2d.fillRect(wall.x * cellSize, wall.y * cellSize, cellSize, cellSize);
         }
     }
 
     private void drawPath(final Graphics2D g2d) {
-
         g2d.setColor(Color.BLUE);
         g2d.setStroke(new BasicStroke(2));
 

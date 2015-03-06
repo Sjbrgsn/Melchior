@@ -27,7 +27,6 @@ public class GameFrame extends JFrame {
         this.setBackground(new Color(85, 161, 196)); // Arbitary background color
         this.pack();
         this.setVisible(true);
-
     }
 
 
@@ -48,7 +47,6 @@ public class GameFrame extends JFrame {
         final JMenuBar menuBar = new JMenuBar();
         menuBar.add(file);
         this.setJMenuBar(menuBar);
-
     }
 
     public static void main(String[] args) {
