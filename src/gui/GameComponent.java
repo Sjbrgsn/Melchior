@@ -1,11 +1,13 @@
 package gui;
 
+import enemies.Enemy;
 import pathfinding.Location;
 import pathfinding.Path;
 import pathfinding.SquareGrid;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by Holmgr 2015-03-04
@@ -19,9 +21,12 @@ public class GameComponent extends JComponent{
     private SquareGrid grid;
     private Path path;
 
-    public GameComponent(SquareGrid grid, int gridSize) {
+    private ArrayList<Enemy> enemies;
+
+    public GameComponent(SquareGrid grid, int gridSize, ArrayList<Enemy> enemies) {
         this.gridSize = gridSize;
         this.grid = grid;
+        this.enemies = enemies;
 
         this.setOpaque(true); // Needed for background color to show
     }
@@ -46,6 +51,16 @@ public class GameComponent extends JComponent{
         drawGrid(g2d);
         drawPath(g2d);
         drawWalls(g2d);
+        drawEnemies(g2d);
+    }
+
+    private void drawEnemies(Graphics2D g2d) {
+        g2d.setColor(Color.GREEN);
+
+        for(Enemy enemy : enemies){
+            g2d.drawOval((int) ((enemy.getPositionX() + 0.5) * cellSize), (int) ((enemy.getPositionY() + 0.5) * cellSize),
+                    cellSize / 2, cellSize / 2);
+        }
     }
 
     private void drawWalls(final Graphics2D g2d) {
