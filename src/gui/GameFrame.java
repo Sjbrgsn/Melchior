@@ -14,14 +14,14 @@ public class GameFrame extends JFrame {
 
     private GameComponent component;
 
-    public GameFrame() throws HeadlessException {
+    public GameFrame(GameComponent component) throws HeadlessException {
         super("Melchior");
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
         this.setLayout(new BorderLayout());
-        component = new GameComponent();
+        this.component = component;
         this.add(component);
         createMenus();
 
@@ -47,9 +47,5 @@ public class GameFrame extends JFrame {
         final JMenuBar menuBar = new JMenuBar();
         menuBar.add(file);
         this.setJMenuBar(menuBar);
-    }
-
-    public static void main(String[] args) {
-        new GameFrame();
     }
 }

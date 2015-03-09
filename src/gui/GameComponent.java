@@ -1,6 +1,5 @@
 package gui;
 
-import pathfinding.AStarSearch;
 import pathfinding.Location;
 import pathfinding.Path;
 import pathfinding.SquareGrid;
@@ -16,22 +15,15 @@ import java.awt.*;
 public class GameComponent extends JComponent{
 
     private int cellSize;
-    private int gridSize = 20;
+    private int gridSize;
     private SquareGrid grid;
     private Path path;
 
-    public GameComponent() {
+    public GameComponent(SquareGrid grid, int gridSize) {
+        this.gridSize = gridSize;
+        this.grid = grid;
+
         this.setOpaque(true); // Needed for background color to show
-        grid = new SquareGrid(gridSize, gridSize);
-
-        for (int x = 1; x < 4; x++) {
-            for (int y = 7; y < 9; y++) {
-                grid.getWalls().add(new Location(x, y));
-            }
-        }
-
-        AStarSearch search = new AStarSearch(grid, new Location(0, 0), new Location(6, 12));
-        path = search.createPath();
     }
 
     @Override
@@ -45,6 +37,8 @@ public class GameComponent extends JComponent{
         final Graphics2D g2d = (Graphics2D) g;
         cellSize = getHeight() / gridSize;
         drawGrid(g2d);
+
+        setBackground(new Color(85, 161, 196)); // Arbitary background color
 
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY);
@@ -63,6 +57,11 @@ public class GameComponent extends JComponent{
     }
 
     private void drawPath(final Graphics2D g2d) {
+
+        // No path to be drawn
+        if (path == null)
+            return;
+
         g2d.setColor(Color.BLUE);
         g2d.setStroke(new BasicStroke(2));
 
@@ -85,5 +84,9 @@ public class GameComponent extends JComponent{
             }
             g2d.drawLine(0, row * cellSize, getWidth(), row * cellSize);
         }
+    }
+
+    public void setPath(Path path) {
+        this.path = path;
     }
 }
