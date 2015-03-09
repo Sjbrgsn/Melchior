@@ -13,10 +13,10 @@ import pathfinding.Path;
  * health and damage.
  */
 public abstract class AbstractEnemy implements Enemy{
-    private int health;
-    private double movementSpeed = 0.1; // Defualt speed
-    private double x, y;
-    private Location target;
+    protected int health;
+    protected double movementSpeed = 0.1; // Defualt speed
+    protected double x, y;
+    protected Location target;
 
     private Path currentPath;
 
