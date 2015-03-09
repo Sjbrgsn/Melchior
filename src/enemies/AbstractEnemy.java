@@ -38,10 +38,13 @@ public abstract class AbstractEnemy implements Enemy{
         int targetX = target.x;
         int targetY = target.y;
 
-        if ((int) x == targetX && (int) y == targetY)
+        if (Math.abs(targetX - x) <= movementSpeed && Math.abs(targetY - y) <= movementSpeed){
+            x = targetX;
+            y = targetY;
             target = currentPath.getNext(target);
+        }
 
-        if (x < targetX)
+        else if (x < targetX)
             x += movementSpeed;
 
         else if (x > targetX)

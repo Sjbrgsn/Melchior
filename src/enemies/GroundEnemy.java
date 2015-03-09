@@ -7,7 +7,7 @@ import pathfinding.Path;
  */
 public class GroundEnemy extends AbstractEnemy{
 
-    protected GroundEnemy(Path path) {
+    public GroundEnemy(Path path) {
         super(path);
         health = 100;
 

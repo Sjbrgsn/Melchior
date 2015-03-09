@@ -9,6 +9,9 @@ public interface Enemy {
     public void moveStep();
     public void takeDamage(int damage);
 
+    public double getPositionX();
+    public double getPositionY();
+
     public void addEnemyListener(EnemyListener el);
 
 }
