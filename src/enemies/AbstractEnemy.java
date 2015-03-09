@@ -14,11 +14,11 @@ import pathfinding.Path;
  */
 public abstract class AbstractEnemy implements Enemy{
     protected int health;
-    protected double movementSpeed = 0.1; // Defualt speed
+    protected double movementSpeed = 0.1; // Default speed
     protected double x, y;
     protected Location target;
 
-    private Path currentPath;
+    protected Path currentPath;
 
     private List<EnemyListener> listeners;
 
@@ -32,29 +32,6 @@ public abstract class AbstractEnemy implements Enemy{
 
     }
 
-    @Override
-    public void moveStep() {
-
-        int targetX = target.x;
-        int targetY = target.y;
-
-        if (Math.abs(targetX - x) <= movementSpeed && Math.abs(targetY - y) <= movementSpeed){
-            x = targetX;
-            y = targetY;
-            target = currentPath.getNext(target);
-        }
-
-        else if (x < targetX)
-            x += movementSpeed;
-
-        else if (x > targetX)
-            x -= movementSpeed;
-
-        else if (y < targetX)
-            y -= movementSpeed;
-        else
-            y += movementSpeed;
-    }
 
     private void setPosition(Location location){
         this.x = location.x;
@@ -95,4 +72,10 @@ public abstract class AbstractEnemy implements Enemy{
         for (EnemyListener el : listeners)
             el.onEnemyKilled();
     }
+
+    private void notifyReachedGoal(){
+        for (EnemyListener el : listeners)
+            el.onReachedGoal();
+    }
+
 }

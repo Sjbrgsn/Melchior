@@ -7,9 +7,34 @@ import pathfinding.Path;
  */
 public class GroundEnemy extends AbstractEnemy{
 
-    public GroundEnemy(Path path) {
+    public GroundEnemy(Path path, GroundEnemyType type) {
         super(path);
         health = 100;
+        type = type;
 
+    }
+
+    @Override
+    public void moveStep() {
+
+        int targetX = target.x;
+        int targetY = target.y;
+
+        if (Math.abs(targetX - x) <= movementSpeed && Math.abs(targetY - y) <= movementSpeed){
+            x = targetX;
+            y = targetY;
+            target = currentPath.getNext(target);
+        }
+
+        else if (x < targetX)
+            x += movementSpeed;
+
+        else if (x > targetX)
+            x -= movementSpeed;
+
+        else if (y < targetX)
+            y -= movementSpeed;
+        else
+            y += movementSpeed;
     }
 }

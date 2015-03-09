@@ -5,4 +5,5 @@ package enemies;
  */
 public interface EnemyListener {
     public void onEnemyKilled();
+    public void onReachedGoal();
 }
