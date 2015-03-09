@@ -24,6 +24,8 @@ public class GroundEnemy extends AbstractEnemy{
             x = targetX;
             y = targetY;
             target = currentPath.getNext(target);
+            if (target == null)
+                notifyReachedGoal();
         }
 
         else if (x < targetX)

@@ -73,7 +73,7 @@ public abstract class AbstractEnemy implements Enemy{
             el.onEnemyKilled();
     }
 
-    private void notifyReachedGoal(){
+    protected void notifyReachedGoal(){
         for (EnemyListener el : listeners)
             el.onReachedGoal();
     }
