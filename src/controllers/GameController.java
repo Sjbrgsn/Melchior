@@ -1,8 +1,8 @@
 package controllers;
 
-import enemies.AbstractEnemy;
 import enemies.Enemy;
 import enemies.GroundEnemy;
+import enemies.GroundEnemyType;
 import gui.GameComponent;
 import gui.GameFrame;
 import pathfinding.AStarSearch;
@@ -27,9 +27,12 @@ public class GameController {
     private static int gridSize = 20;
 
     private Location defaultStart = new Location(0, 0);
-    private Location defaultEnd = new Location(8, 11);
+    private Location defaultEnd = new Location(19, 19);
 
-    ArrayList<Enemy> enemies;
+    private ArrayList<Enemy> enemies;
+
+
+    private int defaultTickSpeed = 1000/30;
 
     public GameController() {
 
@@ -39,26 +42,32 @@ public class GameController {
         Path path = search.createPath();
 
         enemies = new ArrayList<>();
-        enemies.add(new GroundEnemy(path));
+        enemies.add(new GroundEnemy(path, GroundEnemyType.EASY));
 
         component = new GameComponent(grid, gridSize, enemies);
         frame = new GameFrame(component);
 
         component.setPath(path);
 
-        Timer loopTimer = new Timer(34, new ActionListener() {
+        Timer loopTimer = new Timer(defaultTickSpeed, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for(Enemy enemy : enemies){
-                    enemy.moveStep();
-                    component.repaint();
-                }
+                doTick();
             }
         });
 
         loopTimer.setCoalesce(true);
         loopTimer.start();
 
+    }
+
+    private void doTick() {
+
+
+        for(Enemy enemy : enemies){
+            enemy.moveStep();
+            component.repaint();
+        }
     }
 
     private SquareGrid createArbitaryGrid(){
