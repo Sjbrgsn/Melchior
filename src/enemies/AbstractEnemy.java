@@ -22,7 +22,7 @@ public abstract class AbstractEnemy implements Enemy{
 
     private List<EnemyListener> listeners;
 
-    protected AbstractEnemy(Path path) {
+    public AbstractEnemy(Path path) {
         listeners = new ArrayList<>();
 
         this.currentPath = path;
