@@ -22,8 +22,9 @@ public class SquareGrid implements WeightedGraph {
 
     private int width, height;
 
-    private Set<Location> walls = new HashSet<Location>(); // Set of Locations which are unpassable
-    private Set<Location> forrests = new HashSet<Location>(); // Set of Location which are harder to navigate
+    private Set<Location> walls = new HashSet<>(); // Set of Locations which are unpassable
+    private Set<Location> towers = new HashSet<>(); // Set of Towers which also are unpassable
+    private Set<Location> forrests = new HashSet<>(); // Set of Location which are harder to navigate
 
 
     public SquareGrid(int width, int height) {
@@ -37,7 +38,7 @@ public class SquareGrid implements WeightedGraph {
     }
 
     public boolean isPassable(Location id){
-        return !walls.contains(id);
+        return !walls.contains(id) && !towers.contains(id);
     }
 
     @Override public int cost(final Location a, final Location b) {
@@ -49,7 +50,7 @@ public class SquareGrid implements WeightedGraph {
      * valid neighbors (passable and in bounds) for a given Location id.
      */
     @Override public Iterable<Location> neighbors(final Location id) {
-        Collection<Location> neighbours = new ArrayList<Location>();
+        Collection<Location> neighbours = new ArrayList<>();
         for (Location direction : directions){
 
             Location position = new Location(direction.x + id.x, direction.y + id.y);
@@ -63,16 +64,8 @@ public class SquareGrid implements WeightedGraph {
     public Set<Location> getWalls() {
         return walls;
     }
-
-    public void setWalls(final Set<Location> walls) {
-        this.walls = walls;
-    }
-
+    public Set<Location> getTowers() { return towers;}
     public Set<Location> getForrests() {
         return forrests;
-    }
-
-    public void setForrests(final Set<Location> forrests) {
-        this.forrests = forrests;
     }
 }
