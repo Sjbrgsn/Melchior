@@ -72,8 +72,7 @@ public class GameController {
     }
 
     private void doTick() {
-
-
+        
         for(Enemy enemy : enemies){
             enemy.moveStep();
         }
@@ -87,7 +86,9 @@ public class GameController {
         if (grid.isPassable(location) && money > tower.getUpgradeCost()){
             grid.getTowers().add(tower.getLocation());
             towers.add(tower);
+
         }
+        component.repaint();
     }
 
     private SquareGrid createArbitaryGrid(){

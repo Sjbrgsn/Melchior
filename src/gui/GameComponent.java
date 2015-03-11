@@ -80,16 +80,14 @@ public class GameComponent extends JComponent{
         return new Dimension(640, 640);
     }
 
-    @Override protected void paintComponent(final Graphics g) {
+    @Override
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         final Graphics2D g2d = (Graphics2D) g;
         cellSize = getHeight() / gridSize;
-        drawGrid(g2d);
 
-        setBackground(new Color(85, 161, 196)); // Arbitary background color
-
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
-                RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.clearRect(0, 0, getWidth(), getHeight()); // To prevent overlapping from last frame
 
         drawGrid(g2d);
         drawPath(g2d);
@@ -113,10 +111,12 @@ public class GameComponent extends JComponent{
     private void drawEnemies(Graphics2D g2d) {
         g2d.setColor(Color.GREEN);
 
+        setAntialising(g2d, true);
         for(Enemy enemy : enemies){
             g2d.drawOval((int) (enemy.getPositionX() * cellSize), (int) (enemy.getPositionY() * cellSize),
                     cellSize / 2, cellSize / 2);
         }
+        setAntialising(g2d, false);
     }
 
     private void drawWalls(final Graphics2D g2d) {
@@ -154,6 +154,15 @@ public class GameComponent extends JComponent{
                 g2d.drawLine(col * cellSize, row * cellSize, col * cellSize, getHeight());
             }
             g2d.drawLine(0, row * cellSize, getWidth(), row * cellSize);
+        }
+    }
+
+    private void setAntialising(Graphics2D g2d, boolean mode) {
+        if (mode){
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        }
+        else {
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_DEFAULT);
         }
     }
 
