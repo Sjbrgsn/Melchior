@@ -62,12 +62,11 @@ public class GameController {
     }
 
     private void doTick() {
-
-
+        
         for(Enemy enemy : enemies){
             enemy.moveStep();
-            component.repaint();
         }
+        component.repaint();
     }
 
     private SquareGrid createArbitaryGrid(){
