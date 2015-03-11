@@ -1,12 +1,16 @@
 package gui;
 
+import controllers.GameController;
 import enemies.Enemy;
 import pathfinding.Location;
 import pathfinding.Path;
 import pathfinding.SquareGrid;
+import towers.Tower;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 /**
@@ -18,17 +22,56 @@ public class GameComponent extends JComponent{
 
     private int cellSize;
     private int gridSize;
-    private SquareGrid grid;
+    private final SquareGrid grid;
     private Path path;
 
     private ArrayList<Enemy> enemies;
+    private ArrayList<Tower> towers;
 
-    public GameComponent(SquareGrid grid, int gridSize, ArrayList<Enemy> enemies) {
+    private GameController controller;
+
+    public GameComponent(final SquareGrid grid, int gridSize, ArrayList<Enemy> enemies,
+                         ArrayList<Tower> towers, GameController controller) {
         this.gridSize = gridSize;
         this.grid = grid;
         this.enemies = enemies;
+        this.towers = towers;
+        this.controller = controller;
+
+
 
         this.setOpaque(true); // Needed for background color to show
+
+        setupBindings();
+    }
+
+    private void setupBindings() {
+
+
+        // Mouse events
+        addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                Location loc = new Location(e.getX() / cellSize, e.getY() / cellSize);
+                controller.buyTower(loc);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
     }
 
     @Override
@@ -52,13 +95,26 @@ public class GameComponent extends JComponent{
         drawPath(g2d);
         drawWalls(g2d);
         drawEnemies(g2d);
+        drawTowers(g2d);
+    }
+
+    private void drawTowers(Graphics2D g2d) {
+
+        g2d.setColor(Color.RED);
+
+        for (Tower tower : towers){
+            Location loc = tower.getLocation();
+
+            g2d.fillRect(loc.x * cellSize, loc.y * cellSize,
+                    cellSize, cellSize);
+        }
     }
 
     private void drawEnemies(Graphics2D g2d) {
         g2d.setColor(Color.GREEN);
 
         for(Enemy enemy : enemies){
-            g2d.drawOval((int) ((enemy.getPositionX() + 0.5) * cellSize), (int) ((enemy.getPositionY() + 0.5) * cellSize),
+            g2d.drawOval((int) (enemy.getPositionX() * cellSize), (int) (enemy.getPositionY() * cellSize),
                     cellSize / 2, cellSize / 2);
         }
     }

@@ -9,10 +9,13 @@ import pathfinding.AStarSearch;
 import pathfinding.Location;
 import pathfinding.Path;
 import pathfinding.SquareGrid;
+import towers.BasicTower;
+import towers.Tower;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -30,21 +33,28 @@ public class GameController {
     private Location defaultEnd = new Location(19, 19);
 
     private ArrayList<Enemy> enemies;
+    private ArrayList<Tower> towers;
+
+
+    private int money;
 
 
     private int defaultTickSpeed = 1000/30;
 
     public GameController() {
 
-        grid = createArbitaryGrid();
+        grid = new SquareGrid(gridSize, gridSize);
+        money = 1000;
 
         AStarSearch search = new AStarSearch(grid, defaultStart, defaultEnd);
         Path path = search.createPath();
 
+        towers = new ArrayList<>();
+
         enemies = new ArrayList<>();
         enemies.add(new GroundEnemy(path, GroundEnemyType.EASY));
 
-        component = new GameComponent(grid, gridSize, enemies);
+        component = new GameComponent(grid, gridSize, enemies, towers, this);
         frame = new GameFrame(component);
 
         component.setPath(path);
@@ -66,7 +76,17 @@ public class GameController {
 
         for(Enemy enemy : enemies){
             enemy.moveStep();
-            component.repaint();
+        }
+        component.repaint();
+    }
+
+    public void buyTower(Location location){
+
+        BasicTower tower = new BasicTower(location);
+
+        if (grid.isPassable(location) && money > tower.getUpgradeCost()){
+            grid.getTowers().add(tower.getLocation());
+            towers.add(tower);
         }
     }
 
