@@ -5,17 +5,14 @@ import enemies.GroundEnemy;
 import enemies.GroundEnemyType;
 import gui.GameComponent;
 import gui.GameFrame;
-import pathfinding.AStarSearch;
-import pathfinding.Location;
-import pathfinding.Path;
-import pathfinding.SquareGrid;
+import pathfinding.*;
 import towers.BasicTower;
 import towers.Tower;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -31,13 +28,13 @@ public class GameController {
 
     private Location defaultStart = new Location(0, 0);
     private Location defaultEnd = new Location(19, 19);
+    private Path path;
 
     private ArrayList<Enemy> enemies;
     private ArrayList<Tower> towers;
 
 
     private int money;
-
 
     private int defaultTickSpeed = 1000/30;
 
@@ -47,12 +44,17 @@ public class GameController {
         money = 1000;
 
         AStarSearch search = new AStarSearch(grid, defaultStart, defaultEnd);
-        Path path = search.createPath();
+
+        try {
+            path = search.createPath();
+        } catch (PathNotFoundException e) {
+            e.printStackTrace();
+        }
 
         towers = new ArrayList<>();
 
         enemies = new ArrayList<>();
-        enemies.add(new GroundEnemy(path, GroundEnemyType.EASY));
+        enemies.add(new GroundEnemy(path, GroundEnemyType.EASY)); // Path will allways be instantiated
 
         component = new GameComponent(grid, gridSize, enemies, towers, this);
         frame = new GameFrame(component);
@@ -72,7 +74,7 @@ public class GameController {
     }
 
     private void doTick() {
-        
+
         for(Enemy enemy : enemies){
             enemy.moveStep();
         }
@@ -84,11 +86,24 @@ public class GameController {
         BasicTower tower = new BasicTower(location);
 
         if (grid.isPassable(location) && money > tower.getUpgradeCost()){
-            grid.getTowers().add(tower.getLocation());
-            towers.add(tower);
 
+            grid.getTowers().add(tower.getLocation());
+
+            try{
+                Path testPath = new AStarSearch(grid, defaultStart, defaultEnd).createPath();
+
+                money -= tower.getUpgradeCost();
+                towers.add(tower);
+                path = testPath;
+                component.setPath(path);
+                component.repaint();
+            }
+            catch (PathNotFoundException e) {
+                grid.getTowers().remove(tower.getLocation());
+                e.setLocation(tower.getLocation());
+                e.printStackTrace();
+            }
         }
-        component.repaint();
     }
 
     private SquareGrid createArbitaryGrid(){

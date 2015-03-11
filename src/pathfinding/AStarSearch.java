@@ -1,5 +1,6 @@
 package pathfinding;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 /**
@@ -32,7 +33,7 @@ public class AStarSearch {
         this.start = start;
         this.goal = goal;
 
-        PriorityQueue<Location> frontier = new PriorityQueue<Location>();
+        PriorityQueue<Location> frontier = new PriorityQueue<>();
         frontier.enqueue(start, 0);
 
         cameFrom.put(start, start);
@@ -42,7 +43,7 @@ public class AStarSearch {
 
             Location current = frontier.dequeue(); // Continue with the Location with the lowest priority value
             if (current.equals(goal)){
-                break;
+                //break;
             }
 
             for (Location next : graph.neighbors(current)){
@@ -63,7 +64,7 @@ public class AStarSearch {
      * Reconstructs the optimal sequence of Locations
      * by returning an instance of Path
      */
-    public Path createPath(){
+    public Path createPath() throws PathNotFoundException {
 
         Location current = goal;
         HashMap<Location, Location> pathMap = new HashMap<>();
@@ -73,8 +74,12 @@ public class AStarSearch {
             //System.out.println("Location: " + current.x + ", " + current.y);
             pathMap.put(cameFrom.get(current), current);
             current = cameFrom.get(current);
-        }
 
+            // If there exists no path between start and goal
+            if (current == null){
+                throw new PathNotFoundException(null);
+            }
+        }
         return new Path(pathMap, start);
     }
 }
