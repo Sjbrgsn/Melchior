@@ -86,7 +86,7 @@ public class GameController {
 
         BasicTower tower = new BasicTower(location, this);
 
-        if (grid.isPassable(location) && money > tower.getUpgradeCost()){
+        if (grid.isPassable(location) && money >= tower.getUpgradeCost()){
 
             grid.getTowers().add(tower.getLocation());
 
