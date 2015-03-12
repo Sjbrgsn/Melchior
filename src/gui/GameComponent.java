@@ -38,6 +38,7 @@ public class GameComponent extends JComponent{
         this.towers = towers;
         this.controller = controller;
 
+        this.setDoubleBuffered(true);
         this.setOpaque(true); // Needed for background color to show
         setupBindings();
     }
@@ -91,6 +92,8 @@ public class GameComponent extends JComponent{
         drawWalls(g2d);
         drawEnemies(g2d);
         drawTowers(g2d);
+
+        Toolkit.getDefaultToolkit().sync();
     }
 
     private void drawTowers(Graphics2D g2d) {
