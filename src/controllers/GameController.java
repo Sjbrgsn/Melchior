@@ -12,7 +12,6 @@ import towers.Tower;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -54,7 +53,7 @@ public class GameController {
         towers = new ArrayList<>();
 
         enemies = new ArrayList<>();
-        enemies.add(new GroundEnemy(path, GroundEnemyType.EASY)); // Path will allways be instantiated
+        enemies.add(new GroundEnemy(path, GroundEnemyType.EASY)); // Path will always be instantiated
 
         component = new GameComponent(grid, gridSize, enemies, towers, this);
         frame = new GameFrame(component);
@@ -78,12 +77,15 @@ public class GameController {
         for(Enemy enemy : enemies){
             enemy.moveStep();
         }
+        for(Tower tower : towers){
+            tower.onTick();
+        }
         component.repaint();
     }
 
     public void buyTower(Location location){
 
-        BasicTower tower = new BasicTower(location);
+        BasicTower tower = new BasicTower(location, this);
 
         if (grid.isPassable(location) && money > tower.getUpgradeCost()){
 
@@ -104,6 +106,29 @@ public class GameController {
                 e.printStackTrace();
             }
         }
+    }
+
+    public Enemy getNearestEnemyInRange(Location id, int range){
+
+        Enemy nearest = null;
+        double distance = -1; // Placeholder distance if there are no enemies
+
+        for (Enemy enemy : enemies){
+
+            if (nearest == null || distanceToEnemy(enemy, id) < distanceToEnemy(nearest, id)){
+                distance = distanceToEnemy(enemy, id);
+                nearest = enemy;
+            }
+        }
+        if (distance == -1 || range < distance)
+            return null;
+        else
+            return nearest;
+    }
+
+    private double distanceToEnemy(Enemy enemy, Location loc){
+        return Math.sqrt(Math.pow(enemy.getPositionX() - loc.x, 2) +
+                Math.pow(enemy.getPositionY() - loc.y, 2));
     }
 
     private SquareGrid createArbitaryGrid(){

@@ -1,6 +1,6 @@
 package towers;
 
-import enemies.AbstractEnemy;
+import controllers.GameController;
 import pathfinding.Location;
 
 /**
@@ -8,9 +8,10 @@ import pathfinding.Location;
  */
 public class BasicTower extends AbstractTower {
 
-    public BasicTower(Location location) {
-        super(location);
-        cooldown = 200;
+    public BasicTower(Location location, GameController controller) {
+        super(location, controller);
+        cooldown = 30;
+        range = 5; // Range at which enemies can be engaged
     }
 
     @Override

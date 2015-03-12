@@ -1,5 +1,7 @@
 package towers;
 
+import controllers.GameController;
+import enemies.Enemy;
 import pathfinding.Location;
 
 /**
@@ -13,14 +15,28 @@ public abstract class AbstractTower implements Tower{
     protected int cooldown = 100;
     protected int currentCooldown = 0;
 
-    public AbstractTower(final Location location) {
+    protected int range;
+    protected GameController controller;
+
+    protected Enemy nearestEnemy;
+
+    public AbstractTower(final Location location, GameController controller) {
         this.location = location;
+        this.controller = controller; // Needed for requesting nearest enemy
     }
 
+    @Override
     public void onTick(){
-        if (currentCooldown <= 0)
-            fire();
-
+        if (currentCooldown <= 0) { // Ready to fire
+            nearestEnemy = controller.getNearestEnemyInRange(this.location, range);
+            if (nearestEnemy != null) {
+                fire();
+                currentCooldown = cooldown;
+            }
+        }
+        else {
+            currentCooldown--;
+        }
     }
     @Override public int sell() {
         return (int)(upgradeCost * 0.75);
@@ -28,7 +44,7 @@ public abstract class AbstractTower implements Tower{
 
     @Override public void upgrade() {
         upgradeLevel++;
-        upgradeCost += 200; // Arbritary increase per level
+        upgradeCost += 200; // Arbitrary increase per level
     }
 
     @Override

@@ -7,6 +7,7 @@ import pathfinding.Location;
  */
 public interface Tower {
     public void fire();
+    public void onTick();
 
     public int sell();
     public void upgrade();
