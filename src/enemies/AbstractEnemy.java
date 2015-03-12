@@ -71,17 +71,17 @@ public abstract class AbstractEnemy implements Enemy{
 
     @Override
     public boolean isAlive() {
-        return 0 >= health;
+        return 0 < health;
     }
 
     private void notifyKilled(){
         for (EnemyListener el : listeners)
-            el.onEnemyKilled();
+            el.onEnemyKilled(this);
     }
 
     protected void notifyReachedGoal(){
         for (EnemyListener el : listeners)
-            el.onReachedGoal();
+            el.onReachedGoal(this);
     }
 
 }
