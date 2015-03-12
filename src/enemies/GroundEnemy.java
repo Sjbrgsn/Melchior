@@ -13,6 +13,7 @@ public class GroundEnemy extends AbstractEnemy{
     public GroundEnemy(Path path, GroundEnemyType Enemytype) {
         super(path);
         health = 100;
+        maximumHealth = 100;
         //type = Enemytype;
 
         // Set start target values

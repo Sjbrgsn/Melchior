@@ -32,7 +32,6 @@ public class GameController {
     private ArrayList<Enemy> enemies;
     private ArrayList<Tower> towers;
 
-
     private int money;
 
     private int defaultTickSpeed = 1000/30;

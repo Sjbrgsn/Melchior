@@ -5,6 +5,7 @@ package enemies;
  */
 public interface Enemy {
     public int getHealth();
+    public int getMaximumHealth();
     public boolean isAlive();
     public void moveStep();
     public void takeDamage(int damage);

@@ -1,10 +1,10 @@
 package enemies;
 
 import pathfinding.Location;
-
-import java.util.*;
-
 import pathfinding.Path;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by acrux on 2015-03-04.
@@ -14,6 +14,7 @@ import pathfinding.Path;
  */
 public abstract class AbstractEnemy implements Enemy{
     protected int health;
+    protected int maximumHealth;
     protected double movementSpeed = 0.1; // Default speed
     protected double x, y;
     protected Location target;
@@ -56,6 +57,11 @@ public abstract class AbstractEnemy implements Enemy{
     @Override
     public void addEnemyListener(EnemyListener el) {
         listeners.add(el);
+    }
+
+    @Override
+    public int getMaximumHealth() {
+        return maximumHealth;
     }
 
     @Override

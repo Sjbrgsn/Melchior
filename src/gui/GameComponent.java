@@ -38,10 +38,7 @@ public class GameComponent extends JComponent{
         this.towers = towers;
         this.controller = controller;
 
-
-
         this.setOpaque(true); // Needed for background color to show
-
         setupBindings();
     }
 
@@ -109,19 +106,36 @@ public class GameComponent extends JComponent{
     }
 
     private void drawEnemies(Graphics2D g2d) {
-        g2d.setColor(Color.GREEN);
 
+        g2d.setColor(Color.GREEN);
         setAntialising(g2d, true);
+        int enemySize = cellSize/2;
+
         for(Enemy enemy : enemies){
             g2d.drawOval((int) (enemy.getPositionX() * cellSize), (int) (enemy.getPositionY() * cellSize),
-                    cellSize / 2, cellSize / 2);
+                    enemySize, enemySize);
+            drawHealthBar(g2d, enemy);
         }
         setAntialising(g2d, false);
     }
 
-    private void drawWalls(final Graphics2D g2d) {
-        g2d.setColor(Color.YELLOW);
+    private void drawHealthBar(Graphics2D g2d, Enemy enemy){
 
+        int healthBarHeight = cellSize/8;
+
+        g2d.setColor(Color.RED);
+        g2d.fillRect((int) (enemy.getPositionX() * cellSize), (int) ((enemy.getPositionY() - 0.5) * cellSize),
+                cellSize, healthBarHeight);
+
+        g2d.setColor(Color.GREEN);
+        g2d.fillRect((int) (enemy.getPositionX() * cellSize), (int) ((enemy.getPositionY() - 0.5) * cellSize),
+                cellSize * enemy.getHealth() / enemy.getMaximumHealth(), healthBarHeight);
+
+    }
+
+    private void drawWalls(final Graphics2D g2d) {
+
+        g2d.setColor(Color.YELLOW);
         for (Location wall : grid.getWalls()) {
             g2d.fillRect(wall.x * cellSize, wall.y * cellSize, cellSize, cellSize);
         }
