@@ -1,6 +1,7 @@
 package controllers;
 
 import enemies.Enemy;
+import enemies.EnemyListener;
 import enemies.GroundEnemy;
 import enemies.GroundEnemyType;
 import gui.GameComponent;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by Holmgr 2015-03-09
  */
-public class GameController {
+public class GameController implements EnemyListener{
 
     private GameFrame frame;
     private GameComponent component;
@@ -30,16 +31,17 @@ public class GameController {
     private Path path;
 
     private ArrayList<Enemy> enemies;
+    private ArrayList<Enemy> enemiesToBeRemoved = new ArrayList<>();
     private ArrayList<Tower> towers;
 
-    private int money;
+    private int money = 300; //Used to buy/upgrade towers
+    private int health = 20; //Starting health
 
     private int defaultTickSpeed = 1000/30;
 
     public GameController() {
 
         grid = new SquareGrid(gridSize, gridSize);
-        money = 1000;
 
         AStarSearch search = new AStarSearch(grid, defaultStart, defaultEnd);
 
@@ -52,7 +54,10 @@ public class GameController {
         towers = new ArrayList<>();
 
         enemies = new ArrayList<>();
-        enemies.add(new GroundEnemy(path, GroundEnemyType.EASY)); // Path will always be instantiated
+
+        GroundEnemy testEnemy = new GroundEnemy(path, GroundEnemyType.EASY);
+        testEnemy.addEnemyListener(this);
+        enemies.add(testEnemy); // Path will always be instantiated
 
         component = new GameComponent(grid, gridSize, enemies, towers, this);
         frame = new GameFrame(component);
@@ -72,6 +77,12 @@ public class GameController {
     }
 
     private void doTick() {
+
+        // Remove all enemies which are dead or have reached the goal
+        if (!enemiesToBeRemoved.isEmpty()){
+            enemies.removeAll(enemiesToBeRemoved);
+            enemiesToBeRemoved.clear();
+        }
 
         for(Enemy enemy : enemies){
             enemy.moveStep();
@@ -144,5 +155,28 @@ public class GameController {
 
     public static void main(String[] args) {
         new GameController();
+    }
+
+    @Override
+    public void onEnemyKilled(Enemy enemy) {
+        System.out.println("Enemy killed");
+        removeEnemy(enemy);
+    }
+
+    @Override
+    public void onReachedGoal(Enemy enemy) {
+        if (health == 1){
+            System.exit(0); // TODO: Show highscore table
+        }
+        else {
+            health--;
+            System.out.println("Enemy reached goal, health:" + health);
+            removeEnemy(enemy);
+        }
+    }
+
+    private void removeEnemy(Enemy enemy) {
+        assert enemies.contains(enemy);
+        enemiesToBeRemoved.add(enemy);
     }
 }
