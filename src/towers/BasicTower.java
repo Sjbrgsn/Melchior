@@ -16,6 +16,7 @@ public class BasicTower extends AbstractTower {
 
     @Override
     public void fire() {
+        controller.spawnProjectile(getLocation(), nearestEnemy);
         System.out.println("Fire!");
     }
 }

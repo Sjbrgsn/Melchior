@@ -8,6 +8,7 @@ import gui.GameComponent;
 import gui.GameFrame;
 import pathfinding.*;
 import towers.BasicTower;
+import towers.Projectile;
 import towers.Tower;
 
 import javax.swing.*;
@@ -31,8 +32,10 @@ public class GameController implements EnemyListener{
     private Path path;
 
     private ArrayList<Enemy> enemies;
-    private ArrayList<Enemy> enemiesToBeRemoved = new ArrayList<>();
+    private ArrayList<Enemy> enemiesToBeRemoved;
     private ArrayList<Tower> towers;
+    private ArrayList<Projectile> projectiles;
+    private ArrayList<Projectile> projectilesToBeRemoved;
 
     private int money = 300; //Used to buy/upgrade towers
     private int health = 20; //Starting health
@@ -52,14 +55,16 @@ public class GameController implements EnemyListener{
         }
 
         towers = new ArrayList<>();
-
         enemies = new ArrayList<>();
+        enemiesToBeRemoved = new ArrayList<>();
+        projectiles = new ArrayList<>();
+        projectilesToBeRemoved = new ArrayList<>();
 
         GroundEnemy testEnemy = new GroundEnemy(path, GroundEnemyType.EASY);
         testEnemy.addEnemyListener(this);
         enemies.add(testEnemy); // Path will always be instantiated
 
-        component = new GameComponent(grid, gridSize, enemies, towers, this);
+        component = new GameComponent(grid, gridSize, enemies, towers, projectiles, this);
         frame = new GameFrame(component);
 
         component.setPath(path);
@@ -83,9 +88,19 @@ public class GameController implements EnemyListener{
             enemies.removeAll(enemiesToBeRemoved);
             enemiesToBeRemoved.clear();
         }
+        // Remove all projectiles that hit
+        if (!projectilesToBeRemoved.isEmpty()){
+            projectiles.removeAll(projectilesToBeRemoved);
+            projectilesToBeRemoved.clear();
+        }
+
+        for (Projectile projectile : projectiles){
+            projectile.moveStep();
+        }
 
         for(Enemy enemy : enemies){
             enemy.moveStep();
+            doCollisions(enemy);
         }
         for(Tower tower : towers){
             tower.onTick();
@@ -125,8 +140,9 @@ public class GameController implements EnemyListener{
 
         for (Enemy enemy : enemies){
 
-            if (nearest == null || distanceToEnemy(enemy, id) < distanceToEnemy(nearest, id)){
-                distance = distanceToEnemy(enemy, id);
+            double distanceToEnemy = getDistance(enemy.getPositionX(), enemy.getPositionY(), id.x, id.y);
+            if (nearest == null || distanceToEnemy < getDistance(nearest.getPositionX(), nearest.getPositionY(), id.x, id.y)){
+                distance = distanceToEnemy;
                 nearest = enemy;
             }
         }
@@ -136,9 +152,19 @@ public class GameController implements EnemyListener{
             return nearest;
     }
 
-    private double distanceToEnemy(Enemy enemy, Location loc){
-        return Math.sqrt(Math.pow(enemy.getPositionX() - loc.x, 2) +
-                Math.pow(enemy.getPositionY() - loc.y, 2));
+    private void doCollisions(Enemy enemy){
+
+        for (Projectile proj : projectiles){
+            if (proj.getRadius() >= getDistance(proj.getX(), proj.getY(), enemy.getPositionX(), enemy.getPositionY())){
+                projectilesToBeRemoved.add(proj);
+                enemy.takeDamage(proj.getDamage());
+            }
+        }
+    }
+
+    private double getDistance(double x1, double y1, double x2, double y2){
+        return Math.sqrt(Math.pow(x1 - x2, 2) +
+                Math.pow(y1 - y2, 2));
     }
 
     private SquareGrid createArbitaryGrid(){
@@ -155,6 +181,12 @@ public class GameController implements EnemyListener{
 
     public static void main(String[] args) {
         new GameController();
+    }
+
+    public void spawnProjectile(Location id, Enemy enemy){
+        int defaultSpeed = 1;
+        int defaultDamage = 34;
+        projectiles.add(new Projectile(defaultSpeed, defaultDamage, id.x, id.y, enemy.getPositionX(), enemy.getPositionY()));
     }
 
     @Override

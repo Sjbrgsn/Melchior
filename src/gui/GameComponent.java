@@ -5,6 +5,7 @@ import enemies.Enemy;
 import pathfinding.Location;
 import pathfinding.Path;
 import pathfinding.SquareGrid;
+import towers.Projectile;
 import towers.Tower;
 
 import javax.swing.*;
@@ -27,15 +28,17 @@ public class GameComponent extends JComponent{
 
     private ArrayList<Enemy> enemies;
     private ArrayList<Tower> towers;
+    private ArrayList<Projectile> projectiles;
 
     private GameController controller;
 
     public GameComponent(final SquareGrid grid, int gridSize, ArrayList<Enemy> enemies,
-                         ArrayList<Tower> towers, GameController controller) {
+                         ArrayList<Tower> towers, ArrayList<Projectile> projectiles, GameController controller) {
         this.gridSize = gridSize;
         this.grid = grid;
         this.enemies = enemies;
         this.towers = towers;
+        this.projectiles = projectiles;
         this.controller = controller;
 
         this.setDoubleBuffered(true);
@@ -92,8 +95,19 @@ public class GameComponent extends JComponent{
         drawWalls(g2d);
         drawEnemies(g2d);
         drawTowers(g2d);
+        drawProjectiles(g2d);
 
         Toolkit.getDefaultToolkit().sync();
+    }
+
+    private void drawProjectiles(Graphics2D g2d) {
+
+        g2d.setColor(Color.YELLOW);
+
+        for (Projectile projectile : projectiles){
+            g2d.drawOval((int) (projectile.getX() * cellSize), (int) (projectile.getY() * cellSize),
+                    (int) (projectile.getRadius() * cellSize), (int) (projectile.getRadius() * cellSize));
+        }
     }
 
     private void drawTowers(Graphics2D g2d) {
