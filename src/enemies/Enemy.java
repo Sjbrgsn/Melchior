@@ -14,9 +14,9 @@ public interface Enemy {
 
     public void takeDamage(int damage);
 
-    public double getPositionX();
+    public double getX();
 
-    public double getPositionY();
+    public double getY();
 
     public void addEnemyListener(EnemyListener el);
 

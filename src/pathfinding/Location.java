@@ -17,7 +17,7 @@ public class Location {
     }
 
     @Override public boolean equals(final Object obj) {
-        return hashCode() == obj.hashCode();
+        return this.getClass().equals(obj.getClass()) && hashCode() == obj.hashCode();
     }
 
     @Override public String toString() {

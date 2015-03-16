@@ -15,6 +15,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Holmgr 2015-03-09
@@ -32,10 +33,10 @@ public class GameController implements EnemyListener{
     private Path path = null;
 
     private ArrayList<Enemy> enemies;
-    private ArrayList<Enemy> enemiesToBeRemoved;
+    private List<Enemy> enemiesToBeRemoved;
     private ArrayList<Tower> towers;
     private ArrayList<Projectile> projectiles;
-    private ArrayList<Projectile> projectilesToBeRemoved;
+    private List<Projectile> projectilesToBeRemoved;
 
     private int money = 300; //Used to buy/upgrade towers
     private int health = 20; //Starting health
@@ -60,7 +61,7 @@ public class GameController implements EnemyListener{
         projectiles = new ArrayList<>();
         projectilesToBeRemoved = new ArrayList<>();
 
-        GroundEnemy testEnemy = new GroundEnemy(path, GroundEnemyType.EASY);
+        Enemy testEnemy = new GroundEnemy(path, GroundEnemyType.EASY);
         testEnemy.addEnemyListener(this);
         enemies.add(testEnemy); // Path will always be instantiated
 
@@ -96,7 +97,7 @@ public class GameController implements EnemyListener{
         }
 
         for (Projectile projectile : projectiles){
-            if (grid.inBounds(new Location((int) projectile.getX(), (int) projectile.getY()))){ // Remove if outside
+            if (!grid.inBounds(new Location((int) projectile.getX(), (int) projectile.getY()))){ // Remove if outside
                 projectilesToBeRemoved.add(projectile);
             }
             else {
@@ -116,7 +117,7 @@ public class GameController implements EnemyListener{
 
     public void buyTower(Location location){
 
-        BasicTower tower = new BasicTower(location, this);
+        Tower tower = new BasicTower(location, this);
 
         if (grid.isPassable(location) && money >= tower.getUpgradeCost()){
 
@@ -140,13 +141,13 @@ public class GameController implements EnemyListener{
         }
     }
 
-    public ArrayList<Enemy> allEnemiesInRange(Location id, int range){
+    public Iterable<Enemy> allEnemiesInRange(Location id, int range){
 
         ArrayList<Enemy> enemiesInRange = new ArrayList<>();
 
         for (Enemy enemy : enemies){
 
-            if (range >= getDistance(enemy.getPositionX(), enemy.getPositionY(), id.x, id.y)){
+            if (range >= getDistance(enemy.getX(), enemy.getY(), id.x, id.y)){
                 enemiesInRange.add(enemy);
             }
         }
@@ -160,8 +161,8 @@ public class GameController implements EnemyListener{
 
         for (Enemy enemy : enemies){
 
-            double distanceToEnemy = getDistance(enemy.getPositionX(), enemy.getPositionY(), id.x, id.y);
-            if (nearest == null || distanceToEnemy < getDistance(nearest.getPositionX(), nearest.getPositionY(), id.x, id.y)){
+            double distanceToEnemy = getDistance(enemy.getX(), enemy.getY(), id.x, id.y);
+            if (nearest == null || distanceToEnemy < getDistance(nearest.getX(), nearest.getY(), id.x, id.y)){
                 distance = distanceToEnemy;
                 nearest = enemy;
             }
@@ -175,7 +176,7 @@ public class GameController implements EnemyListener{
     private void doCollisions(Enemy enemy){
 
         for (Projectile proj : projectiles){
-            if (proj.getRadius() >= getDistance(proj.getX(), proj.getY(), enemy.getPositionX(), enemy.getPositionY())){
+            if (proj.getRadius() >= getDistance(proj.getX(), proj.getY(), enemy.getX(), enemy.getY())){
                 projectilesToBeRemoved.add(proj);
                 enemy.takeDamage(proj.getDamage());
             }
@@ -187,22 +188,10 @@ public class GameController implements EnemyListener{
                 Math.pow(y1 - y2, 2));
     }
 
-    private SquareGrid createArbitaryGrid(){
-
-        grid = new SquareGrid(gridSize, gridSize);
-
-        for (int x = 1; x < 4; x++) {
-            for (int y = 7; y < 9; y++) {
-                grid.getWalls().add(new Location(x, y));
-            }
-        }
-        return grid;
-    }
-
     public void spawnProjectile(Location id, Enemy enemy){
         int defaultSpeed = 1;
         int defaultDamage = 34;
-        projectiles.add(new Projectile(defaultSpeed, defaultDamage, id.x, id.y, enemy.getPositionX(), enemy.getPositionY()));
+        projectiles.add(new Projectile(defaultSpeed, defaultDamage, id.x, id.y, enemy.getX(), enemy.getY()));
     }
 
     @Override

@@ -26,11 +26,12 @@ public class GameComponent extends JComponent{
     private final SquareGrid grid;
     private Path path;
 
-    private ArrayList<Enemy> enemies;
-    private ArrayList<Tower> towers;
-    private ArrayList<Projectile> projectiles;
+    private Iterable<Enemy> enemies;
+    private Iterable<Tower> towers;
+    private Iterable<Projectile> projectiles;
 
     private GameController controller;
+    private Color backgroundColor;
 
     public GameComponent(final SquareGrid grid, int gridSize, ArrayList<Enemy> enemies,
                          ArrayList<Tower> towers, ArrayList<Projectile> projectiles, GameController controller) {
@@ -42,6 +43,7 @@ public class GameComponent extends JComponent{
         this.controller = controller;
 
         this.setDoubleBuffered(true);
+        backgroundColor = new Color(85, 161, 196);
         this.setOpaque(true); // Needed for background color to show
         setupBindings();
     }
@@ -90,6 +92,10 @@ public class GameComponent extends JComponent{
 
         g2d.clearRect(0, 0, getWidth(), getHeight()); // To prevent overlapping from last frame
 
+        g2d.setColor(backgroundColor);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
+        g2d.setColor(getForeground());
+
         drawGrid(g2d);
         drawPath(g2d);
         drawWalls(g2d);
@@ -129,7 +135,7 @@ public class GameComponent extends JComponent{
         int enemySize = cellSize/2;
 
         for(Enemy enemy : enemies){
-            g2d.drawOval((int) (enemy.getPositionX() * cellSize), (int) (enemy.getPositionY() * cellSize),
+            g2d.drawOval((int) (enemy.getX() * cellSize), (int) (enemy.getY() * cellSize),
                     enemySize, enemySize);
             drawHealthBar(g2d, enemy);
         }
@@ -141,11 +147,11 @@ public class GameComponent extends JComponent{
         int healthBarHeight = cellSize/8;
 
         g2d.setColor(Color.RED);
-        g2d.fillRect((int) (enemy.getPositionX() * cellSize), (int) ((enemy.getPositionY() - 0.5) * cellSize),
+        g2d.fillRect((int) (enemy.getX() * cellSize), (int) ((enemy.getY() - 0.5) * cellSize),
                 cellSize, healthBarHeight);
 
         g2d.setColor(Color.GREEN);
-        g2d.fillRect((int) (enemy.getPositionX() * cellSize), (int) ((enemy.getPositionY() - 0.5) * cellSize),
+        g2d.fillRect((int) (enemy.getX() * cellSize), (int) ((enemy.getY() - 0.5) * cellSize),
                 cellSize * enemy.getHealth() / enemy.getMaximumHealth(), healthBarHeight);
 
     }

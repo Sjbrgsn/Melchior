@@ -1,6 +1,7 @@
 package pathfinding;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Holmgr on 2015-03-02.
@@ -9,7 +10,7 @@ import java.util.HashMap;
  * start node to a given end node.
  */
 public class AStarSearch {
-    public HashMap<Location, Location> cameFrom;
+    public Map<Location, Location> cameFrom;
     public HashMap<Location, Integer> costSoFar;
     public Location start, goal;
 

@@ -14,7 +14,7 @@ public class Path {
     private Map<Location, Location> path;
     private Location startLocation;
 
-    public Path(final HashMap<Location, Location> path, Location start) {
+    public Path(final Map<Location, Location> path, Location start) {
         this.path = path;
         this.startLocation = start;
     }

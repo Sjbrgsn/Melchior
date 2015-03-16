@@ -39,11 +39,11 @@ public abstract class AbstractEnemy implements Enemy{
         this.y = location.y;
     }
 
-    public double getPositionX(){
+    public double getX(){
         return x;
     }
 
-    public double getPositionY(){
+    public double getY(){
         return y;
     }
 

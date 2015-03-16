@@ -19,13 +19,11 @@ public class GameFrame extends JFrame {
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-
         this.setLayout(new BorderLayout());
         this.add(gameComponent, BorderLayout.EAST);
         createMenus();
         createStatusPane(health, cash);
 
-        this.setBackground(new Color(85, 161, 196)); // Arbitary background color
         this.pack();
         this.setVisible(true);
     }

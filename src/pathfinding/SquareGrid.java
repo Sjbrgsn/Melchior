@@ -61,10 +61,10 @@ public class SquareGrid implements WeightedGraph {
         return neighbours;
     }
 
-    public Set<Location> getWalls() {
+    public Iterable<Location> getWalls() {
         return walls;
     }
-    public Set<Location> getTowers() { return towers;}
+    public Collection<Location> getTowers() { return towers;}
     public Set<Location> getForrests() {
         return forrests;
     }
