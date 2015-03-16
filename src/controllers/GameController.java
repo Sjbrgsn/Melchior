@@ -96,7 +96,12 @@ public class GameController implements EnemyListener{
         }
 
         for (Projectile projectile : projectiles){
-            projectile.moveStep();
+            if (grid.inBounds(new Location((int) projectile.getX(), (int) projectile.getY()))){ // Remove if outside
+                projectilesToBeRemoved.add(projectile);
+            }
+            else {
+                projectile.moveStep();
+            }
         }
 
         for(Enemy enemy : enemies){
@@ -119,7 +124,7 @@ public class GameController implements EnemyListener{
 
             try{
                 Path testPath = new AStarSearch(grid, defaultStart, defaultEnd).createPath();
-                
+
                 money -= tower.getUpgradeCost();
                 towers.add(tower);
                 path = testPath;
