@@ -119,7 +119,7 @@ public class GameController implements EnemyListener{
 
             try{
                 Path testPath = new AStarSearch(grid, defaultStart, defaultEnd).createPath();
-
+                
                 money -= tower.getUpgradeCost();
                 towers.add(tower);
                 path = testPath;
@@ -133,6 +133,19 @@ public class GameController implements EnemyListener{
                 e.printStackTrace();
             }
         }
+    }
+
+    public ArrayList<Enemy> allEnemiesInRange(Location id, int range){
+
+        ArrayList<Enemy> enemiesInRange = new ArrayList<>();
+
+        for (Enemy enemy : enemies){
+
+            if (range >= getDistance(enemy.getPositionX(), enemy.getPositionY(), id.x, id.y)){
+                enemiesInRange.add(enemy);
+            }
+        }
+        return enemiesInRange;
     }
 
     public Enemy getNearestEnemyInRange(Location id, int range){
@@ -181,10 +194,6 @@ public class GameController implements EnemyListener{
         return grid;
     }
 
-    public static void main(String[] args) {
-        new GameController();
-    }
-
     public void spawnProjectile(Location id, Enemy enemy){
         int defaultSpeed = 1;
         int defaultDamage = 34;
@@ -213,5 +222,9 @@ public class GameController implements EnemyListener{
     private void removeEnemy(Enemy enemy) {
         assert enemies.contains(enemy);
         enemiesToBeRemoved.add(enemy);
+    }
+
+    public static void main(String[] args) {
+        new GameController();
     }
 }
