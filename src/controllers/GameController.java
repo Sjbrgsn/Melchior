@@ -133,7 +133,7 @@ public class GameController implements EnemyListener{
             tower = new PlagueTower(selectedLocation, this);
         }
 
-        if (grid.isPassable(selectedLocation) && money >= tower.getUpgradeCost()){
+        if (selectedLocation != null && grid.isPassable(selectedLocation) && money >= tower.getUpgradeCost()){
 
             grid.getTowers().add(tower.getLocation());
 
@@ -160,7 +160,7 @@ public class GameController implements EnemyListener{
         for (Tower tower : towers){
             if (tower.getLocation().equals(selectedLocation)) {
                 int upgradeCost = tower.getUpgradeCost();
-                
+
                 if (money >= upgradeCost){
                     money -= upgradeCost;
                     tower.upgrade();
