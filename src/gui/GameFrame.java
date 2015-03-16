@@ -17,7 +17,8 @@ import java.awt.event.ActionListener;
 public class GameFrame extends JFrame {
 
     private JLabel healthLabel, cashLabel;
-    private JButton buyBasicTowerButton, buyPlagueTowerButton, sellTowerButton;
+    private JButton buyBasicTowerButton, buyPlagueTowerButton,
+            upgradeTowerButton, sellTowerButton;
     private GameController controller;
 
     public GameFrame(GameComponent gameComponent, int health, int cash, GameController controller) throws HeadlessException {
@@ -52,6 +53,13 @@ public class GameFrame extends JFrame {
             }
         });
 
+        upgradeTowerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.upgradeTower();
+            }
+        });
+
         sellTowerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,15 +85,17 @@ public class GameFrame extends JFrame {
 
         this.buyBasicTowerButton = new JButton("Buy Basic Tower");
         this.buyPlagueTowerButton = new JButton("Buy Plague Tower");
+        this.upgradeTowerButton = new JButton("Upgrade");
         this.sellTowerButton = new JButton("Sell");
 
         JPanel lowerPanel = new JPanel();
-        lowerPanel.setLayout(new BorderLayout());
+        lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.Y_AXIS));
         panel.add(lowerPanel, BorderLayout.SOUTH);
 
-        lowerPanel.add(buyBasicTowerButton, BorderLayout.NORTH);
-        lowerPanel.add(buyPlagueTowerButton, BorderLayout.CENTER);
-        lowerPanel.add(sellTowerButton, BorderLayout.SOUTH);
+        lowerPanel.add(buyBasicTowerButton);
+        lowerPanel.add(buyPlagueTowerButton);
+        lowerPanel.add(upgradeTowerButton);
+        lowerPanel.add(sellTowerButton);
 
         this.add(panel, BorderLayout.WEST);
 

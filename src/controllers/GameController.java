@@ -119,10 +119,13 @@ public class GameController implements EnemyListener{
         gameComponent.repaint();
     }
 
+    /**
+     * Creates a new tower of given type (class), inserts into grid only if location
+     * is empty and the money >= the cost of the given tower.
+     */
     public void buyTower(Class<?> towerType){
 
         Tower tower;
-
         if (towerType == BasicTower.class){
             tower = new BasicTower(selectedLocation, this);
         }
@@ -148,6 +151,22 @@ public class GameController implements EnemyListener{
                 grid.getTowers().remove(tower.getLocation());
                 e.setLocation(tower.getLocation());
                 e.printStackTrace();
+            }
+        }
+    }
+
+    public void upgradeTower() {
+
+        for (Tower tower : towers){
+            if (tower.getLocation().equals(selectedLocation)) {
+                int upgradeCost = tower.getUpgradeCost();
+                
+                if (money >= upgradeCost){
+                    money -= upgradeCost;
+                    tower.upgrade();
+                    frame.setCashLabel(money);
+                }
+                break;
             }
         }
     }
