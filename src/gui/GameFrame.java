@@ -12,22 +12,36 @@ import java.awt.event.ActionListener;
  */
 public class GameFrame extends JFrame {
 
-    private GameComponent component;
+    private JLabel healthLabel, cashLabel;
 
-    public GameFrame(GameComponent component) throws HeadlessException {
+    public GameFrame(GameComponent gameComponent, int health, int cash) throws HeadlessException {
         super("Melchior");
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
         this.setLayout(new BorderLayout());
-        this.component = component;
-        this.add(component, BorderLayout.CENTER);
+        this.add(gameComponent, BorderLayout.EAST);
         createMenus();
+        createStatusPane(health, cash);
 
         this.setBackground(new Color(85, 161, 196)); // Arbitary background color
         this.pack();
         this.setVisible(true);
+    }
+
+    private void createStatusPane(int health, int cash) {
+
+        JPanel panel = new JPanel();
+
+        this.healthLabel = new JLabel("Health: " + health);
+        this.cashLabel = new JLabel("Cash: " + cash);
+
+        panel.add(this.healthLabel);
+        panel.add(this.cashLabel);
+
+        this.add(panel, BorderLayout.WEST);
+
     }
 
 
@@ -48,4 +62,13 @@ public class GameFrame extends JFrame {
         menuBar.add(file);
         this.setJMenuBar(menuBar);
     }
+
+    public void setCashLabel(int cash) {
+        this.cashLabel.setText("Cash: " + cash);
+    }
+
+    public void setHealthLabel(int health) {
+        this.healthLabel.setText("Health: " + health);
+    }
+
 }

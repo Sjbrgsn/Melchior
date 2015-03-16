@@ -22,14 +22,14 @@ import java.util.ArrayList;
 public class GameController implements EnemyListener{
 
     private GameFrame frame;
-    private GameComponent component;
+    private GameComponent gameComponent;
 
     private SquareGrid grid;
     private static int gridSize = 20;
 
     private Location defaultStart = new Location(0, 0);
     private Location defaultEnd = new Location(19, 19);
-    private Path path;
+    private Path path = null;
 
     private ArrayList<Enemy> enemies;
     private ArrayList<Enemy> enemiesToBeRemoved;
@@ -64,10 +64,11 @@ public class GameController implements EnemyListener{
         testEnemy.addEnemyListener(this);
         enemies.add(testEnemy); // Path will always be instantiated
 
-        component = new GameComponent(grid, gridSize, enemies, towers, projectiles, this);
-        frame = new GameFrame(component);
+        gameComponent = new GameComponent(grid, gridSize, enemies, towers, projectiles, this);
+        gameComponent.setPath(path);
 
-        component.setPath(path);
+        frame = new GameFrame(gameComponent, health, money);
+
 
         Timer loopTimer = new Timer(defaultTickSpeed, new ActionListener() {
             @Override
@@ -105,7 +106,7 @@ public class GameController implements EnemyListener{
         for(Tower tower : towers){
             tower.onTick();
         }
-        component.repaint();
+        gameComponent.repaint();
     }
 
     public void buyTower(Location location){
@@ -122,8 +123,9 @@ public class GameController implements EnemyListener{
                 money -= tower.getUpgradeCost();
                 towers.add(tower);
                 path = testPath;
-                component.setPath(path);
-                component.repaint();
+                gameComponent.setPath(path);
+                frame.setCashLabel(money);
+                gameComponent.repaint();
             }
             catch (PathNotFoundException e) {
                 grid.getTowers().remove(tower.getLocation());
@@ -202,6 +204,7 @@ public class GameController implements EnemyListener{
         }
         else {
             health--;
+            frame.setHealthLabel(health);
             System.out.println("Enemy reached goal, health:" + health);
             removeEnemy(enemy);
         }
