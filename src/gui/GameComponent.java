@@ -57,7 +57,7 @@ public class GameComponent extends JComponent{
             public void mouseClicked(MouseEvent e) {
 
                 Location loc = new Location(e.getX() / cellSize, e.getY() / cellSize);
-                controller.buyTower(loc);
+                controller.setSelectedLocation(loc);
             }
 
             @Override
@@ -99,9 +99,16 @@ public class GameComponent extends JComponent{
         drawGrid(g2d);
         drawPath(g2d);
         drawWalls(g2d);
-        drawEnemies(g2d);
         drawTowers(g2d);
+        drawEnemies(g2d);
         drawProjectiles(g2d);
+
+        Location loc = controller.getSelectedLocation();
+        g2d.setColor(Color.RED);
+
+        if (loc != null){
+            g2d.drawRect(loc.x * cellSize, loc.y * cellSize, cellSize, cellSize);
+        }
 
         Toolkit.getDefaultToolkit().sync();
     }

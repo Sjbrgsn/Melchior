@@ -8,6 +8,7 @@ import gui.GameComponent;
 import gui.GameFrame;
 import pathfinding.*;
 import towers.BasicTower;
+import towers.PlagueTower;
 import towers.Projectile;
 import towers.Tower;
 
@@ -35,6 +36,7 @@ public class GameController implements EnemyListener{
     private ArrayList<Enemy> enemies;
     private List<Enemy> enemiesToBeRemoved;
     private ArrayList<Tower> towers;
+    //private Tower towerToBeRemoved;
     private ArrayList<Projectile> projectiles;
     private List<Projectile> projectilesToBeRemoved;
 
@@ -42,6 +44,8 @@ public class GameController implements EnemyListener{
     private int health = 20; //Starting health
 
     private int defaultTickSpeed = 1000/30;
+
+    private Location selectedLocation = null;
 
     public GameController() {
 
@@ -68,7 +72,7 @@ public class GameController implements EnemyListener{
         gameComponent = new GameComponent(grid, gridSize, enemies, towers, projectiles, this);
         gameComponent.setPath(path);
 
-        frame = new GameFrame(gameComponent, health, money);
+        frame = new GameFrame(gameComponent, health, money, this);
 
 
         Timer loopTimer = new Timer(defaultTickSpeed, new ActionListener() {
@@ -115,11 +119,18 @@ public class GameController implements EnemyListener{
         gameComponent.repaint();
     }
 
-    public void buyTower(Location location){
+    public void buyTower(Class<?> towerType){
 
-        Tower tower = new BasicTower(location, this);
+        Tower tower;
 
-        if (grid.isPassable(location) && money >= tower.getUpgradeCost()){
+        if (towerType == BasicTower.class){
+            tower = new BasicTower(selectedLocation, this);
+        }
+        else {
+            tower = new PlagueTower(selectedLocation, this);
+        }
+
+        if (grid.isPassable(selectedLocation) && money >= tower.getUpgradeCost()){
 
             grid.getTowers().add(tower.getLocation());
 
@@ -138,6 +149,22 @@ public class GameController implements EnemyListener{
                 e.setLocation(tower.getLocation());
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void sellTower(){
+
+        Tower towerToBeRemoved = null;
+
+        for (Tower tower : towers){
+            if (tower.getLocation().equals(selectedLocation)) {
+                tower.sell();
+                towerToBeRemoved = tower;
+                break;
+            }
+        }
+        if (towerToBeRemoved != null){
+            towers.remove(towerToBeRemoved);
         }
     }
 
@@ -220,5 +247,13 @@ public class GameController implements EnemyListener{
 
     public static void main(String[] args) {
         new GameController();
+    }
+
+    public void setSelectedLocation(Location selectedLocation) {
+        this.selectedLocation = selectedLocation;
+    }
+
+    public Location getSelectedLocation() {
+        return selectedLocation;
     }
 }
