@@ -234,10 +234,8 @@ public class GameController implements EnemyListener{
                 Math.pow(y1 - y2, 2));
     }
 
-    public void spawnProjectile(Location id, Enemy enemy){
-        int defaultSpeed = 1;
-        int defaultDamage = 34;
-        projectiles.add(new Projectile(defaultSpeed, defaultDamage, id.x, id.y, enemy.getX(), enemy.getY()));
+    public void spawnProjectile(Location id, Enemy enemy, int speed, int damage){
+        projectiles.add(new Projectile(speed, damage, id.x, id.y, enemy.getX(), enemy.getY()));
     }
 
     @Override
