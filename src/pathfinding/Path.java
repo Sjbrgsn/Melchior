@@ -30,4 +30,13 @@ public class Path {
     public boolean isGoal(Location currentLocation){
         return path.get(currentLocation) == null;
     }
+
+    public Location getGoal(){
+        for (Location key : path.keySet()){
+            if (path.get(key) == null){
+                return key;
+            }
+        }
+        return null;
+    }
 }

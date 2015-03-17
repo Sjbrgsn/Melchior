@@ -16,9 +16,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by Holmgr 2015-03-04
@@ -37,13 +36,14 @@ public class GameComponent extends JComponent{
     private Iterable<Projectile> projectiles;
 
     private GameController controller;
-    private Color backgroundColor;
     private ImageIcon background;
-    private BufferedImage enemyImage;
     private Map<Direction, Image> enemyImageMap = new EnumMap<>(Direction.class);
 
-    public GameComponent(final SquareGrid grid, int gridSize, ArrayList<Enemy> enemies,
-                         ArrayList<Tower> towers, ArrayList<Projectile> projectiles, GameController controller) {
+    private List<Image> flagImages = new ArrayList<>();
+    private int flagImageCounter = 0; // Needed for animating the goal flag
+
+    public GameComponent(final SquareGrid grid, int gridSize, Iterable<Enemy> enemies,
+                         Iterable<Tower> towers, Iterable<Projectile> projectiles, GameController controller) {
         this.gridSize = gridSize;
         this.grid = grid;
         this.enemies = enemies;
@@ -52,8 +52,6 @@ public class GameComponent extends JComponent{
         this.controller = controller;
 
         this.setDoubleBuffered(true);
-        backgroundColor = new Color(85, 161, 196);
-        this.setOpaque(true); // Needed for background color to show
 
         setupImageMappings();
         setupBindings();
@@ -64,11 +62,19 @@ public class GameComponent extends JComponent{
         background = new ImageIcon(getClass().getClassLoader().getResource("images/snow.png"));
 
         try {
-            enemyImage = ImageIO.read(getClass().getResourceAsStream("/images/easy_enemy.png"));
+            BufferedImage enemyImage = ImageIO.read(getClass().getResourceAsStream("/images/easy_enemy.png"));
             enemyImageMap.put(Direction.UP, enemyImage.getSubimage(40, 0, 40, 40));
             enemyImageMap.put(Direction.LEFT, enemyImage.getSubimage(0, 40, 40, 40));
             enemyImageMap.put(Direction.RIGHT, enemyImage.getSubimage(80, 40, 40, 40));
             enemyImageMap.put(Direction.DOWN, enemyImage.getSubimage(40, 80, 40, 40));
+
+            BufferedImage flagImage = ImageIO.read(getClass().getResourceAsStream("/images/flag.png"));
+
+            int n = 0;
+            while (n < flagImage.getWidth()){
+                flagImages.add(flagImage.getSubimage(n, 0, 20, 21));
+                n += 20;
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -126,6 +132,7 @@ public class GameComponent extends JComponent{
         drawTowers(g2d);
         drawEnemies(g2d);
         drawProjectiles(g2d);
+        drawGoalFlag(g2d);
 
         Location loc = controller.getSelectedLocation();
         g2d.setColor(Color.RED);
@@ -135,6 +142,19 @@ public class GameComponent extends JComponent{
         }
 
         Toolkit.getDefaultToolkit().sync();
+    }
+
+    private void drawGoalFlag(Graphics2D g2d) {
+        Location goal = path.getGoal();
+        int ticksPerAnimation = 4;
+
+        g2d.drawImage(flagImages.get(flagImageCounter / ticksPerAnimation),
+                goal.x * cellSize, goal.y * cellSize, cellSize, cellSize, null);
+
+        if (flagImageCounter < flagImages.size() * ticksPerAnimation -1)
+            flagImageCounter++;
+        else
+            flagImageCounter = 0;
     }
 
     private void drawBackground(Graphics2D g2d) {
