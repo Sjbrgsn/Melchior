@@ -6,6 +6,7 @@ import enemies.Enemy;
 import pathfinding.Location;
 import pathfinding.Path;
 import pathfinding.SquareGrid;
+import towers.PlagueTower;
 import towers.Projectile;
 import towers.Tower;
 
@@ -37,7 +38,11 @@ public class GameComponent extends JComponent{
 
     private GameController controller;
     private ImageIcon background;
+    private ImageIcon plagueTowerImage;
     private Map<Direction, Image> enemyImageMap = new EnumMap<>(Direction.class);
+
+    private List<Image> basicTowerImages = new ArrayList<>();
+    private int basicTowerImageCounter = 0;
 
     private List<Image> flagImages = new ArrayList<>();
     private int flagImageCounter = 0; // Needed for animating the goal flag
@@ -60,6 +65,7 @@ public class GameComponent extends JComponent{
     private void setupImageMappings() {
 
         background = new ImageIcon(getClass().getClassLoader().getResource("images/snow.png"));
+        plagueTowerImage = new ImageIcon(getClass().getClassLoader().getResource("images/plague_tower.png"));
 
         try {
             BufferedImage enemyImage = ImageIO.read(getClass().getResourceAsStream("/images/easy_enemy.png"));
@@ -74,6 +80,16 @@ public class GameComponent extends JComponent{
             while (n < flagImage.getWidth()){
                 flagImages.add(flagImage.getSubimage(n, 0, 20, 21));
                 n += 20;
+            }
+
+            BufferedImage basicTowerImage = ImageIO.read(getClass().getResourceAsStream("/images/basic_tower.png"));
+
+            int imageCount = 7;
+            int imageWidth = 40;
+            int imageHeight = 42;
+            for (n = 0; n < imageCount; n++) {
+                System.out.println(n);
+                basicTowerImages.add(basicTowerImage.getSubimage(n * imageWidth, 0, imageWidth, imageHeight));
             }
 
         } catch (IOException e) {
@@ -182,9 +198,22 @@ public class GameComponent extends JComponent{
 
         for (Tower tower : towers){
             Location loc = tower.getLocation();
+            int ticksPerAnimation = 5;
 
-            g2d.fillRect(loc.x * cellSize, loc.y * cellSize,
-                    cellSize, cellSize);
+            if (tower instanceof PlagueTower){
+                g2d.drawImage(plagueTowerImage.getImage(), loc.x * cellSize, loc.y * cellSize,
+                        cellSize, cellSize, null);
+            }
+            else {
+                g2d.drawImage(basicTowerImages.get(basicTowerImageCounter / ticksPerAnimation),
+                    loc.x * cellSize, loc.y * cellSize, cellSize, cellSize, null);
+
+                if (basicTowerImageCounter < basicTowerImages.size() * ticksPerAnimation -1)
+                    basicTowerImageCounter++;
+                else
+                    basicTowerImageCounter = 0;
+            }
+
         }
     }
 

@@ -28,7 +28,7 @@ public class GameFrame extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         this.setLayout(new BorderLayout());
-        this.add(gameComponent, BorderLayout.EAST);
+        this.add(gameComponent, BorderLayout.CENTER);
         createMenus();
         createStatusPane(health, cash);
         setupBindings();
@@ -71,6 +71,7 @@ public class GameFrame extends JFrame {
     private void createStatusPane(int health, int cash) {
 
         JPanel panel = new JPanel();
+        panel.setPreferredSize(new Dimension(240, 800));
         panel.setLayout(new BorderLayout());
 
         JPanel upperPanel = new JPanel();
