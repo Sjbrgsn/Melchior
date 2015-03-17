@@ -222,7 +222,7 @@ public class GameController implements EnemyListener{
     private void doCollisions(Enemy enemy){
 
         for (Projectile proj : projectiles){
-            if (proj.getRadius() >= getDistance(proj.getX(), proj.getY(), enemy.getX(), enemy.getY())){
+            if (proj.getRadius() + enemy.getSize() >= getDistance(proj.getX(), proj.getY(), enemy.getX(), enemy.getY())){
                 projectilesToBeRemoved.add(proj);
                 enemy.takeDamage(proj.getDamage());
             }

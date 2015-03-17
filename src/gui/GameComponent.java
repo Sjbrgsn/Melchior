@@ -1,6 +1,7 @@
 package gui;
 
 import controllers.GameController;
+import enemies.Direction;
 import enemies.Enemy;
 import pathfinding.Location;
 import pathfinding.Path;
@@ -8,11 +9,16 @@ import pathfinding.SquareGrid;
 import towers.Projectile;
 import towers.Tower;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.Map;
 
 /**
  * Created by Holmgr 2015-03-04
@@ -32,6 +38,9 @@ public class GameComponent extends JComponent{
 
     private GameController controller;
     private Color backgroundColor;
+    private ImageIcon background;
+    private BufferedImage enemyImage;
+    private Map<Direction, Image> enemyImageMap = new EnumMap<>(Direction.class);
 
     public GameComponent(final SquareGrid grid, int gridSize, ArrayList<Enemy> enemies,
                          ArrayList<Tower> towers, ArrayList<Projectile> projectiles, GameController controller) {
@@ -45,7 +54,25 @@ public class GameComponent extends JComponent{
         this.setDoubleBuffered(true);
         backgroundColor = new Color(85, 161, 196);
         this.setOpaque(true); // Needed for background color to show
+
+        setupImageMappings();
         setupBindings();
+    }
+
+    private void setupImageMappings() {
+
+        background = new ImageIcon(getClass().getClassLoader().getResource("images/snow.png"));
+
+        try {
+            enemyImage = ImageIO.read(getClass().getResourceAsStream("/images/easy_enemy.png"));
+            enemyImageMap.put(Direction.UP, enemyImage.getSubimage(40, 0, 40, 40));
+            enemyImageMap.put(Direction.LEFT, enemyImage.getSubimage(0, 40, 40, 40));
+            enemyImageMap.put(Direction.RIGHT, enemyImage.getSubimage(80, 40, 40, 40));
+            enemyImageMap.put(Direction.DOWN, enemyImage.getSubimage(40, 80, 40, 40));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setupBindings() {
@@ -92,10 +119,7 @@ public class GameComponent extends JComponent{
 
         g2d.clearRect(0, 0, getWidth(), getHeight()); // To prevent overlapping from last frame
 
-        g2d.setColor(backgroundColor);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
-        g2d.setColor(getForeground());
-
+        drawBackground(g2d);
         drawGrid(g2d);
         drawPath(g2d);
         drawWalls(g2d);
@@ -111,6 +135,15 @@ public class GameComponent extends JComponent{
         }
 
         Toolkit.getDefaultToolkit().sync();
+    }
+
+    private void drawBackground(Graphics2D g2d) {
+
+        for (int i = 0; i < gridSize; i++) {
+            for (int j = 0; j < gridSize; j++) {
+                g2d.drawImage(background.getImage(), i * cellSize, j * cellSize, cellSize, cellSize, null);
+            }
+        }
     }
 
     private void drawProjectiles(Graphics2D g2d) {
@@ -137,16 +170,11 @@ public class GameComponent extends JComponent{
 
     private void drawEnemies(Graphics2D g2d) {
 
-        g2d.setColor(Color.GREEN);
-        setAntialising(g2d, true);
-        int enemySize = cellSize/2;
-
         for(Enemy enemy : enemies){
-            g2d.drawOval((int) (enemy.getX() * cellSize), (int) (enemy.getY() * cellSize),
-                    enemySize, enemySize);
+            g2d.drawImage(enemyImageMap.get(enemy.getDirection()), (int) (enemy.getX() * cellSize), (int) (enemy.getY() * cellSize),
+                    cellSize, cellSize, null);
             drawHealthBar(g2d, enemy);
         }
-        setAntialising(g2d, false);
     }
 
     private void drawHealthBar(Graphics2D g2d, Enemy enemy){
@@ -198,15 +226,6 @@ public class GameComponent extends JComponent{
                 g2d.drawLine(col * cellSize, row * cellSize, col * cellSize, getHeight());
             }
             g2d.drawLine(0, row * cellSize, getWidth(), row * cellSize);
-        }
-    }
-
-    private void setAntialising(Graphics2D g2d, boolean mode) {
-        if (mode){
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        else {
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_DEFAULT);
         }
     }
 

@@ -18,6 +18,10 @@ public interface Enemy {
 
     public double getY();
 
+    public Direction getDirection();
+
+    public double getSize();
+
     public void addEnemyListener(EnemyListener el);
 
 }

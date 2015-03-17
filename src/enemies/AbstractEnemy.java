@@ -20,6 +20,7 @@ public abstract class AbstractEnemy implements Enemy{
     protected Location target;
 
     protected Path currentPath;
+    protected Direction currentDirection;
 
     private List<EnemyListener> listeners;
 
@@ -30,7 +31,7 @@ public abstract class AbstractEnemy implements Enemy{
         setPosition(currentPath.getFirst());
 
         this.target = currentPath.getNext(currentPath.getFirst());
-
+        this.currentDirection = Direction.DOWN; // Default direction
     }
 
 
@@ -72,6 +73,11 @@ public abstract class AbstractEnemy implements Enemy{
     @Override
     public boolean isAlive() {
         return 0 < health;
+    }
+
+    @Override
+    public Direction getDirection() {
+        return currentDirection;
     }
 
     private void notifyKilled(){

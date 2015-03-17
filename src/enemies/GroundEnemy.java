@@ -9,6 +9,7 @@ public class GroundEnemy extends AbstractEnemy{
 
     private int targetX;
     private int targetY;
+    private double size = 0.8;
 
     public GroundEnemy(Path path, GroundEnemyType Enemytype) {
         super(path);
@@ -40,15 +41,28 @@ public class GroundEnemy extends AbstractEnemy{
             }
         }
 
-        else if (x < targetX)
+        else if (x < targetX){
             x += movementSpeed;
+            currentDirection = Direction.RIGHT;
+        }
 
-        else if (x > targetX)
+        else if (x > targetX){
             x -= movementSpeed;
+            currentDirection = Direction.LEFT;
+        }
 
-        else if (y < targetY)
+        else if (y < targetY){
             y += movementSpeed;
-        else
+            currentDirection = Direction.DOWN;
+        }
+        else{
             y -= movementSpeed;
+            currentDirection = Direction.UP;
+        }
+    }
+
+    @Override
+    public double getSize() {
+        return size;
     }
 }
