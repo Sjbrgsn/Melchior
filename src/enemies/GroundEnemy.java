@@ -11,12 +11,26 @@ public class GroundEnemy extends AbstractEnemy{
     private int targetY;
     private double size = 0.8;
 
-    public GroundEnemy(Path path, GroundEnemyType Enemytype) {
+    public GroundEnemy(Path path, GroundEnemyType enemyType) {
         super(path);
-        health = 100;
-        maximumHealth = 100;
-        reward = 20;
-        //type = Enemytype;
+
+        switch (enemyType){
+            case EASY:
+                health = 100;
+                movementSpeed = 0.1;
+                break;
+            case MEDIUM:
+                health = 150;
+                movementSpeed = 0.075;
+                break;
+            case HARD:
+                health = 200;
+                movementSpeed = 0.05;
+        }
+
+        maximumHealth = health;
+        reward = maximumHealth;
+        //type = enemyType;
 
         // Set start target values
         targetX = target.x;
