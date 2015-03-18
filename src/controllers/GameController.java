@@ -1,9 +1,6 @@
 package controllers;
 
-import enemies.Enemy;
-import enemies.EnemyListener;
-import enemies.GroundEnemy;
-import enemies.GroundEnemyType;
+import enemies.*;
 import gui.GameComponent;
 import gui.GameFrame;
 import pathfinding.*;
@@ -18,10 +15,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by Holmgr 2015-03-09
  */
 public class GameController implements EnemyListener{
+
+    private GameState currentState = GameState.RUNNING;
 
     private GameFrame frame;
     private GameComponent gameComponent;
@@ -40,6 +40,9 @@ public class GameController implements EnemyListener{
     private ArrayList<Projectile> projectiles;
     private List<Projectile> projectilesToBeRemoved;
 
+    private BasicEnemyFactory enemyFactory;
+    private int difficulty = 100;
+
     private int money = 300; //Used to buy/upgrade towers
     private int health = 20; //Starting health
 
@@ -47,17 +50,23 @@ public class GameController implements EnemyListener{
 
     private Location selectedLocation = null;
 
+    private int spawnDelayCounter = GameConstants.ENEMY_SPAWN_DELAY;
+    private int stateDelayCounter = GameConstants.PAUSE_STATE_TIME;
+
     public GameController() {
 
         grid = new SquareGrid(gridSize, gridSize);
 
         AStarSearch search = new AStarSearch(grid, defaultStart, defaultEnd);
 
+
         try {
             path = search.createPath();
         } catch (PathNotFoundException e) {
             e.printStackTrace();
         }
+
+        enemyFactory = new BasicEnemyFactory(difficulty, path);
 
         towers = new ArrayList<>();
         enemies = new ArrayList<>();
@@ -89,34 +98,73 @@ public class GameController implements EnemyListener{
 
     private void doTick() {
 
-        // Remove all enemies which are dead or have reached the goal
-        if (!enemiesToBeRemoved.isEmpty()){
-            enemies.removeAll(enemiesToBeRemoved);
-            enemiesToBeRemoved.clear();
-        }
-        // Remove all projectiles that hit
-        if (!projectilesToBeRemoved.isEmpty()){
-            projectiles.removeAll(projectilesToBeRemoved);
-            projectilesToBeRemoved.clear();
-        }
+        switch (currentState){
+            case RUNNING:
+                // Remove all enemies which are dead or have reached the goal
+                if (!enemiesToBeRemoved.isEmpty()){
+                    enemies.removeAll(enemiesToBeRemoved);
+                    enemiesToBeRemoved.clear();
+                }
+                // Remove all projectiles that hit
+                if (!projectilesToBeRemoved.isEmpty()){
+                    projectiles.removeAll(projectilesToBeRemoved);
+                    projectilesToBeRemoved.clear();
+                }
 
-        for (Projectile projectile : projectiles){
-            if (!grid.inBounds(new Location((int) projectile.getX(), (int) projectile.getY()))){ // Remove if outside
-                projectilesToBeRemoved.add(projectile);
-            }
-            else {
-                projectile.moveStep();
-            }
-        }
+                for (Projectile projectile : projectiles){
+                    // TODO Move this into projectile
+                    if (!grid.inBounds(new Location((int) projectile.getX(), (int) projectile.getY()))){ // Remove if outside
+                        projectilesToBeRemoved.add(projectile);
+                    }
+                    else {
+                        projectile.moveStep();
+                    }
+                }
 
-        for(Enemy enemy : enemies){
-            enemy.moveStep();
-            doCollisions(enemy);
-        }
-        for(Tower tower : towers){
-            tower.onTick();
+                for(Enemy enemy : enemies){
+                    enemy.moveStep();
+                    doCollisions(enemy);
+                }
+                for(Tower tower : towers){
+                    tower.onTick();
+                }
+
+                if(spawnDelayCounter == 0){
+                    spawnDelayCounter = GameConstants.ENEMY_SPAWN_DELAY;
+                    if (enemyFactory.iterator().hasNext()){
+                        Enemy enemy = enemyFactory.iterator().next();
+                        enemy.addEnemyListener(this);
+                        enemies.add(enemy);
+                    }
+                    else if (enemies.size() == 0) {
+                        currentState = GameState.BUILD;
+                        System.out.println("State: BUILD");
+                    }
+                }
+                else
+                    spawnDelayCounter--;
+
+                break;
+            case PAUSE:
+
+                break;
+            case BUILD:
+                if (stateDelayCounter == 0){
+                    stateDelayCounter = GameConstants.PAUSE_STATE_TIME;
+                    difficulty *= GameConstants.DIFFICULTY_INCREASE_FACTOR;
+                    enemyFactory = new BasicEnemyFactory(difficulty, path);
+                    currentState = GameState.RUNNING;
+
+                }
+                else
+                    stateDelayCounter--;
+                break;
+            default:
+                break;
         }
         gameComponent.repaint();
+
+
     }
 
     /**
@@ -250,7 +298,7 @@ public class GameController implements EnemyListener{
     @Override
     public void onReachedGoal(Enemy enemy) {
         if (health == 1){
-            System.exit(0); // TODO: Show highscore table
+            currentState = GameState.PAUSE; // TODO: Show highscore table
         }
         else {
             health--;
