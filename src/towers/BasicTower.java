@@ -14,7 +14,7 @@ public class BasicTower extends AbstractTower {
         super(location, controller);
         cooldown = 30;
         range = 5; // Range at which enemies can be engaged
-        baseDamage = 30;
+        baseDamage = 10;
     }
 
     @Override
