@@ -22,6 +22,8 @@ public interface Enemy {
 
     public double getSize();
 
+    public int getKillReward();
+
     public void addEnemyListener(EnemyListener el);
 
 }

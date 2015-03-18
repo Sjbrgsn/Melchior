@@ -15,6 +15,7 @@ public class GroundEnemy extends AbstractEnemy{
         super(path);
         health = 100;
         maximumHealth = 100;
+        reward = 20;
         //type = Enemytype;
 
         // Set start target values

@@ -71,7 +71,7 @@ public class GameFrame extends JFrame {
     private void createStatusPane(int health, int cash) {
 
         JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(240, 800));
+        panel.setPreferredSize(new Dimension(140, 640));
         panel.setLayout(new BorderLayout());
 
         JPanel upperPanel = new JPanel();

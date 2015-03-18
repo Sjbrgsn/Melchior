@@ -241,6 +241,9 @@ public class GameController implements EnemyListener{
     @Override
     public void onEnemyKilled(Enemy enemy) {
         System.out.println("Enemy killed");
+        System.out.println(enemy.getKillReward());
+        money += enemy.getKillReward();
+        frame.setCashLabel(money);
         removeEnemy(enemy);
     }
 

@@ -16,6 +16,8 @@ public abstract class AbstractEnemy implements Enemy{
     protected int health;
     protected int maximumHealth;
     protected double movementSpeed = 0.1; // Default speed
+    protected int reward;
+
     protected double x, y;
     protected Location target;
 
@@ -78,6 +80,11 @@ public abstract class AbstractEnemy implements Enemy{
     @Override
     public Direction getDirection() {
         return currentDirection;
+    }
+
+    @Override
+    public int getKillReward() {
+        return reward;
     }
 
     private void notifyKilled(){
