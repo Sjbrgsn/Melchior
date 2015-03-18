@@ -1,7 +1,6 @@
 package pathfinding;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,8 +48,8 @@ public class SquareGrid implements WeightedGraph {
      * Returns an ArrayList containing all
      * valid neighbors (passable and in bounds) for a given Location id.
      */
-    @Override public Iterable<Location> neighbors(final Location id) {
-        Collection<Location> neighbours = new ArrayList<>();
+    @Override public ArrayList<Location> neighbors(final Location id) {
+       ArrayList<Location> neighbours = new ArrayList<>();
         for (Location direction : directions){
 
             Location position = new Location(direction.x + id.x, direction.y + id.y);
@@ -61,10 +60,10 @@ public class SquareGrid implements WeightedGraph {
         return neighbours;
     }
 
-    public Iterable<Location> getWalls() {
+    public Set<Location> getWalls() {
         return walls;
     }
-    public Collection<Location> getTowers() { return towers;}
+    public Set<Location> getTowers() { return towers;}
     public Set<Location> getForrests() {
         return forrests;
     }
