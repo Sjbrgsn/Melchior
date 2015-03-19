@@ -13,7 +13,7 @@ public class BasicTower extends AbstractTower {
     public BasicTower(Location location, GameController controller) {
         super(location, controller);
         cooldown = 30;
-        range = 5; // Range at which enemies can be engaged
+        range = 2; // Range at which enemies can be engaged
         baseDamage = 10;
     }
 

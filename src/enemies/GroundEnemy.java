@@ -29,7 +29,7 @@ public class GroundEnemy extends AbstractEnemy{
         }
 
         maximumHealth = health;
-        reward = maximumHealth;
+        reward = maximumHealth / 5;
         //type = enemyType;
 
         // Set start target values

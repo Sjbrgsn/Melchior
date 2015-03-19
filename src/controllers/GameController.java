@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class GameController implements EnemyListener{
 
-    private GameState currentState = GameState.RUNNING;
+    private GameState currentState = GameState.BUILD;
 
     private GameFrame frame;
     private GameComponent gameComponent;
@@ -235,7 +235,7 @@ public class GameController implements EnemyListener{
         }
     }
 
-    public Iterable<Enemy> allEnemiesInRange(Location id, int range){
+    public ArrayList<Enemy> allEnemiesInRange(Location id, int range){
 
         ArrayList<Enemy> enemiesInRange = new ArrayList<>();
 
@@ -270,7 +270,7 @@ public class GameController implements EnemyListener{
     private void doCollisions(Enemy enemy){
 
         for (Projectile proj : projectiles){
-            if (proj.getRadius() + enemy.getSize() >= getDistance(proj.getX(), proj.getY(), enemy.getX(), enemy.getY())){
+            if (!projectilesToBeRemoved.contains(proj) && proj.getRadius() + enemy.getSize() >= getDistance(proj.getX(), proj.getY(), enemy.getX(), enemy.getY())){
                 projectilesToBeRemoved.add(proj);
                 enemy.takeDamage(proj.getDamage());
             }

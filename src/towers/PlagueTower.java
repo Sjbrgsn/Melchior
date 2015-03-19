@@ -11,7 +11,7 @@ import pathfinding.Location;
  */
 public class PlagueTower extends AbstractTower{
 
-    private int damage = 10;
+    private int damage = 5;
 
     public PlagueTower(Location location, GameController controller) {
         super(location, controller);
@@ -21,7 +21,8 @@ public class PlagueTower extends AbstractTower{
 
     @Override
     public void fire() {
-        for (Enemy enemy: controller.allEnemiesInRange(getLocation(), range)){
+        int max = Math.min(controller.allEnemiesInRange(getLocation(), range).size(), 2);
+        for (Enemy enemy: controller.allEnemiesInRange(getLocation(), range).subList(0,max)){
             enemy.takeDamage(damage);
         }
     }

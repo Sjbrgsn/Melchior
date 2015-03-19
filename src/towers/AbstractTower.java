@@ -10,7 +10,7 @@ import pathfinding.Location;
 public abstract class AbstractTower implements Tower{
     private Location location;
     private int upgradeLevel = 0;
-    private int upgradeCost = 100;
+    private int upgradeCost = 50;
 
     protected int cooldown = 100;
     protected int currentCooldown = 0;
