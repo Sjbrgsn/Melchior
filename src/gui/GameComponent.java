@@ -88,7 +88,6 @@ public class GameComponent extends JComponent{
             int imageWidth = 40;
             int imageHeight = 42;
             for (n = 0; n < imageCount; n++) {
-                System.out.println(n);
                 basicTowerImages.add(basicTowerImage.getSubimage(n * imageWidth, 0, imageWidth, imageHeight));
             }
 
