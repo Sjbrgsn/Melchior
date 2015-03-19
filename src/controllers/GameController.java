@@ -168,7 +168,9 @@ public class GameController implements EnemyListener{
      * is empty and the money >= the cost of the given tower.
      */
     public void buyTower(Class<?> towerType){
-
+        if (currentState != GameState.BUILD){
+            return;
+        }
         Tower tower;
         if (towerType == BasicTower.class){
             tower = new BasicTower(selectedLocation, this);
