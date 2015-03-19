@@ -48,7 +48,7 @@ public class GameController implements EnemyListener{
 
     private int defaultTickSpeed = 1000/30;
 
-    private Location selectedLocation = null;
+    private Location selectedLocation = new Location(0, 0);
 
     private int spawnDelayCounter = GameConstants.ENEMY_SPAWN_DELAY;
     private int stateDelayCounter = GameConstants.PAUSE_STATE_TIME;
@@ -329,5 +329,12 @@ public class GameController implements EnemyListener{
 
     public Location getSelectedLocation() {
         return selectedLocation;
+    }
+
+    public void moveSelected(int offsetX, int offsetY) {
+        Location loc = new Location(selectedLocation.x + offsetX, selectedLocation.y + offsetY);
+        if (grid.inBounds(loc)){
+            selectedLocation = loc;
+        }
     }
 }

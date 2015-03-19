@@ -16,7 +16,8 @@ public class PlagueTower extends AbstractTower{
     public PlagueTower(Location location, GameController controller) {
         super(location, controller);
         cooldown = 10;
-        range = 3;
+        range = 2;
+        upgradeCost = 100;
     }
 
     @Override

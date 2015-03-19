@@ -13,6 +13,7 @@ import towers.Tower;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -123,6 +124,42 @@ public class GameComponent extends JComponent{
             public void mouseExited(MouseEvent e) {
             }
         });
+
+        InputMap inputMap = getInputMap(WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = getActionMap();
+
+        inputMap.put(KeyStroke.getKeyStroke("LEFT"), "MoveLeft");
+        actionMap.put("MoveLeft", new AbstractAction() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                controller.moveSelected(-1, 0);
+            }
+        });
+
+        inputMap.put(KeyStroke.getKeyStroke("RIGHT"), "MoveRight");
+        actionMap.put("MoveRight", new AbstractAction() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                controller.moveSelected(1, 0);
+            }
+        });
+
+        inputMap.put(KeyStroke.getKeyStroke("UP"), "MoveUp");
+        actionMap.put("MoveUp", new AbstractAction() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                controller.moveSelected(0, -1);
+            }
+        });
+
+        inputMap.put(KeyStroke.getKeyStroke("DOWN"), "MoveDown");
+        actionMap.put("MoveDown", new AbstractAction() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                controller.moveSelected(0, 1);
+            }
+        });
+
     }
 
     @Override
@@ -194,10 +231,10 @@ public class GameComponent extends JComponent{
     private void drawTowers(Graphics2D g2d) {
 
         g2d.setColor(Color.RED);
+        int ticksPerAnimation = 8;
 
         for (Tower tower : towers){
             Location loc = tower.getLocation();
-            int ticksPerAnimation = 5;
 
             if (tower instanceof PlagueTower){
                 g2d.drawImage(plagueTowerImage.getImage(), loc.x * cellSize, loc.y * cellSize,
@@ -207,13 +244,13 @@ public class GameComponent extends JComponent{
                 g2d.drawImage(basicTowerImages.get(basicTowerImageCounter / ticksPerAnimation),
                     loc.x * cellSize, loc.y * cellSize, cellSize, cellSize, null);
 
-                if (basicTowerImageCounter < basicTowerImages.size() * ticksPerAnimation -1)
-                    basicTowerImageCounter++;
-                else
-                    basicTowerImageCounter = 0;
             }
 
         }
+        if (basicTowerImageCounter < basicTowerImages.size() * ticksPerAnimation -1)
+            basicTowerImageCounter++;
+        else
+            basicTowerImageCounter = 0;
     }
 
     private void drawEnemies(Graphics2D g2d) {
