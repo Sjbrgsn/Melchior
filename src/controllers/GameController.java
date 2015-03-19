@@ -221,13 +221,20 @@ public class GameController implements EnemyListener{
 
         for (Tower tower : towers){
             if (tower.getLocation().equals(selectedLocation)) {
-                tower.sell();
                 towerToBeRemoved = tower;
                 break;
             }
         }
         if (towerToBeRemoved != null){
             towers.remove(towerToBeRemoved);
+            towerToBeRemoved.sell();
+            grid.getTowers().remove(towerToBeRemoved.getLocation());
+            try {
+                path = new AStarSearch(grid, defaultStart, defaultEnd).createPath();
+            } catch (PathNotFoundException e) {
+                e.printStackTrace();
+            }
+            gameComponent.setPath(path);
         }
     }
 
