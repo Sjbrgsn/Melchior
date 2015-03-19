@@ -74,10 +74,6 @@ public class GameController implements EnemyListener{
         projectiles = new ArrayList<>();
         projectilesToBeRemoved = new ArrayList<>();
 
-        Enemy testEnemy = new GroundEnemy(path, GroundEnemyType.EASY);
-        testEnemy.addEnemyListener(this);
-        enemies.add(testEnemy); // Path will always be instantiated
-
         gameComponent = new GameComponent(grid, gridSize, enemies, towers, projectiles, this);
         gameComponent.setPath(path);
 
