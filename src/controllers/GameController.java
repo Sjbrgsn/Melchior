@@ -39,7 +39,7 @@ public class GameController implements EnemyListener, ProjectileListener{
 
     private BasicEnemyFactory enemyFactory;
     private int difficulty = 100;
-    private int round = 1; // Current round (increments when changing to state RUNNING)
+    private int round = 0; // Current round (increments when changing to state RUNNING)
 
     private int money = 300; //Used to buy/upgrade towers
     private int health = 20; //Starting health

@@ -136,7 +136,7 @@ public class GameFrame extends JFrame {
     }
 
     public void setRoundLabel(int round) {
-        this.roundLabel = roundLabel;
+        this.roundLabel.setText("Round: " + round);
     }
 
     public void setCounterLabel(int counter) {
