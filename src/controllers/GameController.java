@@ -39,6 +39,7 @@ public class GameController implements EnemyListener, ProjectileListener{
 
     private BasicEnemyFactory enemyFactory;
     private int difficulty = 100;
+    private int round = 1; // Current round (increments when changing to state RUNNING)
 
     private int money = 300; //Used to buy/upgrade towers
     private int health = 20; //Starting health
@@ -142,10 +143,13 @@ public class GameController implements EnemyListener, ProjectileListener{
                     difficulty *= GameConstants.DIFFICULTY_INCREASE_FACTOR;
                     enemyFactory = new BasicEnemyFactory(difficulty, path);
                     currentState = GameState.RUNNING;
-
+                    round++;
+                    frame.setRoundLabel(round);
                 }
-                else
+                else {
                     stateDelayCounter--;
+                    frame.setCounterLabel(stateDelayCounter / defaultTickSpeed);
+                }
                 break;
             default:
                 break;

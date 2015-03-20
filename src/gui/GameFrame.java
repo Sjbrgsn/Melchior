@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
  */
 public class GameFrame extends JFrame {
 
-    private JLabel healthLabel, cashLabel;
+    private JLabel healthLabel, cashLabel, roundLabel, counterLabel;
     private JButton buyBasicTowerButton, buyPlagueTowerButton,
             upgradeTowerButton, sellTowerButton;
     private GameController controller;
@@ -75,14 +75,20 @@ public class GameFrame extends JFrame {
         panel.setLayout(new BorderLayout());
 
         JPanel upperPanel = new JPanel();
-        upperPanel.setLayout(new BorderLayout());
+        upperPanel.setLayout(new BoxLayout(upperPanel, BoxLayout.Y_AXIS));
         panel.add(upperPanel, BorderLayout.NORTH);
 
         this.healthLabel = new JLabel("Health: " + health);
         this.cashLabel = new JLabel("Cash: " + cash);
+        this.roundLabel = new JLabel("Round: 1"); // Starting round is 1
 
-        upperPanel.add(this.healthLabel, BorderLayout.NORTH);
-        upperPanel.add(this.cashLabel, BorderLayout.SOUTH);
+        this.counterLabel = new JLabel("Counter: 0");
+        this.counterLabel.setVisible(false);
+
+        upperPanel.add(healthLabel);
+        upperPanel.add(cashLabel);
+        upperPanel.add(roundLabel);
+        upperPanel.add(counterLabel);
 
         this.buyBasicTowerButton = new JButton("Buy Basic Tower");
         this.buyPlagueTowerButton = new JButton("Buy Plague Tower");
@@ -129,4 +135,17 @@ public class GameFrame extends JFrame {
         this.healthLabel.setText("Health: " + health);
     }
 
+    public void setRoundLabel(int round) {
+        this.roundLabel = roundLabel;
+    }
+
+    public void setCounterLabel(int counter) {
+        if (counter == 0){
+            counterLabel.setVisible(false);
+        }
+        else {
+            counterLabel.setVisible(true);
+            counterLabel.setText("Counter: " + counter);
+        }
+    }
 }
