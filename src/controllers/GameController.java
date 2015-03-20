@@ -330,6 +330,25 @@ public class GameController implements EnemyListener, ProjectileListener{
         }
     }
 
+    /**
+     * Sets the current state of the game, although setting
+     * state to BUILD is not allowed (to prevent any type of cheating)
+     */
+    public void setCurrentState(GameState state){
+        if (state != GameState.BUILD){
+            currentState = state;
+        }
+    }
+
+    public void switchPause(){
+        if (currentState == GameState.RUNNING) {
+            currentState = GameState.PAUSE;
+        }
+        else {
+            currentState = GameState.RUNNING;
+        }
+    }
+
     @Override
     public void onReachedRangeLimit(Projectile projectile) {
         assert projectiles.contains(projectile);

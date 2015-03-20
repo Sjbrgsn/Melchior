@@ -160,6 +160,14 @@ public class GameComponent extends JComponent{
             }
         });
 
+        inputMap.put(KeyStroke.getKeyStroke("P"), "PAUSE/UNPAUSE");
+        actionMap.put("PAUSE/UNPAUSE", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.switchPause();
+            }
+        });
+
     }
 
     @Override
