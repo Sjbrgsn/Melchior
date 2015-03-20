@@ -4,10 +4,7 @@ import enemies.*;
 import gui.GameComponent;
 import gui.GameFrame;
 import pathfinding.*;
-import towers.BasicTower;
-import towers.PlagueTower;
-import towers.Projectile;
-import towers.Tower;
+import towers.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +16,7 @@ import java.util.List;
 /**
  * Created by Holmgr 2015-03-09
  */
-public class GameController implements EnemyListener{
+public class GameController implements EnemyListener, ProjectileListener{
 
     private GameState currentState = GameState.BUILD;
 
@@ -108,13 +105,7 @@ public class GameController implements EnemyListener{
                 }
 
                 for (Projectile projectile : projectiles){
-                    // TODO Move this into projectile
-                    if (!grid.inBounds(new Location((int) projectile.getX(), (int) projectile.getY()))){ // Remove if outside
-                        projectilesToBeRemoved.add(projectile);
-                    }
-                    else {
-                        projectile.moveStep();
-                    }
+                    projectile.moveStep();
                 }
 
                 for(Enemy enemy : enemies){
@@ -143,8 +134,8 @@ public class GameController implements EnemyListener{
 
                 break;
             case PAUSE:
-
                 break;
+
             case BUILD:
                 if (stateDelayCounter == 0){
                     stateDelayCounter = GameConstants.PAUSE_STATE_TIME;
@@ -288,14 +279,15 @@ public class GameController implements EnemyListener{
                 Math.pow(y1 - y2, 2));
     }
 
-    public void spawnProjectile(Location id, Enemy enemy, int speed, int damage){
-        projectiles.add(new Projectile(speed, damage, id.x, id.y, enemy.getX(), enemy.getY()));
+    public void spawnProjectile(Location id, Enemy enemy, double speed, int damage, int range){
+        Projectile proj = new Projectile(speed, damage, id.x, id.y, enemy.getX(), enemy.getY(), range);
+        proj.addProjectileListener(this);
+        projectiles.add(proj);
     }
 
     @Override
     public void onEnemyKilled(Enemy enemy) {
         System.out.println("Enemy killed");
-        System.out.println(enemy.getKillReward());
         money += enemy.getKillReward();
         frame.setCashLabel(money);
         removeEnemy(enemy);
@@ -336,5 +328,11 @@ public class GameController implements EnemyListener{
         if (grid.inBounds(loc)){
             selectedLocation = loc;
         }
+    }
+
+    @Override
+    public void onReachedRangeLimit(Projectile projectile) {
+        assert projectiles.contains(projectile);
+        projectilesToBeRemoved.add(projectile);
     }
 }

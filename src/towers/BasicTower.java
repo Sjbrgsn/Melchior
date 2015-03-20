@@ -19,8 +19,8 @@ public class BasicTower extends AbstractTower {
 
     @Override
     public void fire() {
-        controller.spawnProjectile(getLocation(), nearestEnemy, 1,
-                (int) (baseDamage * (1 + (double) getUpgradeLevel()/2)));
+        controller.spawnProjectile(getLocation(), nearestEnemy, 0.8,
+                (int) (baseDamage * (1 + (double) getUpgradeLevel()/2)), range);
         System.out.println("Fire!");
     }
 }
