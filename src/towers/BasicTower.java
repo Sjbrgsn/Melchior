@@ -22,5 +22,7 @@ public class BasicTower extends AbstractTower {
         controller.spawnProjectile(getLocation(), nearestEnemy, 0.8,
                 (int) (baseDamage * (1 + (double) getUpgradeLevel()/2)), range);
         System.out.println("Fire!");
+
+        //SoundHandler.getInstance().playShotFired(); // Sound effect
     }
 }

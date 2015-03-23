@@ -3,6 +3,7 @@ package controllers;
 import enemies.*;
 import gui.GameComponent;
 import gui.GameFrame;
+import handlers.SoundHandler;
 import pathfinding.*;
 import towers.*;
 
@@ -87,6 +88,8 @@ public class GameController implements EnemyListener, ProjectileListener{
 
         loopTimer.setCoalesce(true);
         loopTimer.start();
+
+        SoundHandler.getInstance().playMusic();
 
     }
 
