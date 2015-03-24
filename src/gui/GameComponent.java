@@ -1,5 +1,6 @@
 package gui;
 
+import controllers.GameConstants;
 import controllers.GameController;
 import enemies.Direction;
 import enemies.Enemy;
@@ -18,8 +19,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Holmgr 2015-03-04
@@ -29,7 +32,6 @@ import java.util.List;
 public class GameComponent extends JComponent{
 
     private int cellSize;
-    private int gridSize;
     private final SquareGrid grid;
     private Path path;
 
@@ -48,9 +50,9 @@ public class GameComponent extends JComponent{
     private List<Image> flagImages = new ArrayList<>();
     private int flagImageCounter = 0; // Needed for animating the goal flag
 
-    public GameComponent(final SquareGrid grid, int gridSize, Iterable<Enemy> enemies,
+    public GameComponent(final SquareGrid grid, Iterable<Enemy> enemies,
                          Iterable<Tower> towers, Iterable<Projectile> projectiles, GameController controller) {
-        this.gridSize = gridSize;
+
         this.grid = grid;
         this.enemies = enemies;
         this.towers = towers;
@@ -181,7 +183,7 @@ public class GameComponent extends JComponent{
         super.paintComponent(g);
 
         final Graphics2D g2d = (Graphics2D) g;
-        cellSize = getHeight() / gridSize;
+        cellSize = getHeight() / GameConstants.GRID_SIZE;
 
         g2d.clearRect(0, 0, getWidth(), getHeight()); // To prevent overlapping from last frame
 
@@ -219,8 +221,8 @@ public class GameComponent extends JComponent{
 
     private void drawBackground(Graphics2D g2d) {
 
-        for (int i = 0; i < gridSize; i++) {
-            for (int j = 0; j < gridSize; j++) {
+        for (int i = 0; i < GameConstants.GRID_SIZE; i++) {
+            for (int j = 0; j < GameConstants.GRID_SIZE; j++) {
                 g2d.drawImage(background.getImage(), i * cellSize, j * cellSize, cellSize, cellSize, null);
             }
         }
@@ -314,8 +316,8 @@ public class GameComponent extends JComponent{
     }
 
     private void drawGrid(Graphics2D g2d) {
-        for (int row = 0; row < gridSize; row++) {
-            for (int col = 0; col < gridSize; col++) {
+        for (int row = 0; row < GameConstants.GRID_SIZE; row++) {
+            for (int col = 0; col < GameConstants.GRID_SIZE; col++) {
                 g2d.drawLine(col * cellSize, row * cellSize, col * cellSize, getHeight());
             }
             g2d.drawLine(0, row * cellSize, getWidth(), row * cellSize);
