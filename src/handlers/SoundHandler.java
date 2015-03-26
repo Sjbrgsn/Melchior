@@ -46,6 +46,10 @@ public class SoundHandler {
         musicClip.start();
     }
 
+    public void stopMusic() {
+        musicClip.stop();
+    }
+
     public static SoundHandler getInstance(){
         return INSTANCE;
     }

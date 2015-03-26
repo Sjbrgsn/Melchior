@@ -1,13 +1,19 @@
 package gui;
 
+import controllers.GameConstants;
 import controllers.GameController;
+import enemies.Direction;
+import handlers.SoundHandler;
 import towers.BasicTower;
 import towers.PlagueTower;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * Created by Holmgr 2015-03-04
@@ -17,6 +23,8 @@ import java.awt.event.ActionListener;
 public class GameFrame extends JFrame {
 
     private JLabel healthLabel, cashLabel, roundLabel, counterLabel;
+    private JToggleButton muteSoundEffectsButton, muteMusicButton;
+
     private JButton buyBasicTowerButton, buyPlagueTowerButton,
             upgradeTowerButton, sellTowerButton;
     private GameController controller;
@@ -71,11 +79,13 @@ public class GameFrame extends JFrame {
     private void createStatusPane(int health, int cash) {
 
         JPanel panel = new JPanel();
+        panel.setBackground(new Color(69, 69, 69));
         panel.setPreferredSize(new Dimension(140, 640));
         panel.setLayout(new BorderLayout());
 
         JPanel upperPanel = new JPanel();
         upperPanel.setLayout(new BoxLayout(upperPanel, BoxLayout.Y_AXIS));
+        upperPanel.setBackground(new Color(69, 69, 69));
         panel.add(upperPanel, BorderLayout.NORTH);
 
         this.healthLabel = new JLabel("Health: " + health);
@@ -90,6 +100,52 @@ public class GameFrame extends JFrame {
         upperPanel.add(roundLabel);
         upperPanel.add(counterLabel);
 
+
+
+        this.muteMusicButton = new JToggleButton();
+        muteMusicButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GameConstants.PLAY_MUSIC = !GameConstants.PLAY_MUSIC;
+                if (GameConstants.PLAY_MUSIC) {
+                    SoundHandler.getInstance().playMusic();
+                }
+                else {
+                    SoundHandler.getInstance().stopMusic();
+                }
+            }
+        });
+
+        this.muteSoundEffectsButton = new JToggleButton();
+        muteSoundEffectsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GameConstants.PLAY_SOUND_EFFECTS = !GameConstants.PLAY_SOUND_EFFECTS;
+            }
+        });
+
+        try {
+            BufferedImage soundButtons = ImageIO.read(getClass().getResourceAsStream("/images/buttons.png"));
+
+            ImageIcon musicEnabled = new ImageIcon(soundButtons.getSubimage(64, 0, 64, 56));
+            ImageIcon musicDisabled = new ImageIcon(soundButtons.getSubimage(0, 0, 64, 56));
+            muteMusicButton.setPressedIcon(musicDisabled);
+            muteMusicButton.setSelectedIcon(musicDisabled);
+            muteMusicButton.setIcon(musicEnabled);
+            muteMusicButton.setBorderPainted(false);
+
+            ImageIcon soundEnabled = new ImageIcon(soundButtons.getSubimage(192, 0, 64, 56));
+            ImageIcon soundDisabled = new ImageIcon(soundButtons.getSubimage(128, 0, 64, 56));
+            muteSoundEffectsButton.setPressedIcon(soundDisabled);
+            muteSoundEffectsButton.setSelectedIcon(soundDisabled);
+            muteSoundEffectsButton.setIcon(soundEnabled);
+            muteSoundEffectsButton.setBorderPainted(false);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         this.buyBasicTowerButton = new JButton("Buy Basic Tower");
         this.buyPlagueTowerButton = new JButton("Buy Plague Tower");
         this.upgradeTowerButton = new JButton("Upgrade");
@@ -97,8 +153,11 @@ public class GameFrame extends JFrame {
 
         JPanel lowerPanel = new JPanel();
         lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.Y_AXIS));
+        lowerPanel.setBackground(new Color(69, 69, 69));
         panel.add(lowerPanel, BorderLayout.SOUTH);
 
+        lowerPanel.add(muteMusicButton);
+        lowerPanel.add(muteSoundEffectsButton);
         lowerPanel.add(buyBasicTowerButton);
         lowerPanel.add(buyPlagueTowerButton);
         lowerPanel.add(upgradeTowerButton);

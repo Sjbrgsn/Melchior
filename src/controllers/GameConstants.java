@@ -19,5 +19,5 @@ public class GameConstants {
     public static final String HIGHSCORE_PATH = "highscore.ser";
 
     public static boolean PLAY_MUSIC = true;
-    public static boolean PLAY_SOUND_EFFECTS = false;
+    public static boolean PLAY_SOUND_EFFECTS = true;
 }
