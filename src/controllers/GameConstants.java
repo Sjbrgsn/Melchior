@@ -14,4 +14,7 @@ public class GameConstants {
     public static final int STARTING_DIFFICULTY = 100;
     public static final int STARTING_CASH = 300;
     public static final int STARTING_HEALTH = 20;
+
+    public static boolean PLAY_MUSIC = true;
+    public static boolean PLAY_SOUND_EFFECTS = false;
 }

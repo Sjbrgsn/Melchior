@@ -12,7 +12,7 @@ import java.util.List;
  * base functionality concerning positioning, moving
  * health and damage.
  */
-public abstract class AbstractEnemy implements Enemy{
+public abstract class AbstractEnemy implements Enemy {
     protected int health;
     protected int maximumHealth;
     protected double movementSpeed = 0.1; // Default speed
@@ -37,16 +37,16 @@ public abstract class AbstractEnemy implements Enemy{
     }
 
 
-    private void setPosition(Location location){
+    private void setPosition(Location location) {
         this.x = location.x;
         this.y = location.y;
     }
 
-    public double getX(){
+    public double getX() {
         return x;
     }
 
-    public double getY(){
+    public double getY() {
         return y;
     }
 

@@ -86,7 +86,9 @@ public class GameController implements EnemyListener, ProjectileListener{
         loopTimer.setCoalesce(true);
         loopTimer.start();
 
-        SoundHandler.getInstance().playMusic();
+        if (GameConstants.PLAY_MUSIC){
+            SoundHandler.getInstance().playMusic();
+        }
     }
 
     /**
@@ -145,21 +147,21 @@ public class GameController implements EnemyListener, ProjectileListener{
         projectiles.removeAll(projectilesToBeRemoved);
         projectilesToBeRemoved.clear();
 
-        for (Projectile projectile : projectiles){
+        for (Projectile projectile : projectiles) {
             projectile.moveStep();
         }
 
-        for(Enemy enemy : enemies){
+        for(Enemy enemy : enemies) {
             enemy.moveStep();
             doCollisions(enemy);
         }
-        for(Tower tower : towers){
+        for(Tower tower : towers) {
             tower.onTick();
         }
 
-        if(spawnDelayCounter == 0){
+        if(spawnDelayCounter == 0) {
             spawnDelayCounter = GameConstants.ENEMY_SPAWN_DELAY;
-            if (enemyFactory.iterator().hasNext()){
+            if (enemyFactory.iterator().hasNext()) {
                 Enemy enemy = enemyFactory.iterator().next();
                 enemy.addEnemyListener(this);
                 enemies.add(enemy);
@@ -179,12 +181,12 @@ public class GameController implements EnemyListener, ProjectileListener{
      * Creates a new tower of given type (class), inserts into grid only if location is empty, the cash >= the cost
      * of the given tower and that a complete path can be constructed.
      */
-    public void buyTower(Class<?> towerType){
+    public void buyTower(Class<?> towerType) {
         if (currentState != GameState.BUILD){
             return;
         }
         Tower tower;
-        if (towerType == BasicTower.class){
+        if (towerType == BasicTower.class) {
             tower = new BasicTower(selectedLocation, this);
         }
         else {
@@ -228,16 +230,16 @@ public class GameController implements EnemyListener, ProjectileListener{
         }
     }
 
-    public void sellTower(){
+    public void sellTower() {
 
         Tower towerToBeRemoved = null;
-        for (Tower tower : towers){
+        for (Tower tower : towers) {
             if (tower.getLocation().equals(selectedLocation)) {
                 towerToBeRemoved = tower;
                 break;
             }
         }
-        if (towerToBeRemoved != null){
+        if (towerToBeRemoved != null) {
             towers.remove(towerToBeRemoved);
             towerToBeRemoved.sell();
             grid.getTowers().remove(towerToBeRemoved.getLocation());
@@ -251,7 +253,7 @@ public class GameController implements EnemyListener, ProjectileListener{
         }
     }
 
-    public ArrayList<Enemy> allEnemiesInRange(Location id, int range){
+    public ArrayList<Enemy> allEnemiesInRange(Location id, int range) {
 
         ArrayList<Enemy> enemiesInRange = new ArrayList<>();
         for (Enemy enemy : enemies){
@@ -262,12 +264,12 @@ public class GameController implements EnemyListener, ProjectileListener{
         return enemiesInRange;
     }
 
-    public Enemy getNearestEnemyInRange(Location id, int range){
+    public Enemy getNearestEnemyInRange(Location id, int range) {
 
         Enemy nearest = null;
         double distance = -1; // Placeholder distance if there are no enemies
 
-        for (Enemy enemy : enemies){
+        for (Enemy enemy : enemies) {
             double distanceToEnemy = getDistance(enemy.getX(), enemy.getY(), id.x, id.y);
             if (nearest == null || distanceToEnemy < getDistance(nearest.getX(), nearest.getY(), id.x, id.y)){
                 distance = distanceToEnemy;
@@ -275,39 +277,41 @@ public class GameController implements EnemyListener, ProjectileListener{
             }
         }
 
-        if (distance == -1 || range < distance)
+        if (distance == -1 || range < distance) {
             return null;
-        else
+        }
+        else {
             return nearest;
+        }
     }
 
     /**
      * Searches through all projectiles to see if any collide, if so then the enemy will take the damage
      * specified by the projectile and the projectile will then be added to the remove list.
      */
-    private void doCollisions(Enemy enemy){
+    private void doCollisions(Enemy enemy) {
 
-        for (Projectile proj : projectiles){
+        for (Projectile proj : projectiles) {
             double distanceToProjectile = getDistance(proj.getX(), proj.getY(), enemy.getX(), enemy.getY());
-            if (!projectilesToBeRemoved.contains(proj) && proj.getRadius() + enemy.getSize() >= distanceToProjectile){
+            if (!projectilesToBeRemoved.contains(proj) && proj.getRadius() + enemy.getSize() >= distanceToProjectile) {
                 projectilesToBeRemoved.add(proj);
                 enemy.takeDamage(proj.getDamage());
             }
         }
     }
 
-    private double getDistance(double x1, double y1, double x2, double y2){
+    private double getDistance(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow(x1 - x2, 2) +
                 Math.pow(y1 - y2, 2));
     }
 
-    public void spawnProjectile(Location id, Enemy enemy, double speed, int damage, int range){
+    public void spawnProjectile(Location id, Enemy enemy, double speed, int damage, int range) {
         Projectile proj = new Projectile(speed, damage, id.x, id.y, enemy.getX(), enemy.getY(), range);
         proj.addProjectileListener(this);
         projectiles.add(proj);
     }
 
-    public void switchPause(){
+    public void switchPause() {
         if (currentState == GameState.RUNNING) {
             currentState = GameState.PAUSE;
         }
