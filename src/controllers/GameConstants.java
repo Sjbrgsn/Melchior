@@ -14,4 +14,6 @@ public class GameConstants {
     public static final int STARTING_DIFFICULTY = 100;
     public static final int STARTING_CASH = 300;
     public static final int STARTING_HEALTH = 20;
+
+    public static final String HIGHSCORE_PATH = "highscore.ser";
 }
