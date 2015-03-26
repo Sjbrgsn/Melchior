@@ -1,6 +1,8 @@
 package towers;
 
+import controllers.GameConstants;
 import controllers.GameController;
+import handlers.SoundHandler;
 import pathfinding.Location;
 
 /**
@@ -23,6 +25,8 @@ public class BasicTower extends AbstractTower {
                 (int) (baseDamage * (1 + (double) getUpgradeLevel()/2)), range);
         System.out.println("Fire!");
 
-        //SoundHandler.getInstance().playShotFired(); // Sound effect
+        if (GameConstants.PLAY_SOUND_EFFECTS){
+            SoundHandler.getInstance().playShotFired();
+        }
     }
 }
