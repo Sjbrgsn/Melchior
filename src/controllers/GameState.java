@@ -6,5 +6,5 @@ package controllers;
  * game mechanics.
  */
 public enum GameState {
-    BUILD, RUNNING, PAUSE
+    BUILD, RUNNING, PAUSE, GAME_OVER
 }

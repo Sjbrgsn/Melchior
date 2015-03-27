@@ -24,6 +24,7 @@ import java.util.List;
 public class GameController implements EnemyListener, ProjectileListener{
 
     private GameState currentState = GameState.BUILD;
+    private Timer loopTimer;
 
     private GameFrame frame;
     private GameComponent gameComponent;
@@ -77,7 +78,7 @@ public class GameController implements EnemyListener, ProjectileListener{
         frame = new GameFrame(gameComponent, health, cash, this);
 
 
-        Timer loopTimer = new Timer(GameConstants.GAME_TICK_DELAY, new ActionListener() {
+        loopTimer = new Timer(GameConstants.GAME_TICK_DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 doTick();
@@ -85,6 +86,7 @@ public class GameController implements EnemyListener, ProjectileListener{
         });
         loopTimer.setCoalesce(true);
         loopTimer.start();
+
 
         if (GameConstants.PLAY_MUSIC){
             SoundHandler.getInstance().playMusic();
@@ -108,6 +110,10 @@ public class GameController implements EnemyListener, ProjectileListener{
                 break;
 
             case PAUSE:
+                break;
+
+            case GAME_OVER:
+                loopTimer.stop();
                 break;
 
             default:
