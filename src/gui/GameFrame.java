@@ -133,6 +133,7 @@ public class GameFrame extends JFrame {
             muteMusicButton.setSelectedIcon(musicDisabled);
             muteMusicButton.setIcon(musicEnabled);
             muteMusicButton.setBorderPainted(false);
+            muteMusicButton.setContentAreaFilled(false);
 
             ImageIcon soundEnabled = new ImageIcon(soundButtons.getSubimage(192, 0, 64, 56));
             ImageIcon soundDisabled = new ImageIcon(soundButtons.getSubimage(128, 0, 64, 56));
@@ -140,6 +141,7 @@ public class GameFrame extends JFrame {
             muteSoundEffectsButton.setSelectedIcon(soundDisabled);
             muteSoundEffectsButton.setIcon(soundEnabled);
             muteSoundEffectsButton.setBorderPainted(false);
+            muteSoundEffectsButton.setContentAreaFilled(false);
 
         } catch (IOException e) {
             e.printStackTrace();
