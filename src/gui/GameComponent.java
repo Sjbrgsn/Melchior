@@ -242,7 +242,7 @@ public class GameComponent extends JComponent{
 
         g2d.setColor(Color.RED);
         int ticksPerAnimation = 8;
-
+        
         for (Tower tower : towers){
             Location loc = tower.getLocation();
 

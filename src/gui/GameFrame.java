@@ -47,33 +47,45 @@ public class GameFrame extends JFrame {
 
     private void setupBindings() {
 
-        buyBasicTowerButton.addActionListener(new ActionListener() {
+        ActionListener buyBasicTowerAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.buyTower(BasicTower.class);
             }
-        });
+        };
+        buyBasicTowerButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("Q"), "buyBasic");
+        buyBasicTowerButton.getActionMap().put("buyBasic", (Action) buyBasicTowerAction);
+        buyBasicTowerButton.addActionListener(buyBasicTowerAction);
 
-        buyPlagueTowerButton.addActionListener(new ActionListener() {
+        ActionListener buyPlagueTowerAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.buyTower(PlagueTower.class);
             }
-        });
+        };
+        buyPlagueTowerButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "buyPlague");
+        buyPlagueTowerButton.getActionMap().put("buyPlague", (Action) buyPlagueTowerAction);
+        buyPlagueTowerButton.addActionListener(buyPlagueTowerAction);
 
-        upgradeTowerButton.addActionListener(new ActionListener() {
+        ActionListener upgradeTowerAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.upgradeTower();
             }
-        });
+        };
+        upgradeTowerButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("U"), "upgrade");
+        upgradeTowerButton.getActionMap().put("upgrade", (Action) upgradeTowerAction);
+        upgradeTowerButton.addActionListener(upgradeTowerAction);
 
-        sellTowerButton.addActionListener(new ActionListener() {
+        ActionListener sellTowerAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.sellTower();
             }
-        });
+        };
+        sellTowerButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "sell");
+        sellTowerButton.getActionMap().put("sell", (Action) sellTowerAction);
+        sellTowerButton.addActionListener(sellTowerAction);
     }
 
     private void createStatusPane(int health, int cash) {
