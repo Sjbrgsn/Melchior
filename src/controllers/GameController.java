@@ -58,12 +58,7 @@ public class GameController implements EnemyListener, ProjectileListener{
 
         grid = new SquareGrid(GameConstants.GRID_SIZE, GameConstants.GRID_SIZE);
 
-        AStarSearch search = new AStarSearch(grid, defaultStart, defaultEnd);
-        try {
-            path = search.createPath();
-        } catch (PathNotFoundException e) {
-            e.printStackTrace();
-        }
+        path = calcualtePath();
         assert path != null; // Path should be possible given an empty grid
 
         enemyFactory = new BasicEnemyFactory(difficulty, path);
@@ -91,6 +86,17 @@ public class GameController implements EnemyListener, ProjectileListener{
         if (GameConstants.PLAY_MUSIC){
             SoundHandler.getInstance().playMusic();
         }
+    }
+
+    private Path calcualtePath() {
+        AStarSearch search = new AStarSearch(grid, defaultStart, defaultEnd);
+        Path newPath = null;
+        try {
+            newPath = search.createPath();
+        } catch (PathNotFoundException e) {
+            e.printStackTrace();
+        }
+        return newPath;
     }
 
     /**
@@ -190,12 +196,16 @@ public class GameController implements EnemyListener, ProjectileListener{
         enemies.clear();
         towers.clear();
         projectiles.clear();
-
+        grid = new SquareGrid(GameConstants.GRID_SIZE, GameConstants.GRID_SIZE);
         difficulty = GameConstants.STARTING_DIFFICULTY;
         score = 0;
         round = 0;
         health = GameConstants.STARTING_HEALTH;
         cash = GameConstants.STARTING_CASH; //Used to buy/upgrade towers
+
+        path = calcualtePath();
+        assert path != null;
+        gameComponent.setPath(path);
 
         loopTimer.start();
     }
@@ -219,20 +229,15 @@ public class GameController implements EnemyListener, ProjectileListener{
         if (selectedLocation != null && grid.inBounds(selectedLocation) && grid.isPassable(selectedLocation) && cash >= tower.getUpgradeCost()){
 
             grid.getTowers().add(tower.getLocation());
-            try{
-                Path testPath = new AStarSearch(grid, defaultStart, defaultEnd).createPath();
 
+            Path testPath = calcualtePath();
+            if (testPath != null) {
                 cash -= tower.getUpgradeCost();
                 towers.add(tower);
                 path = testPath;
                 gameComponent.setPath(path);
                 frame.setCashLabel(cash);
                 gameComponent.repaint();
-            }
-            catch (PathNotFoundException e) {
-                grid.getTowers().remove(tower.getLocation());
-                e.setLocation(tower.getLocation());
-                e.printStackTrace();
             }
         }
     }
@@ -266,12 +271,7 @@ public class GameController implements EnemyListener, ProjectileListener{
             towers.remove(towerToBeRemoved);
             towerToBeRemoved.sell();
             grid.getTowers().remove(towerToBeRemoved.getLocation());
-            try {
-                path = new AStarSearch(grid, defaultStart, defaultEnd).createPath();
-            }
-            catch (PathNotFoundException e) {
-                e.printStackTrace();
-            }
+            path = calcualtePath();
             gameComponent.setPath(path);
         }
     }
@@ -322,7 +322,6 @@ public class GameController implements EnemyListener, ProjectileListener{
             }
         }
     }
-
     private double getDistance(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow(x1 - x2, 2) +
                 Math.pow(y1 - y2, 2));
