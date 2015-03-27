@@ -199,7 +199,7 @@ public class GameController implements EnemyListener, ProjectileListener{
             tower = new PlagueTower(selectedLocation, this);
         }
 
-        if (selectedLocation != null && grid.isPassable(selectedLocation) && cash >= tower.getUpgradeCost()){
+        if (selectedLocation != null && grid.inBounds(selectedLocation) && grid.isPassable(selectedLocation) && cash >= tower.getUpgradeCost()){
 
             grid.getTowers().add(tower.getLocation());
             try{
