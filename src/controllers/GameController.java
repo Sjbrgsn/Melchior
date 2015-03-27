@@ -45,6 +45,7 @@ public class GameController implements EnemyListener, ProjectileListener{
     private int difficulty = GameConstants.STARTING_DIFFICULTY;
     private int round = 0; // Current round (increments when changing to state RUNNING)
 
+    private int score = 0;
     private int cash = GameConstants.STARTING_CASH; //Used to buy/upgrade towers
     private int health = GameConstants.STARTING_HEALTH;
 
@@ -76,7 +77,6 @@ public class GameController implements EnemyListener, ProjectileListener{
         gameComponent = new GameComponent(grid, enemies, towers, projectiles, this);
         gameComponent.setPath(path);
         frame = new GameFrame(gameComponent, health, cash, this);
-
 
         loopTimer = new Timer(GameConstants.GAME_TICK_DELAY, new ActionListener() {
             @Override
@@ -114,6 +114,9 @@ public class GameController implements EnemyListener, ProjectileListener{
 
             case GAME_OVER:
                 loopTimer.stop();
+                frame.launchHighScore(score);
+                currentState = GameState.BUILD;
+
                 break;
 
             default:
@@ -181,6 +184,20 @@ public class GameController implements EnemyListener, ProjectileListener{
         else {
             spawnDelayCounter--;
         }
+    }
+
+    public void resetBoard(){
+        enemies.clear();
+        towers.clear();
+        projectiles.clear();
+
+        difficulty = GameConstants.STARTING_DIFFICULTY;
+        score = 0;
+        round = 0;
+        health = GameConstants.STARTING_HEALTH;
+        cash = GameConstants.STARTING_CASH; //Used to buy/upgrade towers
+
+        loopTimer.start();
     }
 
     /**
@@ -344,6 +361,7 @@ public class GameController implements EnemyListener, ProjectileListener{
     public void onEnemyKilled(Enemy enemy) {
         System.out.println("Enemy killed");
         cash += enemy.getKillReward();
+        score += enemy.getKillReward();
         frame.setCashLabel(cash);
         removeEnemy(enemy);
     }
@@ -351,7 +369,7 @@ public class GameController implements EnemyListener, ProjectileListener{
     @Override
     public void onReachedGoal(Enemy enemy) {
         if (health == 1){
-            currentState = GameState.PAUSE; // TODO: Show highscore table
+            currentState = GameState.GAME_OVER; // TODO: Show highscore table
         }
         else {
             health--;

@@ -4,6 +4,8 @@ import controllers.GameConstants;
 import controllers.GameController;
 import enemies.Direction;
 import handlers.SoundHandler;
+import score.HighscoreEntry;
+import score.HighscoreList;
 import towers.BasicTower;
 import towers.PlagueTower;
 
@@ -14,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Holmgr 2015-03-04
@@ -198,6 +201,26 @@ public class GameFrame extends JFrame {
         final JMenuBar menuBar = new JMenuBar();
         menuBar.add(file);
         this.setJMenuBar(menuBar);
+    }
+
+    public void launchHighScore(int score){
+        String name = new JOptionPane().showInputDialog(this, "Your score is " + score);
+        System.out.println("Highscore: " + name + " " + "score: " + score);
+        HighscoreList highscoreList = new HighscoreList();
+        if (name != null) {
+            highscoreList.add(name, score);
+            highscoreList.saveToFile();
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("Score \t Name");
+        ArrayList<HighscoreEntry> scores = highscoreList.getScoreList();
+        for (int i = 0; i < scores.size(); i++){
+            sb.append("\n" + (i + 1) + ": " + scores.get(i).getScore() + " \t " + scores.get(i).getName());
+        }
+        JOptionPane.showMessageDialog(this, new JTextArea(sb.toString()));
+        controller.resetBoard();
+
+
     }
 
     public void setCashLabel(int cash) {

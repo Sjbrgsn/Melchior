@@ -32,6 +32,9 @@ public class HighscoreList {
         HighscoreEntry entry = new HighscoreEntry(name, score);
         scoreList.add(entry);
         sort();
+        while (scoreList.size() > 10){
+            scoreList.remove(scoreList.size()-1);
+        }
 
     }
 
