@@ -228,7 +228,7 @@ public class GameController implements EnemyListener, ProjectileListener{
 
         if (selectedLocation != null && grid.inBounds(selectedLocation) && grid.isPassable(selectedLocation) && cash >= tower.getUpgradeCost()){
 
-            grid.getTowers().add(tower.getLocation());
+            grid.addTower(tower.getLocation());
 
             Path testPath = calcualtePath();
             if (testPath != null) {
@@ -238,6 +238,9 @@ public class GameController implements EnemyListener, ProjectileListener{
                 gameComponent.setPath(path);
                 frame.setCashLabel(cash);
                 gameComponent.repaint();
+            }
+            else {
+                grid.removeTower(tower.getLocation());
             }
         }
     }
@@ -270,7 +273,7 @@ public class GameController implements EnemyListener, ProjectileListener{
         if (towerToBeRemoved != null) {
             towers.remove(towerToBeRemoved);
             towerToBeRemoved.sell();
-            grid.getTowers().remove(towerToBeRemoved.getLocation());
+            grid.removeTower(towerToBeRemoved.getLocation());
             path = calcualtePath();
             gameComponent.setPath(path);
         }

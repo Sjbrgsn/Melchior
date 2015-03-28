@@ -60,10 +60,20 @@ public class SquareGrid implements WeightedGraph {
         return neighbours;
     }
 
+    public void addTower(Location towerLocation){
+        towers.add(towerLocation);
+    }
+
+    public void removeTower(Location towerLocation){
+        towers.remove(towerLocation);
+    }
+
     public Set<Location> getWalls() {
         return walls;
     }
-    public Set<Location> getTowers() { return towers;}
+    public Set<Location> getTowers() {
+        return towers;
+    }
     public Set<Location> getForrests() {
         return forrests;
     }
