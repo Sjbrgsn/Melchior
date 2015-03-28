@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -263,20 +264,18 @@ public class GameController implements EnemyListener, ProjectileListener{
 
     public void sellTower() {
 
-        Tower towerToBeRemoved = null;
-        for (Tower tower : towers) {
+        for (Iterator<Tower> iterator = towers.iterator();  iterator.hasNext();) {
+            Tower tower = iterator.next();
             if (tower.getLocation().equals(selectedLocation)) {
-                towerToBeRemoved = tower;
+                iterator.remove();
+                tower.sell();
+                grid.removeTower(tower.getLocation());
+                path = calcualtePath();
+                gameComponent.setPath(path);
                 break;
             }
         }
-        if (towerToBeRemoved != null) {
-            towers.remove(towerToBeRemoved);
-            towerToBeRemoved.sell();
-            grid.removeTower(towerToBeRemoved.getLocation());
-            path = calcualtePath();
-            gameComponent.setPath(path);
-        }
+
     }
 
     public ArrayList<Enemy> allEnemiesInRange(Location id, int range) {
