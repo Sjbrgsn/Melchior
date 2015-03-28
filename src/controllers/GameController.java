@@ -123,7 +123,7 @@ public class GameController implements EnemyListener, ProjectileListener{
                 loopTimer.stop();
                 frame.launchHighScore(score);
                 currentState = GameState.BUILD;
-
+                loopTimer.start();
                 break;
 
             default:
@@ -207,8 +207,6 @@ public class GameController implements EnemyListener, ProjectileListener{
         path = calcualtePath();
         assert path != null;
         gameComponent.setPath(path);
-
-        loopTimer.start();
     }
 
     /**
@@ -370,7 +368,7 @@ public class GameController implements EnemyListener, ProjectileListener{
     @Override
     public void onReachedGoal(Enemy enemy) {
         if (health == 1){
-            currentState = GameState.GAME_OVER; // TODO: Show highscore table
+            currentState = GameState.GAME_OVER;
         }
         else {
             health--;
