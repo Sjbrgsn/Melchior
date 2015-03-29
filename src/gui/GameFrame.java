@@ -207,7 +207,7 @@ public class GameFrame extends JFrame {
         String name = new JOptionPane().showInputDialog(this, "Your score is " + score);
         System.out.println("Highscore: " + name + " " + "score: " + score);
         HighscoreList highscoreList = new HighscoreList();
-        if (name != null) {
+        if (name != null && name.length() > 0) {
             highscoreList.add(name, score);
             highscoreList.saveToFile();
         }
