@@ -46,6 +46,8 @@ public class GameController implements EnemyListener, ProjectileListener{
     private int difficulty = GameConstants.STARTING_DIFFICULTY;
     private int round = 0; // Current round (increments when changing to state RUNNING)
 
+    private TowerFactory towerFactory;
+
     private int score = 0;
     private int cash = GameConstants.STARTING_CASH; //Used to buy/upgrade towers
     private int health = GameConstants.STARTING_HEALTH;
@@ -63,6 +65,7 @@ public class GameController implements EnemyListener, ProjectileListener{
         assert path != null; // Path should be possible given an empty grid
 
         enemyFactory = new BasicEnemyFactory(difficulty, path);
+        towerFactory = new TowerFactory(this);
 
         towers = new ArrayList<>();
         enemies = new ArrayList<>();
@@ -213,20 +216,16 @@ public class GameController implements EnemyListener, ProjectileListener{
      * Creates a new tower of given type (class), inserts into grid only if location is empty, the cash >= the cost
      * of the given tower and that a complete path can be constructed.
      */
-    public void buyTower(Class<?> towerType) {
+    public void buyTower(TowerType towerType) {
         if (currentState != GameState.BUILD){
             return;
         }
-        Tower tower;
-        if (towerType == BasicTower.class) {
-            tower = new BasicTower(selectedLocation, this);
+        Tower tower = towerFactory.getTower(towerType);
+        if (tower == null) {
+            return;
         }
-        else {
-            tower = new PlagueTower(selectedLocation, this);
-        }
-
         if (selectedLocation != null && grid.inBounds(selectedLocation) && grid.isPassable(selectedLocation) && cash >= tower.getUpgradeCost()){
-
+            tower.setLocation(selectedLocation);
             grid.addTower(tower.getLocation());
 
             Path testPath = calcualtePath();
