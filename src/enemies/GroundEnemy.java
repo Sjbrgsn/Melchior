@@ -4,6 +4,7 @@ import pathfinding.Path;
 
 /**
  * Created by acrux on 2015-03-04.
+ * Basic enemy implementing movement functionality. Comes in different types defined by GroundEnemyType
  */
 public class GroundEnemy extends AbstractEnemy{
 

@@ -7,6 +7,7 @@ import pathfinding.Location;
 
 /**
  * Created by acrux on 2015-03-10.
+ * Basic projectile based tower implementing the fire method, also defines cooldown, range and damage values etc.
  */
 public class BasicTower extends AbstractTower {
 

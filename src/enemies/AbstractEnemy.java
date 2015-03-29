@@ -9,8 +9,7 @@ import java.util.List;
 /**
  * Created by acrux on 2015-03-04.
  * Abstract class for the Enemy interface, implementing
- * base functionality concerning positioning, moving
- * health and damage.
+ * base functionality concerning positioning,  health and taking damage.
  */
 public abstract class AbstractEnemy implements Enemy {
     protected int health;

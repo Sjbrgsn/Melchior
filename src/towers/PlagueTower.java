@@ -6,8 +6,7 @@ import pathfinding.Location;
 
 /**
  * Created by Holmgr 2015-03-16
- * Simple AOE (Area of Effect) tower damaging
- * all enemies in its range
+ * Simple AOE (Area of Effect) tower damaging all enemies in its range
  */
 public class PlagueTower extends AbstractTower{
 

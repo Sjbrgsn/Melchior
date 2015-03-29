@@ -26,8 +26,8 @@ import java.util.Map;
 
 /**
  * Created by Holmgr 2015-03-04
- * The view in our MVC pattern, responsible for drawing
- * the gameboard, the enemies, towers and so on.
+ * The view in our MVC pattern, responsible for drawing the gameboard, the enemies, towers and so on.
+ * Also redirects keyboard and mouse events to GameController and loads it's own image files.
  */
 public class GameComponent extends JComponent{
 

@@ -5,6 +5,7 @@ import java.io.IOException;
 
 /**
  * Created by holmgr on 2015-03-20.
+ * Loads and plays music and sound effects, implements the Singleton pattern.
  */
 public class SoundHandler {
 

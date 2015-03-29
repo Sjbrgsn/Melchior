@@ -6,6 +6,8 @@ import pathfinding.Location;
 
 /**
  * Created by Holmgr 2015-03-06
+ * Abstract class for the Tower interface, implementing base functionality concerning upgrading, selling but also
+ * the onTick method.
  */
 public abstract class AbstractTower implements Tower{
     private Location location;

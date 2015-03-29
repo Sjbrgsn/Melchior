@@ -2,7 +2,6 @@ package gui;
 
 import controllers.GameConstants;
 import controllers.GameController;
-import enemies.Direction;
 import handlers.SoundHandler;
 import score.HighscoreEntry;
 import score.HighscoreList;
@@ -20,8 +19,8 @@ import java.util.ArrayList;
 
 /**
  * Created by Holmgr 2015-03-04
- * The Frame that holds our GameComponent and handles
- * all menues and such.
+ * The Frame that holds our GameComponent and handles all menus and such. Also redirect some mouse and keyboard
+ * events to the controller for buying, selling and upgrading towers etc.
  */
 public class GameFrame extends JFrame {
 
