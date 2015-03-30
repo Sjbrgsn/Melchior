@@ -15,4 +15,5 @@ public interface Tower {
     public int getUpgradeCost();
     public int getUpgradeLevel();
     public Location getLocation();
+    public void setLocation(Location location);
 }

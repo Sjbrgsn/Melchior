@@ -7,6 +7,7 @@ import score.HighscoreEntry;
 import score.HighscoreList;
 import towers.BasicTower;
 import towers.PlagueTower;
+import towers.TowerType;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -52,7 +53,7 @@ public class GameFrame extends JFrame {
         ActionListener buyBasicTowerAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.buyTower(BasicTower.class);
+                controller.buyTower(TowerType.BASIC);
             }
         };
         buyBasicTowerButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("Q"), "buyBasic");
@@ -62,7 +63,7 @@ public class GameFrame extends JFrame {
         ActionListener buyPlagueTowerAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.buyTower(PlagueTower.class);
+                controller.buyTower(TowerType.PLAGUE);
             }
         };
         buyPlagueTowerButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "buyPlague");

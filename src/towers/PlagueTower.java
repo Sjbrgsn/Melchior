@@ -12,8 +12,8 @@ public class PlagueTower extends AbstractTower{
 
     private int damage = 5;
 
-    public PlagueTower(Location location, GameController controller) {
-        super(location, controller);
+    public PlagueTower(GameController controller) {
+        super(controller);
         cooldown = 10;
         range = 2;
         upgradeCost = 100;

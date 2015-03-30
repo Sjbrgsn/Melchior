@@ -22,7 +22,7 @@ public abstract class AbstractTower implements Tower{
 
     protected Enemy nearestEnemy;
 
-    public AbstractTower(final Location location, GameController controller) {
+    public AbstractTower(GameController controller) {
         this.location = location;
         this.controller = controller; // Needed for requesting nearest enemy
     }
@@ -47,6 +47,10 @@ public abstract class AbstractTower implements Tower{
     @Override public void upgrade() {
         upgradeLevel++;
         upgradeCost += 200; // Arbitrary increase per level
+    }
+
+    public void setLocation(Location location){
+        this.location = location;
     }
 
     @Override
