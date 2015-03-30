@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static controllers.GameConstants.*;
+
 
 /**
  * Created by Holmgr 2015-03-09
@@ -43,23 +45,23 @@ public class GameController implements EnemyListener, ProjectileListener{
     private List<Projectile> projectilesToBeRemoved;
 
     private BasicEnemyFactory enemyFactory;
-    private int difficulty = GameConstants.STARTING_DIFFICULTY;
+    private int difficulty = STARTING_DIFFICULTY;
     private int round = 0; // Current round (increments when changing to state RUNNING)
 
     private TowerFactory towerFactory;
 
     private int score = 0;
-    private int cash = GameConstants.STARTING_CASH; //Used to buy/upgrade towers
-    private int health = GameConstants.STARTING_HEALTH;
+    private int cash = STARTING_CASH; //Used to buy/upgrade towers
+    private int health = STARTING_HEALTH;
 
     private Location selectedLocation = new Location(0, 0);
 
-    private int spawnDelayCounter = GameConstants.ENEMY_SPAWN_DELAY;
-    private int stateDelayCounter = GameConstants.BUILD_STATE_TIME;
+    private int spawnDelayCounter = ENEMY_SPAWN_DELAY;
+    private int stateDelayCounter = BUILD_STATE_TIME;
 
     public GameController() {
 
-        grid = new SquareGrid(GameConstants.GRID_SIZE, GameConstants.GRID_SIZE);
+        grid = new SquareGrid(GRID_SIZE, GRID_SIZE);
 
         path = calcualtePath();
         assert path != null; // Path should be possible given an empty grid
@@ -77,7 +79,7 @@ public class GameController implements EnemyListener, ProjectileListener{
         gameComponent.setPath(path);
         frame = new GameFrame(gameComponent, health, cash, this);
 
-        loopTimer = new Timer(GameConstants.GAME_TICK_DELAY, new ActionListener() {
+        loopTimer = new Timer(GAME_TICK_DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 doTick();
@@ -87,7 +89,7 @@ public class GameController implements EnemyListener, ProjectileListener{
         loopTimer.start();
 
 
-        if (GameConstants.PLAY_MUSIC){
+        if (PLAY_MUSIC){
             SoundHandler.getInstance().playMusic();
         }
     }
@@ -139,8 +141,8 @@ public class GameController implements EnemyListener, ProjectileListener{
      */
     private void buildTick() {
         if (stateDelayCounter == 0){
-            stateDelayCounter = GameConstants.BUILD_STATE_TIME;
-            difficulty *= GameConstants.DIFFICULTY_INCREASE_FACTOR;
+            stateDelayCounter = BUILD_STATE_TIME;
+            difficulty *= DIFFICULTY_INCREASE_FACTOR;
             enemyFactory = new BasicEnemyFactory(difficulty, path);
             currentState = GameState.RUNNING;
             round++;
@@ -148,7 +150,7 @@ public class GameController implements EnemyListener, ProjectileListener{
         }
         else {
             stateDelayCounter--;
-            frame.setCounterLabel(stateDelayCounter / GameConstants.GAME_TICK_DELAY);
+            frame.setCounterLabel(stateDelayCounter / GAME_TICK_DELAY);
         }
     }
 
@@ -179,7 +181,7 @@ public class GameController implements EnemyListener, ProjectileListener{
         }
 
         if(spawnDelayCounter == 0) {
-            spawnDelayCounter = GameConstants.ENEMY_SPAWN_DELAY;
+            spawnDelayCounter = ENEMY_SPAWN_DELAY;
             if (enemyFactory.iterator().hasNext()) {
                 Enemy enemy = enemyFactory.iterator().next();
                 enemy.addEnemyListener(this);
@@ -200,12 +202,12 @@ public class GameController implements EnemyListener, ProjectileListener{
         enemies.clear();
         towers.clear();
         projectiles.clear();
-        grid = new SquareGrid(GameConstants.GRID_SIZE, GameConstants.GRID_SIZE);
-        difficulty = GameConstants.STARTING_DIFFICULTY;
+        grid = new SquareGrid(GRID_SIZE, GRID_SIZE);
+        difficulty = STARTING_DIFFICULTY;
         score = 0;
         round = 0;
-        health = GameConstants.STARTING_HEALTH;
-        cash = GameConstants.STARTING_CASH; //Used to buy/upgrade towers
+        health = STARTING_HEALTH;
+        cash = STARTING_CASH; //Used to buy/upgrade towers
 
         path = calcualtePath();
         assert path != null;
