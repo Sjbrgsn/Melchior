@@ -5,7 +5,8 @@ import controllers.GameController;
 import handlers.SoundHandler;
 import score.HighscoreEntry;
 import score.HighscoreList;
-import towers.*;
+import towers.BasicTowerFactory;
+import towers.PlagueTowerFactory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -44,7 +45,10 @@ public class GameFrame extends JFrame {
 
         this.pack();
         this.setVisible(true);
+        this.setResizable(false);
     }
+
+
 
     private void setupBindings() {
 
@@ -93,7 +97,6 @@ public class GameFrame extends JFrame {
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(69, 69, 69));
-        panel.setPreferredSize(new Dimension(140, 640));
         panel.setLayout(new BorderLayout());
 
         JPanel upperPanel = new JPanel();
@@ -178,7 +181,7 @@ public class GameFrame extends JFrame {
         lowerPanel.add(upgradeTowerButton);
         lowerPanel.add(sellTowerButton);
 
-        this.add(panel, BorderLayout.WEST);
+        this.add(panel, BorderLayout.LINE_START);
 
     }
 

@@ -353,7 +353,6 @@ public class GameController implements EnemyListener, ProjectileListener{
 
     @Override
     public void onEnemyKilled(Enemy enemy) {
-        System.out.println("Enemy killed");
         cash += enemy.getKillReward();
         score += enemy.getKillReward();
         frame.setCashLabel(cash);
@@ -380,7 +379,9 @@ public class GameController implements EnemyListener, ProjectileListener{
     }
 
     public void setSelectedLocation(Location selectedLocation) {
-        this.selectedLocation = selectedLocation;
+        if (grid.inBounds(selectedLocation)){
+            this.selectedLocation = selectedLocation;
+        }
     }
 
     public Location getSelectedLocation() {
