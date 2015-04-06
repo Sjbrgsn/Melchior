@@ -70,12 +70,17 @@ public class GameComponent extends JComponent{
         background = new ImageIcon(getClass().getClassLoader().getResource("images/snow.png"));
         plagueTowerImage = new ImageIcon(getClass().getClassLoader().getResource("images/plague_tower.png"));
 
+        // Failed to load images
+        assert background != null : plagueTowerImage != null;
+
         try {
+
+            int enemyImageSize = 40;
             BufferedImage enemyImage = ImageIO.read(getClass().getResourceAsStream("/images/easy_enemy.png"));
-            enemyImageMap.put(Direction.UP, enemyImage.getSubimage(40, 0, 40, 40));
-            enemyImageMap.put(Direction.LEFT, enemyImage.getSubimage(0, 40, 40, 40));
-            enemyImageMap.put(Direction.RIGHT, enemyImage.getSubimage(80, 40, 40, 40));
-            enemyImageMap.put(Direction.DOWN, enemyImage.getSubimage(40, 80, 40, 40));
+            enemyImageMap.put(Direction.UP, enemyImage.getSubimage(enemyImageSize, 0, enemyImageSize, enemyImageSize));
+            enemyImageMap.put(Direction.LEFT, enemyImage.getSubimage(0, enemyImageSize, enemyImageSize, enemyImageSize));
+            enemyImageMap.put(Direction.RIGHT, enemyImage.getSubimage(2 * enemyImageSize, enemyImageSize, enemyImageSize, enemyImageSize));
+            enemyImageMap.put(Direction.DOWN, enemyImage.getSubimage(enemyImageSize, 2 * enemyImageSize, enemyImageSize, enemyImageSize));
 
             BufferedImage flagImage = ImageIO.read(getClass().getResourceAsStream("/images/flag.png"));
 
@@ -231,7 +236,6 @@ public class GameComponent extends JComponent{
     private void drawProjectiles(Graphics2D g2d) {
 
         g2d.setColor(Color.YELLOW);
-
         for (Projectile projectile : projectiles){
             g2d.drawOval((int) (projectile.getX() * cellSize), (int) (projectile.getY() * cellSize),
                     (int) (projectile.getRadius() * cellSize), (int) (projectile.getRadius() * cellSize));
@@ -240,9 +244,7 @@ public class GameComponent extends JComponent{
 
     private void drawTowers(Graphics2D g2d) {
 
-        g2d.setColor(Color.RED);
         int ticksPerAnimation = 8;
-        
         for (Tower tower : towers){
             Location loc = tower.getLocation();
 

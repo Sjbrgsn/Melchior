@@ -12,10 +12,17 @@ public class Path {
 
     private Map<Location, Location> path;
     private Location startLocation;
+    private Location goalLocation = null;
 
     public Path(final Map<Location, Location> path, Location start) {
         this.path = path;
         this.startLocation = start;
+
+        for (Location key : path.keySet()){
+            if (path.get(key) == null){
+                goalLocation = key;
+            }
+        }
     }
 
     public Location getFirst(){
@@ -26,16 +33,11 @@ public class Path {
         return path.get(currentLocation);
     }
 
-    public boolean isGoal(Location currentLocation){
-        return path.get(currentLocation) == null;
+    public boolean isGoal(Location location){
+        return location == goalLocation;
     }
 
     public Location getGoal(){
-        for (Location key : path.keySet()){
-            if (path.get(key) == null){
-                return key;
-            }
-        }
-        return null;
+        return goalLocation;
     }
 }
