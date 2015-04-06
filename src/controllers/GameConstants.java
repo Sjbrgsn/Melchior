@@ -25,6 +25,8 @@ public final class GameConstants {
     public static boolean PLAY_MUSIC;
     public static boolean PLAY_SOUND_EFFECTS;
 
+    public static boolean RESIZABLE;
+
     static {
         // Default values
         int delay = 30;
@@ -39,6 +41,8 @@ public final class GameConstants {
 
         boolean playMusic = true;
         boolean playSound = true;
+
+        boolean resizable = true;
 
         Properties prop = new Properties();
         InputStream input = null;
@@ -59,6 +63,8 @@ public final class GameConstants {
 
             playMusic = Boolean.parseBoolean(prop.getProperty("PLAY_MUSIC"));
             playSound = Boolean.parseBoolean(prop.getProperty("PLAY_SOUND_EFFECTS"));
+
+            resizable = Boolean.parseBoolean(prop.getProperty("RESIZABLE"));
 
         }catch (IOException e){
             e.printStackTrace();
@@ -84,5 +90,6 @@ public final class GameConstants {
         STARTING_HEALTH = startingHealth;
         PLAY_MUSIC = playMusic;
         PLAY_SOUND_EFFECTS = playSound;
+        RESIZABLE = resizable;
     }
 }
