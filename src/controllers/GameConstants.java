@@ -36,7 +36,7 @@ public final class GameConstants {
         int tickDelay = 100/3;
 
         int startingDifficulty = 100;
-        int startingCash = 300;
+        int startingCash = 500;
         int startingHealth = 20;
 
         boolean playMusic = true;
