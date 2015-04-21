@@ -46,7 +46,7 @@ public class GameController implements EnemyListener, ProjectileListener{
 
     private BasicEnemyFactory enemyFactory;
     private int difficulty = STARTING_DIFFICULTY;
-    private int round = 0; // Current round (increments when changing to state RUNNING)
+    private int round = 1; // Current round (increments when changing to state RUNNING)
 
     private int score = 0;
     private int cash = STARTING_CASH; //Used to buy/upgrade towers
@@ -200,7 +200,7 @@ public class GameController implements EnemyListener, ProjectileListener{
         grid = new SquareGrid(GRID_SIZE, GRID_SIZE);
         difficulty = STARTING_DIFFICULTY;
         score = 0;
-        round = 0;
+        round = 1;
         health = STARTING_HEALTH;
         cash = STARTING_CASH; //Used to buy/upgrade towers
 
