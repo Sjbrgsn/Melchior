@@ -64,8 +64,6 @@ public class GameController implements EnemyListener, ProjectileListener{
         path = calcualtePath();
         assert path != null; // Path should be possible given an empty grid
 
-        enemyFactory = new BasicEnemyFactory(difficulty, path);
-
         towers = new ArrayList<>();
         enemies = new ArrayList<>();
         enemiesToBeRemoved = new ArrayList<>();
@@ -140,7 +138,7 @@ public class GameController implements EnemyListener, ProjectileListener{
         if (stateDelayCounter == 0){
             stateDelayCounter = BUILD_STATE_TIME;
             difficulty *= DIFFICULTY_INCREASE_FACTOR;
-            enemyFactory = new BasicEnemyFactory(difficulty, path);
+            enemyFactory = new BasicEnemyFactory(round, path);
             currentState = GameState.RUNNING;
             round++;
             frame.setRoundLabel(round);
