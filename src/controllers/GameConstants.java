@@ -16,7 +16,7 @@ public final class GameConstants {
     public static final int GRID_SIZE;
     public static final int GAME_TICK_DELAY;
 
-    public static final int STARTING_DIFFICULTY;
+    //public static final int STARTING_DIFFICULTY;
     public static final int STARTING_CASH;
     public static final int STARTING_HEALTH;
 
@@ -85,7 +85,7 @@ public final class GameConstants {
         DIFFICULTY_INCREASE_FACTOR = difficultyIncrease;
         GRID_SIZE = gridSize;
         GAME_TICK_DELAY = tickDelay;
-        STARTING_DIFFICULTY = startingDifficulty;
+        //STARTING_DIFFICULTY = startingDifficulty;
         STARTING_CASH = startingCash;
         STARTING_HEALTH = startingHealth;
         PLAY_MUSIC = playMusic;

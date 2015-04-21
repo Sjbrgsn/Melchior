@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import static controllers.GameConstants.*;
 
@@ -45,7 +46,6 @@ public class GameController implements EnemyListener, ProjectileListener{
     private List<Projectile> projectilesToBeRemoved;
 
     private BasicEnemyFactory enemyFactory;
-    private int difficulty = STARTING_DIFFICULTY;
     private int round = 1; // Current round (increments when changing to state RUNNING)
 
     private int score = 0;
@@ -137,7 +137,6 @@ public class GameController implements EnemyListener, ProjectileListener{
     private void buildTick() {
         if (stateDelayCounter == 0){
             stateDelayCounter = BUILD_STATE_TIME;
-            difficulty *= DIFFICULTY_INCREASE_FACTOR;
             enemyFactory = new BasicEnemyFactory(round, path);
             currentState = GameState.RUNNING;
             round++;
@@ -175,8 +174,9 @@ public class GameController implements EnemyListener, ProjectileListener{
             tower.onTick();
         }
 
-        if(spawnDelayCounter == 0) {
-            spawnDelayCounter = ENEMY_SPAWN_DELAY;
+        if(spawnDelayCounter <= 0) {
+            Random rnd = new Random();
+            spawnDelayCounter = rnd.nextInt(ENEMY_SPAWN_DELAY);
             if (enemyFactory.iterator().hasNext()) {
                 Enemy enemy = enemyFactory.iterator().next();
                 enemy.addEnemyListener(this);
@@ -198,7 +198,6 @@ public class GameController implements EnemyListener, ProjectileListener{
         towers.clear();
         projectiles.clear();
         grid = new SquareGrid(GRID_SIZE, GRID_SIZE);
-        difficulty = STARTING_DIFFICULTY;
         score = 0;
         round = 1;
         health = STARTING_HEALTH;
