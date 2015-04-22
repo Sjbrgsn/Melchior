@@ -20,7 +20,7 @@ public class EnemyWave implements Iterable<Enemy>{
         this.path = path;
 
         enemyCount = (int) (Math.pow(level, 0.5) * 10);
-        points = (int) (( 1 + ((float)level * ((float)level/5))) * 1000);
+        points = (int) (( 1 + (level * ((float)level/5))) * 1000);
         System.out.println("Level: " + level + " Enemy count: " + enemyCount);
         System.out.println("Level: " + level + " Points: " + points);
 
