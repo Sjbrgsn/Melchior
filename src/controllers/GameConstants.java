@@ -12,7 +12,6 @@ import java.util.Properties;
 public final class GameConstants {
     public static final int ENEMY_SPAWN_DELAY;
     public static final int BUILD_STATE_TIME;
-    public static final double DIFFICULTY_INCREASE_FACTOR;
     public static final int GRID_SIZE;
     public static final int GAME_TICK_DELAY;
 
@@ -31,11 +30,9 @@ public final class GameConstants {
         // Default values
         int delay = 30;
         int buildTime = 500;
-        double difficultyIncrease = 2.5;
         int gridSize = 20;
         int tickDelay = 100/3;
 
-        int startingDifficulty = 100;
         int startingCash = 500;
         int startingHealth = 20;
 
@@ -53,11 +50,9 @@ public final class GameConstants {
 
             delay = Integer.parseInt(prop.getProperty("ENEMY_SPAWN_DELAY"));
             buildTime = Integer.parseInt(prop.getProperty("BUILD_STATE_TIME"));
-            difficultyIncrease = Double.parseDouble(prop.getProperty("DIFFICULTY_INCREASE_FACTOR"));
             gridSize = Integer.parseInt(prop.getProperty("GRID_SIZE"));
             tickDelay = Integer.parseInt(prop.getProperty("GAME_TICK_DELAY"));
 
-            startingDifficulty = Integer.parseInt(prop.getProperty("STARTING_DIFFICULTY"));
             startingCash = Integer.parseInt(prop.getProperty("STARTING_CASH"));
             startingHealth = Integer.parseInt(prop.getProperty("STARTING_HEALTH"));
 
@@ -82,10 +77,8 @@ public final class GameConstants {
 
         ENEMY_SPAWN_DELAY = delay;
         BUILD_STATE_TIME = buildTime;
-        DIFFICULTY_INCREASE_FACTOR = difficultyIncrease;
         GRID_SIZE = gridSize;
         GAME_TICK_DELAY = tickDelay;
-        //STARTING_DIFFICULTY = startingDifficulty;
         STARTING_CASH = startingCash;
         STARTING_HEALTH = startingHealth;
         PLAY_MUSIC = playMusic;
