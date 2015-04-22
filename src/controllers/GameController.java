@@ -1,6 +1,6 @@
 package controllers;
 
-import enemies.BasicEnemyFactory;
+import enemies.EnemyWave;
 import enemies.Enemy;
 import enemies.EnemyListener;
 import gui.GameComponent;
@@ -45,7 +45,7 @@ public class GameController implements EnemyListener, ProjectileListener{
     private ArrayList<Projectile> projectiles;
     private List<Projectile> projectilesToBeRemoved;
 
-    private BasicEnemyFactory enemyFactory;
+    private EnemyWave enemyFactory;
     private int round = 1; // Current round (increments when changing to state RUNNING)
 
     private int score = 0;
@@ -137,7 +137,7 @@ public class GameController implements EnemyListener, ProjectileListener{
     private void buildTick() {
         if (stateDelayCounter == 0){
             stateDelayCounter = BUILD_STATE_TIME;
-            enemyFactory = new BasicEnemyFactory(round, path);
+            enemyFactory = new EnemyWave(round, path);
             currentState = GameState.RUNNING;
             round++;
             frame.setRoundLabel(round);
