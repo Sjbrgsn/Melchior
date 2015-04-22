@@ -233,7 +233,7 @@ public class GameFrame extends JFrame {
     }
 
     public void setRoundLabel(int round) {
-        this.roundLabel.setText("Round: " + round);
+        this.roundLabel.setText("Round: " + (round-1)); // Needed to display correct wave
     }
 
     public void setCounterLabel(int counter) {
