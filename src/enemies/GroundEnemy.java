@@ -13,14 +13,7 @@ public class GroundEnemy extends AbstractEnemy{
     private double size = 0.8;
 
     public GroundEnemy(Path path, int difficutly) {
-        super(path);
-
-        this.health = difficutly;
-        this.movementSpeed = 0.1;
-
-        maximumHealth = health;
-        reward = maximumHealth / 5;
-        //type = enemyType;
+        super(path, difficutly, 0.1);
 
         // Set start target values
         targetX = target.x;

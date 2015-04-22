@@ -25,10 +25,16 @@ public abstract class AbstractEnemy implements Enemy {
 
     private List<EnemyListener> listeners;
 
-    public AbstractEnemy(Path path) {
+    public AbstractEnemy(Path path, int health, double movementSpeed) {
+        this.currentPath = path;
+        this.health = health;
+        this.movementSpeed = movementSpeed;
+
         listeners = new ArrayList<>();
 
-        this.currentPath = path;
+        maximumHealth = health;
+        reward = maximumHealth / 5;
+
         setPosition(currentPath.getFirst());
 
         this.target = currentPath.getNext(currentPath.getFirst());
