@@ -1,5 +1,7 @@
 package handlers;
 
+import controllers.GameConstants;
+
 import javax.sound.sampled.*;
 import java.io.IOException;
 
@@ -9,23 +11,19 @@ import java.io.IOException;
  */
 public class SoundHandler {
 
-    private AudioInputStream effectStream;
-    private AudioInputStream musicStream;
-    private Clip shopClip;
+    private Clip shotClip;
     private Clip musicClip;
     private static SoundHandler INSTANCE = new SoundHandler();
 
     public SoundHandler() {
 
         try {
-            if (effectStream == null) {
-                effectStream = AudioSystem.getAudioInputStream(
-                        SoundHandler.class.getClassLoader().getResourceAsStream("sound/shot.wav"));
-                shopClip = AudioSystem.getClip();
-                shopClip.open(effectStream);
-            }
+            AudioInputStream effectStream = AudioSystem.getAudioInputStream(
+                    SoundHandler.class.getClassLoader().getResourceAsStream("sound/shot.wav"));
+            shotClip = AudioSystem.getClip();
+            shotClip.open(effectStream);
 
-            musicStream = AudioSystem.getAudioInputStream(
+            AudioInputStream musicStream = AudioSystem.getAudioInputStream(
                     SoundHandler.class.getClassLoader().getResourceAsStream("sound/music.wav"));
             musicClip = AudioSystem.getClip();
             musicClip.open(musicStream);
@@ -36,19 +34,25 @@ public class SoundHandler {
 
     }
 
-    public void playShotFired() {
-        shopClip.stop();
-        shopClip.setFramePosition(0);
-        shopClip.start();
+    public void playProjectileFired() {
+        if (shotClip.isOpen() && GameConstants.PLAY_SOUND_EFFECTS) {
+            shotClip.stop();
+            shotClip.setFramePosition(0);
+            shotClip.start();
+        }
     }
 
     public void playMusic() {
-        musicClip.loop(Clip.LOOP_CONTINUOUSLY);
-        musicClip.start();
+        if (musicClip.isOpen()) {
+            musicClip.loop(Clip.LOOP_CONTINUOUSLY);
+            musicClip.start();
+        }
     }
 
     public void stopMusic() {
-        musicClip.stop();
+        if (musicClip.isRunning()) {
+            musicClip.stop();
+        }
     }
 
     public static SoundHandler getInstance(){

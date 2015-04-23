@@ -1,9 +1,7 @@
 package towers;
 
-import controllers.GameConstants;
 import controllers.GameController;
 import handlers.SoundHandler;
-import pathfinding.Location;
 
 /**
  * Created by acrux on 2015-03-10.
@@ -25,8 +23,6 @@ public class BasicTower extends AbstractTower {
         controller.spawnProjectile(getLocation(), nearestEnemy, 0.8,
                 (int) (baseDamage * (1 + (double) getUpgradeLevel()/2)), range);
 
-        if (GameConstants.PLAY_SOUND_EFFECTS){
-            SoundHandler.getInstance().playShotFired();
-        }
+        SoundHandler.getInstance().playProjectileFired();
     }
 }
