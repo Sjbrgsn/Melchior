@@ -45,7 +45,7 @@ public class GameController implements EnemyListener, ProjectileListener{
     private ArrayList<Projectile> projectiles;
     private List<Projectile> projectilesToBeRemoved;
 
-    private EnemyWave enemyFactory;
+    private EnemyWave enemyFactory = null;
     private int round = 1; // Current round (increments when changing to state RUNNING)
 
     private int score = 0;
@@ -258,7 +258,7 @@ public class GameController implements EnemyListener, ProjectileListener{
             Tower tower = iterator.next();
             if (tower.getLocation().equals(selectedLocation)) {
                 iterator.remove();
-                tower.sell();
+                cash += tower.sell();
                 grid.removeTower(tower.getLocation());
                 path = calcualtePath();
                 gameComponent.setPath(path);
@@ -268,7 +268,7 @@ public class GameController implements EnemyListener, ProjectileListener{
 
     }
 
-    public ArrayList<Enemy> allEnemiesInRange(Location id, int range) {
+    public List<Enemy> allEnemiesInRange(Location id, int range) {
 
         ArrayList<Enemy> enemiesInRange = new ArrayList<>();
         for (Enemy enemy : enemies){

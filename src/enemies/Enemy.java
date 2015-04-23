@@ -18,7 +18,7 @@ public interface Enemy {
 
     public double getY();
 
-    public Direction getDirection();
+    public Direction getCurrentDirection();
 
     public double getSize();
 

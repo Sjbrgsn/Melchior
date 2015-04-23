@@ -10,7 +10,7 @@ import pathfinding.Location;
  * the onTick method.
  */
 public abstract class AbstractTower implements Tower{
-    private Location location;
+    private Location location = null;
     private int upgradeLevel = 0;
     protected int upgradeCost = 50;
 
@@ -20,7 +20,7 @@ public abstract class AbstractTower implements Tower{
     protected int range;
     protected GameController controller;
 
-    protected Enemy nearestEnemy;
+    protected Enemy nearestEnemy = null;
 
     protected AbstractTower(GameController controller) {
         this.controller = controller; // Needed for requesting nearest enemy

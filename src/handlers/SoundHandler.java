@@ -11,8 +11,8 @@ import java.io.IOException;
  */
 public class SoundHandler {
 
-    private Clip shotClip;
-    private Clip musicClip;
+    private Clip shotClip = null;
+    private Clip musicClip = null;
     private static SoundHandler INSTANCE = new SoundHandler();
 
     public SoundHandler() {

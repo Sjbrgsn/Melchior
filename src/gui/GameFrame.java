@@ -47,8 +47,6 @@ public class GameFrame extends JFrame {
         this.setResizable(GameConstants.RESIZABLE);
     }
 
-
-
     private void setupBindings() {
 
         ActionListener buyBasicTowerAction = new AbstractAction() {
@@ -164,16 +162,16 @@ public class GameFrame extends JFrame {
         try {
             BufferedImage soundButtons = ImageIO.read(getClass().getResourceAsStream("/images/buttons.png"));
 
-            ImageIcon musicEnabled = new ImageIcon(soundButtons.getSubimage(64, 0, 64, 56));
-            ImageIcon musicDisabled = new ImageIcon(soundButtons.getSubimage(0, 0, 64, 56));
+            Icon musicEnabled = new ImageIcon(soundButtons.getSubimage(64, 0, 64, 56));
+            Icon musicDisabled = new ImageIcon(soundButtons.getSubimage(0, 0, 64, 56));
             muteMusicButton.setPressedIcon(musicDisabled);
             muteMusicButton.setSelectedIcon(musicDisabled);
             muteMusicButton.setIcon(musicEnabled);
             muteMusicButton.setBorderPainted(false);
             muteMusicButton.setContentAreaFilled(false);
 
-            ImageIcon soundEnabled = new ImageIcon(soundButtons.getSubimage(192, 0, 64, 56));
-            ImageIcon soundDisabled = new ImageIcon(soundButtons.getSubimage(128, 0, 64, 56));
+            Icon soundEnabled = new ImageIcon(soundButtons.getSubimage(192, 0, 64, 56));
+            Icon soundDisabled = new ImageIcon(soundButtons.getSubimage(128, 0, 64, 56));
             muteSoundEffectsButton.setPressedIcon(soundDisabled);
             muteSoundEffectsButton.setSelectedIcon(soundDisabled);
             muteSoundEffectsButton.setIcon(soundEnabled);

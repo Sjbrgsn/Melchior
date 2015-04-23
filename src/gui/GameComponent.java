@@ -33,7 +33,7 @@ public class GameComponent extends JComponent{
 
     private int cellSize;
     private final SquareGrid grid;
-    private Path path;
+    private Path path = null;
 
     private Iterable<Enemy> enemies;
     private Iterable<Tower> towers;
@@ -212,7 +212,7 @@ public class GameComponent extends JComponent{
     }
 
     private void drawGoalFlag(Graphics2D g2d) {
-        Location goal = path.getGoal();
+        Location goal = path.getGoalLocation();
         int ticksPerAnimation = 4;
 
         g2d.drawImage(flagImages.get(flagImageCounter / ticksPerAnimation),
@@ -268,7 +268,7 @@ public class GameComponent extends JComponent{
     private void drawEnemies(Graphics2D g2d) {
 
         for(Enemy enemy : enemies){
-            g2d.drawImage(enemyImageMap.get(enemy.getDirection()), (int) (enemy.getX() * cellSize), (int) (enemy.getY() * cellSize),
+            g2d.drawImage(enemyImageMap.get(enemy.getCurrentDirection()), (int) (enemy.getX() * cellSize), (int) (enemy.getY() * cellSize),
                     cellSize, cellSize, null);
             drawHealthBar(g2d, enemy);
         }
@@ -305,7 +305,7 @@ public class GameComponent extends JComponent{
         g2d.setColor(Color.BLUE);
         g2d.setStroke(new BasicStroke(2));
 
-        Location current = path.getFirst();
+        Location current = path.getStartLocation();
         Location next = path.getNext(current);
 
         while (next != null){

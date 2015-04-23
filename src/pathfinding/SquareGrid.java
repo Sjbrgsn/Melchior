@@ -12,7 +12,7 @@ import java.util.Set;
 public class SquareGrid implements WeightedGraph {
 
     // All allowed directions, i.e 4-directional
-    public static Location[] directions = new Location[]{
+    private static Location[] directions = new Location[]{
             new Location(1, 0),
             new Location(0, -1),
             new Location(-1, 0),
@@ -40,7 +40,7 @@ public class SquareGrid implements WeightedGraph {
         return !walls.contains(id) && !towers.contains(id);
     }
 
-    @Override public int cost(final Location a, final Location b) {
+    @Override public int cost(final Location b) {
         return forrests.contains(b) ? 5 : 1;
     }
 
@@ -68,12 +68,10 @@ public class SquareGrid implements WeightedGraph {
         towers.remove(towerLocation);
     }
 
-    public Set<Location> getWalls() {
+    public Iterable<Location> getWalls() {
         return walls;
     }
-    public Set<Location> getTowers() {
-        return towers;
-    }
+
     public Set<Location> getForrests() {
         return forrests;
     }

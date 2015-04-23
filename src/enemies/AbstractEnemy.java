@@ -15,7 +15,7 @@ public abstract class AbstractEnemy implements Enemy {
     protected int health;
     protected int maximumHealth;
     protected double movementSpeed = 0.1; // Default speed
-    protected int reward;
+    protected int killReward;
 
     protected double x, y;
     protected Location target;
@@ -33,11 +33,11 @@ public abstract class AbstractEnemy implements Enemy {
         listeners = new ArrayList<>();
 
         maximumHealth = health;
-        reward = maximumHealth / 5;
+        killReward = maximumHealth / 5;
 
-        setPosition(currentPath.getFirst());
+        setPosition(currentPath.getStartLocation());
 
-        this.target = currentPath.getNext(currentPath.getFirst());
+        this.target = currentPath.getNext(currentPath.getStartLocation());
         this.currentDirection = Direction.DOWN; // Default direction
     }
 
@@ -83,13 +83,13 @@ public abstract class AbstractEnemy implements Enemy {
     }
 
     @Override
-    public Direction getDirection() {
+    public Direction getCurrentDirection() {
         return currentDirection;
     }
 
     @Override
     public int getKillReward() {
-        return reward;
+        return killReward;
     }
 
     private void notifyKilled(){

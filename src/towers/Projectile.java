@@ -1,6 +1,7 @@
 package towers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by acrux on 2015-03-10.
@@ -12,7 +13,7 @@ public class Projectile {
     private double targetX, targetY;
     private double x, y;
 
-    private ArrayList<ProjectileListener> listeners = new ArrayList<>();
+    private List<ProjectileListener> listeners = new ArrayList<>();
     private double distanceTraveled = 0;
     private int range;
 

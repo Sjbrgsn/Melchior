@@ -11,7 +11,7 @@ import java.util.List;
  * Created by acrux on 2015-03-26.
  */
 public class HighscoreList {
-    ArrayList<HighscoreEntry> scoreList;
+    private ArrayList<HighscoreEntry> scoreList = null;
 
     public HighscoreList() {
         File f = new File(GameConstants.HIGHSCORE_PATH);
@@ -48,13 +48,10 @@ public class HighscoreList {
             ObjectOutput output = new ObjectOutputStream(file);
             output.writeObject(scoreList);
         }
-        catch(IOException ex) {
+        catch(IOException e) {
             //Logger.log(Level.SEVERE, "Cannot perform output.", ex);
             // TODO add logging
-            System.out.println("error");
-        }
-        catch (Exception e){
-            System.out.println("ops" + e);
+            e.printStackTrace();
         }
     }
 
@@ -66,7 +63,7 @@ public class HighscoreList {
             ObjectInput input = new ObjectInputStream(buffer);
 
             //deserialize the List
-            List<HighscoreEntry> highscoreEntries = (List<HighscoreEntry>) input.readObject();
+            Iterable<HighscoreEntry> highscoreEntries = (List<HighscoreEntry>) input.readObject();
             //display its data
             for (HighscoreEntry entry : highscoreEntries) {
                 System.out.println("Recovered " + entry.getName());

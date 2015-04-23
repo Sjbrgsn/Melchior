@@ -47,7 +47,7 @@ public class AStarSearch {
             }
 
             for (Location next : graph.neighbors(current)){
-                int newCost = costSoFar.get(current) + graph.cost(current, next); // Calculate cost to neighbor
+                int newCost = costSoFar.get(current) + graph.cost(next); // Calculate cost to neighbor
 
                 // Add next if not already visited or if the current path is shorter to next than before
                 if (!costSoFar.containsKey(next) || newCost < costSoFar.get(next)){

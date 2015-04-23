@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class PriorityQueue<T>{
 
-    private List<Tuple<T, Integer>> elements = new ArrayList<Tuple<T, Integer>>();
+    private List<Tuple<T, Integer>> elements = new ArrayList<>();
 
     public int count(){
         return elements.size();
