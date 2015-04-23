@@ -105,8 +105,14 @@ public class GameFrame extends JFrame {
         this.cashLabel = new JLabel("Cash: " + cash);
         this.roundLabel = new JLabel("Round: 1"); // Starting round is 1
 
+
         this.counterLabel = new JLabel("Counter: 0");
         this.counterLabel.setVisible(false);
+
+        healthLabel.setForeground(Color.LIGHT_GRAY);
+        cashLabel.setForeground(Color.LIGHT_GRAY);
+        roundLabel.setForeground(Color.LIGHT_GRAY);
+        counterLabel.setForeground(Color.LIGHT_GRAY);
 
         upperPanel.add(healthLabel);
         upperPanel.add(cashLabel);
