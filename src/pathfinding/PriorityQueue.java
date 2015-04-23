@@ -30,11 +30,11 @@ public class PriorityQueue<T>{
         int bestIndex = 0; // Assume the first element is the smallest
 
         for (int i = 0; i < count(); i++) {
-            if (elements.get(i).b < elements.get(bestIndex).b) // Compare priorities
+            if (elements.get(i).y < elements.get(bestIndex).y) // Compare priorities
                 bestIndex = i;
         }
 
-        T bestItem = elements.get(bestIndex).a;
+        T bestItem = elements.get(bestIndex).x;
         elements.remove(bestIndex);
         return bestItem;
     }
