@@ -5,11 +5,11 @@ package pathfinding;
  * Base immutable Tuple of two generic elements.
  */
 public class Tuple<A, B> {
-    public final A a;
-    public final B b;
+    public final A x;
+    public final B y;
 
-    public Tuple(final A a, final B b) {
-        this.a = a;
-        this.b = b;
+    public Tuple(final A x, final B y) {
+        this.x = x;
+        this.y = y;
     }
 }

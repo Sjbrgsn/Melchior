@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created by Holmgr 2015-03-04
@@ -212,7 +212,7 @@ public class GameFrame extends JFrame {
         }
         StringBuilder sb = new StringBuilder();
         sb.append("Score \t Name");
-        ArrayList<HighscoreEntry> scores = highscoreList.getScoreList();
+        java.util.List<HighscoreEntry> scores = highscoreList.getScoreList();
         for (int i = 0; i < scores.size(); i++){
             sb.append("\n").append(i + 1).append(": ").append(scores.get(i).getScore()).append(" \t ").append(scores.get(i).getName());
         }

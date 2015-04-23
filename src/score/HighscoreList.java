@@ -14,8 +14,8 @@ public class HighscoreList {
     private ArrayList<HighscoreEntry> scoreList = null;
 
     public HighscoreList() {
-        File f = new File(GameConstants.HIGHSCORE_PATH);
-        if (f.exists() && !f.isDirectory()){
+        File file = new File(GameConstants.HIGHSCORE_PATH);
+        if (file.exists() && !file.isDirectory()){
             System.out.println("Loading file");
             loadFromFile();
         }
@@ -63,7 +63,7 @@ public class HighscoreList {
             ObjectInput input = new ObjectInputStream(buffer);
 
             //deserialize the List
-            Iterable<HighscoreEntry> highscoreEntries = (List<HighscoreEntry>) input.readObject();
+            Iterable<HighscoreEntry> highscoreEntries = (Iterable<HighscoreEntry>) input.readObject();
             //display its data
             for (HighscoreEntry entry : highscoreEntries) {
                 System.out.println("Recovered " + entry.getName());

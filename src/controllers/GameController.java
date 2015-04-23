@@ -270,7 +270,7 @@ public class GameController implements EnemyListener, ProjectileListener{
 
     public List<Enemy> allEnemiesInRange(Location id, int range) {
 
-        ArrayList<Enemy> enemiesInRange = new ArrayList<>();
+        List<Enemy> enemiesInRange = new ArrayList<>();
         for (Enemy enemy : enemies){
             if (range >= getDistance(enemy.getX(), enemy.getY(), id.x, id.y)){
                 enemiesInRange.add(enemy);
