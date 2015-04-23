@@ -1,6 +1,7 @@
 package pathfinding;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by Holmgr 2015-03-04
@@ -34,7 +35,7 @@ public class Path {
     }
 
     public boolean isGoal(Location location){
-        return location == goalLocation;
+        return location.equals(goalLocation);
     }
 
     public Location getGoal(){

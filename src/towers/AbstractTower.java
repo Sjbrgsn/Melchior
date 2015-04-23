@@ -22,8 +22,7 @@ public abstract class AbstractTower implements Tower{
 
     protected Enemy nearestEnemy;
 
-    public AbstractTower(GameController controller) {
-        this.location = location;
+    protected AbstractTower(GameController controller) {
         this.controller = controller; // Needed for requesting nearest enemy
     }
 

@@ -2,7 +2,6 @@ package towers;
 
 import controllers.GameController;
 import enemies.Enemy;
-import pathfinding.Location;
 
 /**
  * Created by Holmgr 2015-03-16

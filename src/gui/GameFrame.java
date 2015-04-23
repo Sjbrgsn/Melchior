@@ -25,7 +25,6 @@ import java.util.ArrayList;
 public class GameFrame extends JFrame {
 
     private JLabel healthLabel, cashLabel, roundLabel, counterLabel;
-    private JToggleButton muteSoundEffectsButton, muteMusicButton;
 
     private JButton buyBasicTowerButton, buyPlagueTowerButton,
             upgradeTowerButton, sellTowerButton;
@@ -40,7 +39,7 @@ public class GameFrame extends JFrame {
         this.setLayout(new BorderLayout());
         this.add(gameComponent, BorderLayout.CENTER);
         createMenus();
-        createStatusPane(health, cash);
+        createStatusPanel(health, cash);
         setupBindings();
 
         this.pack();
@@ -93,7 +92,7 @@ public class GameFrame extends JFrame {
         sellTowerButton.addActionListener(sellTowerAction);
     }
 
-    private void createStatusPane(int health, int cash) {
+    private void createStatusPanel(int health, int cash) {
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(69, 69, 69));
@@ -117,22 +116,20 @@ public class GameFrame extends JFrame {
         upperPanel.add(counterLabel);
 
 
-
-        this.muteMusicButton = new JToggleButton();
+        JToggleButton muteMusicButton = new JToggleButton();
         muteMusicButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GameConstants.PLAY_MUSIC = !GameConstants.PLAY_MUSIC;
                 if (GameConstants.PLAY_MUSIC) {
                     SoundHandler.getInstance().playMusic();
-                }
-                else {
+                } else {
                     SoundHandler.getInstance().stopMusic();
                 }
             }
         });
 
-        this.muteSoundEffectsButton = new JToggleButton();
+        JToggleButton muteSoundEffectsButton = new JToggleButton();
         muteSoundEffectsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -140,6 +137,30 @@ public class GameFrame extends JFrame {
             }
         });
 
+        loadButtonImages(muteMusicButton, muteSoundEffectsButton);
+
+        this.buyBasicTowerButton = new JButton("Buy Basic Tower");
+        this.buyPlagueTowerButton = new JButton("Buy Plague Tower");
+        this.upgradeTowerButton = new JButton("Upgrade");
+        this.sellTowerButton = new JButton("Sell");
+
+        JPanel lowerPanel = new JPanel();
+        lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.Y_AXIS));
+        lowerPanel.setBackground(new Color(69, 69, 69));
+        panel.add(lowerPanel, BorderLayout.SOUTH);
+
+        lowerPanel.add(muteMusicButton);
+        lowerPanel.add(muteSoundEffectsButton);
+        lowerPanel.add(buyBasicTowerButton);
+        lowerPanel.add(buyPlagueTowerButton);
+        lowerPanel.add(upgradeTowerButton);
+        lowerPanel.add(sellTowerButton);
+
+        this.add(panel, BorderLayout.LINE_START);
+
+    }
+
+    private void loadButtonImages(JToggleButton muteMusicButton, JToggleButton muteSoundEffectsButton) {
         try {
             BufferedImage soundButtons = ImageIO.read(getClass().getResourceAsStream("/images/buttons.png"));
 
@@ -162,27 +183,6 @@ public class GameFrame extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        this.buyBasicTowerButton = new JButton("Buy Basic Tower");
-        this.buyPlagueTowerButton = new JButton("Buy Plague Tower");
-        this.upgradeTowerButton = new JButton("Upgrade");
-        this.sellTowerButton = new JButton("Sell");
-
-        JPanel lowerPanel = new JPanel();
-        lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.Y_AXIS));
-        lowerPanel.setBackground(new Color(69, 69, 69));
-        panel.add(lowerPanel, BorderLayout.SOUTH);
-
-        lowerPanel.add(muteMusicButton);
-        lowerPanel.add(muteSoundEffectsButton);
-        lowerPanel.add(buyBasicTowerButton);
-        lowerPanel.add(buyPlagueTowerButton);
-        lowerPanel.add(upgradeTowerButton);
-        lowerPanel.add(sellTowerButton);
-
-        this.add(panel, BorderLayout.LINE_START);
-
     }
 
 
@@ -208,7 +208,7 @@ public class GameFrame extends JFrame {
         String name = new JOptionPane().showInputDialog(this, "Your score is " + score);
         System.out.println("Highscore: " + name + " " + "score: " + score);
         HighscoreList highscoreList = new HighscoreList();
-        if (name != null && name.length() > 0) {
+        if (name != null && !name.isEmpty()) {
             highscoreList.add(name, score);
             highscoreList.saveToFile();
         }
@@ -216,7 +216,7 @@ public class GameFrame extends JFrame {
         sb.append("Score \t Name");
         ArrayList<HighscoreEntry> scores = highscoreList.getScoreList();
         for (int i = 0; i < scores.size(); i++){
-            sb.append("\n" + (i + 1) + ": " + scores.get(i).getScore() + " \t " + scores.get(i).getName());
+            sb.append("\n").append(i + 1).append(": ").append(scores.get(i).getScore()).append(" \t ").append(scores.get(i).getName());
         }
         JOptionPane.showMessageDialog(this, new JTextArea(sb.toString()));
         controller.resetBoard();

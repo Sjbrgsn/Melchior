@@ -182,7 +182,7 @@ public class GameController implements EnemyListener, ProjectileListener{
                 enemy.addEnemyListener(this);
                 enemies.add(enemy);
             }
-            else if (enemies.size() == 0) {
+            else if (enemies.isEmpty()) {
                 currentState = GameState.BUILD;
                 projectiles.clear(); // Remove any lingering projectiles in the air
                 System.out.println("State: BUILD");

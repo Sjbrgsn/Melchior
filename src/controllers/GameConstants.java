@@ -85,4 +85,7 @@ public final class GameConstants {
         PLAY_SOUND_EFFECTS = playSound;
         RESIZABLE = resizable;
     }
+
+    private GameConstants() {
+    }
 }

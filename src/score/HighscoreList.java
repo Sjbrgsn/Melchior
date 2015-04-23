@@ -6,8 +6,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by acrux on 2015-03-26.
@@ -75,11 +73,8 @@ public class HighscoreList {
             }
             scoreList = (ArrayList<HighscoreEntry>) highscoreEntries;
         }
-        catch(ClassNotFoundException ex){
-            System.out.println(ex);
-        }
-        catch(IOException ex){
-            System.out.println(ex);
+        catch(ClassNotFoundException | IOException ex){
+            ex.printStackTrace();
         }
     }
 

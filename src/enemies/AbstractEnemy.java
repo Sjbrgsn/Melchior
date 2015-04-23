@@ -25,7 +25,7 @@ public abstract class AbstractEnemy implements Enemy {
 
     private List<EnemyListener> listeners;
 
-    public AbstractEnemy(Path path, int health, double movementSpeed) {
+    protected AbstractEnemy(Path path, int health, double movementSpeed) {
         this.currentPath = path;
         this.health = health;
         this.movementSpeed = movementSpeed;
