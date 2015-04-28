@@ -31,6 +31,10 @@ import java.util.Map;
  */
 public class GameComponent extends JComponent{
 
+    /**
+     * Default grid size (px)
+     */
+    public static final int GRID_SIZE = 640;
     private int cellSize;
     private final SquareGrid grid;
     private Path path = null;
@@ -75,7 +79,7 @@ public class GameComponent extends JComponent{
 
         try {
 
-            int enemyImageSize = 40;
+            int enemyImageSize = 40; // Size of subimage in spritesheet for enemy
             BufferedImage enemyImage = ImageIO.read(getClass().getResourceAsStream("/images/easy_enemy.png"));
             enemyImageMap.put(Direction.UP, enemyImage.getSubimage(enemyImageSize, 0, enemyImageSize, enemyImageSize));
             enemyImageMap.put(Direction.LEFT, enemyImage.getSubimage(0, enemyImageSize, enemyImageSize, enemyImageSize));
@@ -83,20 +87,21 @@ public class GameComponent extends JComponent{
             enemyImageMap.put(Direction.DOWN, enemyImage.getSubimage(enemyImageSize, 2 * enemyImageSize, enemyImageSize, enemyImageSize));
 
             BufferedImage flagImage = ImageIO.read(getClass().getResourceAsStream("/images/flag.png"));
-
-            int n = 0;
-            while (n < flagImage.getWidth()){
-                flagImages.add(flagImage.getSubimage(n, 0, 20, 21));
-                n += 20;
+            // Dimensions of subimage in spritesheet for the flag
+            int flagImageWidth = 20;
+            int flagImageHeight = 21;
+            int flagImageCount = 5;
+            for (int i = 0; i < flagImageCount; i++) {
+                flagImages.add(flagImage.getSubimage(i * flagImageWidth, 0, flagImageWidth, flagImageHeight));
             }
 
             BufferedImage basicTowerImage = ImageIO.read(getClass().getResourceAsStream("/images/basic_tower.png"));
-
-            int imageCount = 7;
-            int imageWidth = 40;
-            int imageHeight = 42;
-            for (n = 0; n < imageCount; n++) {
-                basicTowerImages.add(basicTowerImage.getSubimage(n * imageWidth, 0, imageWidth, imageHeight));
+            // Dimensions of subimage in spritesheet for basic tower
+            int towerImageCount = 7;
+            int towerImageWidth = 40;
+            int towerImageHeight = 42;
+            for (int i = 0; i < towerImageCount; i++) {
+                basicTowerImages.add(basicTowerImage.getSubimage(i * towerImageWidth, 0, towerImageWidth, towerImageHeight));
             }
 
         } catch (IOException e) {
@@ -123,6 +128,7 @@ public class GameComponent extends JComponent{
             @Override
             public void mouseReleased(MouseEvent e) {
             }
+
             @Override
             public void mouseEntered(MouseEvent e) {
             }
@@ -180,7 +186,7 @@ public class GameComponent extends JComponent{
     @Override
     // Needs to ignore superclass, want specific dimens
     public Dimension getPreferredSize() {
-        return new Dimension(640, 640);
+        return new Dimension(GRID_SIZE, GRID_SIZE);
     }
 
     @Override
@@ -278,6 +284,8 @@ public class GameComponent extends JComponent{
 
         int healthBarHeight = cellSize/8;
 
+
+        // Want to center healthbar over each enemy, therefor 0.5
         g2d.setColor(Color.RED);
         g2d.fillRect((int) (enemy.getX() * cellSize), (int) ((enemy.getY() - 0.5) * cellSize),
                 cellSize, healthBarHeight);
@@ -309,6 +317,7 @@ public class GameComponent extends JComponent{
         Location next = path.getNext(current);
 
         while (next != null){
+            // Want to draw path in the middle of grid cell, therefor 0.5
             g2d.drawLine((int) ((current.x + 0.5) * cellSize), (int) ((current.y + 0.5) * cellSize),
                     (int) ((next.x + 0.5) * cellSize), (int) ((next.y + 0.5) * cellSize));
 
