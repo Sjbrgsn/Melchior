@@ -1,6 +1,5 @@
 package gui;
 
-import controllers.GameConstants;
 import controllers.GameController;
 import handlers.SoundHandler;
 import score.HighscoreEntry;
@@ -15,7 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.*;
+
+import static controllers.GameConstants.*;
 
 /**
  * Created by Holmgr 2015-03-04
@@ -44,7 +44,7 @@ public class GameFrame extends JFrame {
 
         this.pack();
         this.setVisible(true);
-        this.setResizable(GameConstants.RESIZABLE);
+        this.setResizable(RESIZABLE);
     }
 
     private void setupBindings() {
@@ -92,13 +92,15 @@ public class GameFrame extends JFrame {
 
     private void createStatusPanel(int health, int cash) {
 
+        Color backgroundColor = new Color(69, 69, 69); // Some fancy color
+
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(69, 69, 69));
+        panel.setBackground(backgroundColor);
         panel.setLayout(new BorderLayout());
 
         JPanel upperPanel = new JPanel();
         upperPanel.setLayout(new BoxLayout(upperPanel, BoxLayout.Y_AXIS));
-        upperPanel.setBackground(new Color(69, 69, 69));
+        upperPanel.setBackground(backgroundColor);
         panel.add(upperPanel, BorderLayout.NORTH);
 
         this.healthLabel = new JLabel("Health: " + health);
@@ -124,8 +126,8 @@ public class GameFrame extends JFrame {
         muteMusicButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GameConstants.PLAY_MUSIC = !GameConstants.PLAY_MUSIC;
-                if (GameConstants.PLAY_MUSIC) {
+                PLAY_MUSIC = !PLAY_MUSIC; // Need to modify static, only used by this class during runtime
+                if (PLAY_MUSIC) {
                     SoundHandler.getInstance().playMusic();
                 } else {
                     SoundHandler.getInstance().stopMusic();
@@ -137,7 +139,7 @@ public class GameFrame extends JFrame {
         muteSoundEffectsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GameConstants.PLAY_SOUND_EFFECTS = !GameConstants.PLAY_SOUND_EFFECTS;
+                PLAY_SOUND_EFFECTS = !PLAY_SOUND_EFFECTS; // Need to modify static, only used by this class during runtime
             }
         });
 
@@ -150,7 +152,7 @@ public class GameFrame extends JFrame {
 
         JPanel lowerPanel = new JPanel();
         lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.Y_AXIS));
-        lowerPanel.setBackground(new Color(69, 69, 69));
+        lowerPanel.setBackground(backgroundColor);
         panel.add(lowerPanel, BorderLayout.SOUTH);
 
         lowerPanel.add(muteMusicButton);
@@ -161,23 +163,26 @@ public class GameFrame extends JFrame {
         lowerPanel.add(sellTowerButton);
 
         this.add(panel, BorderLayout.LINE_START);
-
     }
 
     private void loadButtonImages(JToggleButton muteMusicButton, JToggleButton muteSoundEffectsButton) {
         try {
             BufferedImage soundButtons = ImageIO.read(getClass().getResourceAsStream("/images/buttons.png"));
 
-            Icon musicEnabled = new ImageIcon(soundButtons.getSubimage(64, 0, 64, 56));
-            Icon musicDisabled = new ImageIcon(soundButtons.getSubimage(0, 0, 64, 56));
+            // Size of sound and music buttons
+            int buttonHeight = 56;
+            int buttonWidth = 64;
+
+            Icon musicEnabled = new ImageIcon(soundButtons.getSubimage(buttonWidth, 0, buttonWidth, buttonHeight));
+            Icon musicDisabled = new ImageIcon(soundButtons.getSubimage(0, 0, buttonWidth, buttonHeight));
             muteMusicButton.setPressedIcon(musicDisabled);
             muteMusicButton.setSelectedIcon(musicDisabled);
             muteMusicButton.setIcon(musicEnabled);
             muteMusicButton.setBorderPainted(false);
             muteMusicButton.setContentAreaFilled(false);
 
-            Icon soundEnabled = new ImageIcon(soundButtons.getSubimage(192, 0, 64, 56));
-            Icon soundDisabled = new ImageIcon(soundButtons.getSubimage(128, 0, 64, 56));
+            Icon soundEnabled = new ImageIcon(soundButtons.getSubimage(3 * buttonWidth, 0, buttonWidth, buttonHeight));
+            Icon soundDisabled = new ImageIcon(soundButtons.getSubimage(2 * buttonWidth, 0, buttonWidth, buttonHeight));
             muteSoundEffectsButton.setPressedIcon(soundDisabled);
             muteSoundEffectsButton.setSelectedIcon(soundDisabled);
             muteSoundEffectsButton.setIcon(soundEnabled);
@@ -200,7 +205,6 @@ public class GameFrame extends JFrame {
                 System.exit(0); // Kill program
             }
         });
-
         file.add(exit);
 
         final JMenuBar menuBar = new JMenuBar();

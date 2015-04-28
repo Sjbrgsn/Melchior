@@ -36,7 +36,7 @@ public class GameController implements EnemyListener, ProjectileListener{
     private SquareGrid grid;
 
     private Location defaultStart = new Location(0, 0);
-    private Location defaultEnd = new Location(19, 19);
+    private Location defaultEnd = new Location(19, 19); // Right bottom most corner in 20x20 grid
     private Path path = null;
 
     private ArrayList<Enemy> enemies;
@@ -175,7 +175,7 @@ public class GameController implements EnemyListener, ProjectileListener{
             tower.onTick();
         }
 
-        if(spawnDelayCounter <= 0) {
+        if(spawnDelayCounter == 0) {
             Random rnd = new Random();
             spawnDelayCounter = rnd.nextInt(ENEMY_SPAWN_DELAY);
             if (enemyWave.iterator().hasNext()) {
@@ -293,7 +293,7 @@ public class GameController implements EnemyListener, ProjectileListener{
             }
         }
 
-        if (distance == -1 || range < distance) {
+        if (distance == -1 || range < distance) { // If no enemies matching or range to short
             return null;
         }
         else {
@@ -338,7 +338,7 @@ public class GameController implements EnemyListener, ProjectileListener{
     public void moveSelected(int offsetX, int offsetY) {
         Location loc = new Location(selectedLocation.x + offsetX, selectedLocation.y + offsetY);
 
-        // To not move the selected outside the grid
+        // To not move selected outside the grid
         if (grid.inBounds(loc)){
             selectedLocation = loc;
         }
