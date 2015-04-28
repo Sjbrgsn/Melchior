@@ -7,6 +7,7 @@ import java.util.Random;
 
 /**
  * Created by acrux on 2015-03-18.
+ * Class to create all enemies for one level
  */
 public class EnemyWave implements Iterable<Enemy>{
 
