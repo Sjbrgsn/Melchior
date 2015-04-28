@@ -10,9 +10,9 @@ import java.util.Map;
  * start node to a given end node.
  */
 public class AStarSearch {
-    public Map<Location, Location> cameFrom;
-    public HashMap<Location, Integer> costSoFar;
-    public Location start, goal;
+    private Map<Location, Location> cameFrom;
+    private Location start;
+    private Location goal;
 
     /**
      * Method used for determining the priority to a given node
@@ -29,7 +29,7 @@ public class AStarSearch {
     public AStarSearch(WeightedGraph graph, Location start, Location goal) {
 
         cameFrom = new HashMap<>();
-        costSoFar = new HashMap<>();
+        HashMap<Location, Integer> costSoFar = new HashMap<>();
         this.start = start;
         this.goal = goal;
 

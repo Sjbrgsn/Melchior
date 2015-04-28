@@ -73,7 +73,7 @@ public class SquareGrid implements WeightedGraph {
         return walls;
     }
 
-    public Set<Location> getForrests() {
+    public Set<Location> getForrests() { // Extra method not currently in use
         return forrests;
     }
 }

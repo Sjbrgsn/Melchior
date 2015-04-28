@@ -5,7 +5,7 @@ package pathfinding;
  * Base datatype containing a pair x,y coordinates which is immutable.
  */
 public class Location {
-    public final int x,y;
+    public final int x,y; // Public enables easier access.
 
     public Location(final int x, final int y) {
         this.x = x;

@@ -7,7 +7,7 @@ package pathfinding;
  */
 public class PathNotFoundException extends Exception{
 
-    private Location location;
+    private Location location; // Is attached later, to specifiy which placement caused the exception
 
     public PathNotFoundException(Location location) {
         this.location = location;

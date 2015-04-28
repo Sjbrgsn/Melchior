@@ -2,7 +2,7 @@ package pathfinding;
 
 /**
  * Created by Holmgr 2015-03-02
- * Base immutable Tuple of two generic elements.
+ * Base immutable Tuple of two generic imutable elements. Public for easier access
  */
 public class Tuple<A, B> {
     public final A x;
