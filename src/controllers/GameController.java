@@ -177,15 +177,10 @@ public class GameController implements EnemyListener, ProjectileListener{
 
         if(spawnDelayCounter <= 0) {
             Random rnd = new Random();
-<<<<<<< HEAD
+            
             spawnDelayCounter = rnd.nextInt(ENEMY_SPAWN_MAX_DELAY);
             if (enemyFactory.iterator().hasNext()) {
                 Enemy enemy = enemyFactory.iterator().next();
-=======
-            spawnDelayCounter = rnd.nextInt(ENEMY_SPAWN_DELAY);
-            if (enemyWave.iterator().hasNext()) {
-                Enemy enemy = enemyWave.iterator().next();
->>>>>>> 6050421210fce8137496633aaa9bcc7ef1742408
                 enemy.addEnemyListener(this);
                 enemies.add(enemy);
             }
