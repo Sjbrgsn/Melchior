@@ -22,8 +22,11 @@ public abstract class AbstractTower implements Tower{
 
     protected Enemy nearestEnemy = null;
 
-    protected AbstractTower(GameController controller) {
+    protected AbstractTower(GameController controller, int cooldown, int range, int upgradeCost) {
         this.controller = controller; // Needed for requesting nearest enemy
+        this.cooldown = cooldown;
+        this.range = range;
+        this.upgradeCost = upgradeCost;
     }
 
     @Override

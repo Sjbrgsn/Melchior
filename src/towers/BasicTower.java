@@ -8,14 +8,14 @@ import handlers.SoundHandler;
  * Basic projectile based tower implementing the fire method, also defines cooldown, range and damage values etc.
  */
 public class BasicTower extends AbstractTower {
+    private final static int COOLDOWN = 20;
+    private final static int RANGE = 3; // Range at which enemies can be engaged
+    private final static int UPGRADE_COST = 50
 
     private int baseDamage;
 
     public BasicTower(GameController controller) {
-        super(controller);
-        cooldown = 20;
-        range = 3; // Range at which enemies can be engaged
-        baseDamage = 10;
+        super(controller, COOLDOWN, RANGE, UPGRADE_COST);
     }
 
     @Override

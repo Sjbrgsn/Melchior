@@ -8,14 +8,14 @@ import enemies.Enemy;
  * Simple AOE (Area of Effect) tower damaging all enemies in its range
  */
 public class PlagueTower extends AbstractTower{
+    private final static int COOLDOWN = 10;
+    private final static int RANGE = 2;
+    private final static int UPGRADE_COST = 100;
 
     private int damage = 5;
 
     public PlagueTower(GameController controller) {
-        super(controller);
-        cooldown = 10;
-        range = 2;
-        upgradeCost = 100;
+        super(controller, COOLDOWN, RANGE, UPGRADE_COST);
     }
 
     @Override
