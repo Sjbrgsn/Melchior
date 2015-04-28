@@ -16,6 +16,7 @@ public class BasicTower extends AbstractTower {
 
     public BasicTower(GameController controller) {
         super(controller, COOLDOWN, RANGE, UPGRADE_COST);
+        baseDamage = 10;
     }
 
     @Override
