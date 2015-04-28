@@ -42,10 +42,7 @@ public class HighscoreList {
 
     public void saveToFile() {
         //serialize the List
-        try {
-            OutputStream file = new FileOutputStream(GameConstants.HIGHSCORE_PATH);
-            //OutputStream buffer = new BufferedOutputStream(file);
-            ObjectOutput output = new ObjectOutputStream(file);
+        try (ObjectOutput output = new ObjectOutputStream(new FileOutputStream(GameConstants.HIGHSCORE_PATH))){
             output.writeObject(scoreList);
         }
         catch(IOException e) {
@@ -57,11 +54,7 @@ public class HighscoreList {
 
     private void loadFromFile(){
         //deserialize file
-        try {
-            InputStream file = new FileInputStream(GameConstants.HIGHSCORE_PATH);
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
-
+        try (ObjectInput input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(GameConstants.HIGHSCORE_PATH)))){
             //deserialize the List
             Iterable<HighscoreEntry> highscoreEntries = (Iterable<HighscoreEntry>) input.readObject();
             //display its data
