@@ -22,7 +22,7 @@ public class PlagueTower extends AbstractTower{
     public void fire() {
         int max = Math.min(controller.allEnemiesInRange(getLocation(), range).size(), 2);
         for (Enemy enemy: controller.allEnemiesInRange(getLocation(), range).subList(0,max)){
-            enemy.takeDamage(damage);
+            enemy.takeDamage(damage + (getUpgradeLevel() * 5));
         }
     }
 }
