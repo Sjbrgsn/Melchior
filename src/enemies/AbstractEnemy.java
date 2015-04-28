@@ -12,18 +12,18 @@ import java.util.List;
  * base functionality concerning positioning,  health and taking damage.
  */
 public abstract class AbstractEnemy implements Enemy {
-    protected int health;
-    protected int maximumHealth;
-    protected double movementSpeed = 0.1; // Default speed
-    protected int killReward;
-
-    protected double x, y;
-    protected Location target;
-
-    protected Path currentPath;
-    protected Direction currentDirection;
-
+    private int health;
+    private int maximumHealth;
+    private int killReward;
     private List<EnemyListener> listeners;
+
+    protected double movementSpeed = 0.1; // Default speed
+    protected double x, y;
+
+    protected Location target;
+    protected Path currentPath;
+
+    protected Direction currentDirection;
 
     protected AbstractEnemy(Path path, int health, double movementSpeed) {
         this.currentPath = path;
