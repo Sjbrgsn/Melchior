@@ -45,7 +45,7 @@ public class GameController implements EnemyListener, ProjectileListener{
     private ArrayList<Projectile> projectiles;
     private List<Projectile> projectilesToBeRemoved;
 
-    private EnemyWave enemyFactory = null;
+    private EnemyWave enemyWave = null;
     private int round = 1; // Current round (increments when changing to state RUNNING)
 
     private int score = 0;
@@ -74,6 +74,7 @@ public class GameController implements EnemyListener, ProjectileListener{
         gameComponent.setPath(path);
         frame = new GameFrame(gameComponent, health, cash, this);
 
+        // Game loop timer, approx 30hz
         loopTimer = new Timer(GAME_TICK_DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -137,7 +138,7 @@ public class GameController implements EnemyListener, ProjectileListener{
     private void buildTick() {
         if (stateDelayCounter == 0){
             stateDelayCounter = BUILD_STATE_TIME;
-            enemyFactory = new EnemyWave(round, path);
+            enemyWave = new EnemyWave(round, path);
             currentState = GameState.RUNNING;
             round++;
             frame.setRoundLabel(round);
@@ -176,9 +177,15 @@ public class GameController implements EnemyListener, ProjectileListener{
 
         if(spawnDelayCounter <= 0) {
             Random rnd = new Random();
+<<<<<<< HEAD
             spawnDelayCounter = rnd.nextInt(ENEMY_SPAWN_MAX_DELAY);
             if (enemyFactory.iterator().hasNext()) {
                 Enemy enemy = enemyFactory.iterator().next();
+=======
+            spawnDelayCounter = rnd.nextInt(ENEMY_SPAWN_DELAY);
+            if (enemyWave.iterator().hasNext()) {
+                Enemy enemy = enemyWave.iterator().next();
+>>>>>>> 6050421210fce8137496633aaa9bcc7ef1742408
                 enemy.addEnemyListener(this);
                 enemies.add(enemy);
             }
