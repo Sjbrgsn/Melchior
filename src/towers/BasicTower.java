@@ -10,7 +10,7 @@ import handlers.SoundHandler;
 public class BasicTower extends AbstractTower {
     private final static int COOLDOWN = 20;
     private final static int RANGE = 3; // Range at which enemies can be engaged
-    private final static int UPGRADE_COST = 50
+    private final static int UPGRADE_COST = 50;
 
     private int baseDamage;
 
