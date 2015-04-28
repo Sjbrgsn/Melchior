@@ -8,48 +8,38 @@ import pathfinding.Path;
  */
 public class GroundEnemy extends AbstractEnemy{
 
-    private int targetX;
-    private int targetY;
     private double size = 0.8;
 
-    public GroundEnemy(Path path, int difficutly) {
-        super(path, difficutly, 0.1);
-
-        // Set start target values
-        targetX = target.x;
-        targetY = target.y;
-
+    public GroundEnemy(Path path, int difficultly) {
+        super(path, difficultly, 0.1);
     }
 
     @Override
     public void moveStep() {
 
-        if (Math.abs(targetX - x) <= movementSpeed && Math.abs(targetY - y) <= movementSpeed){
-            x = targetX;
-            y = targetY;
+        if (Math.abs(target.x - x) <= movementSpeed && Math.abs(target.y - y) <= movementSpeed){
+            x = target.x;
+            y = target.y;
             
             target = currentPath.getNext(target);
 
             if (target == null) {
                 notifyReachedGoal();
             }
-            else {
-                targetX = target.x;
-                targetY = target.y;
-            }
+
         }
 
-        else if (x < targetX){
+        else if (x < target.x){
             x += movementSpeed;
             currentDirection = Direction.RIGHT;
         }
 
-        else if (x > targetX){
+        else if (x > target.x){
             x -= movementSpeed;
             currentDirection = Direction.LEFT;
         }
 
-        else if (y < targetY){
+        else if (y < target.y){
             y += movementSpeed;
             currentDirection = Direction.DOWN;
         }
