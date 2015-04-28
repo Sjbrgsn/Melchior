@@ -10,7 +10,7 @@ import java.util.Properties;
  * Holds all global constants mainly used in the game mechanics
  */
 public final class GameConstants {
-    public static final int ENEMY_SPAWN_DELAY;
+    public static final int ENEMY_SPAWN_MAX_DELAY;
     public static final int BUILD_STATE_TIME;
     public static final int GRID_SIZE;
     public static final int GAME_TICK_DELAY;
@@ -75,7 +75,7 @@ public final class GameConstants {
             }
         }
 
-        ENEMY_SPAWN_DELAY = delay;
+        ENEMY_SPAWN_MAX_DELAY = delay;
         BUILD_STATE_TIME = buildTime;
         GRID_SIZE = gridSize;
         GAME_TICK_DELAY = tickDelay;

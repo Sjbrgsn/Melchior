@@ -54,7 +54,7 @@ public class GameController implements EnemyListener, ProjectileListener{
 
     private Location selectedLocation = new Location(0, 0);
 
-    private int spawnDelayCounter = ENEMY_SPAWN_DELAY;
+    private int spawnDelayCounter = ENEMY_SPAWN_MAX_DELAY;
     private int stateDelayCounter = BUILD_STATE_TIME;
 
     public GameController() {
@@ -176,7 +176,7 @@ public class GameController implements EnemyListener, ProjectileListener{
 
         if(spawnDelayCounter <= 0) {
             Random rnd = new Random();
-            spawnDelayCounter = rnd.nextInt(ENEMY_SPAWN_DELAY);
+            spawnDelayCounter = rnd.nextInt(ENEMY_SPAWN_MAX_DELAY);
             if (enemyFactory.iterator().hasNext()) {
                 Enemy enemy = enemyFactory.iterator().next();
                 enemy.addEnemyListener(this);
