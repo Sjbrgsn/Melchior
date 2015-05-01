@@ -3,7 +3,6 @@ package pathfinding;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Holmgr 2015-03-02
@@ -24,7 +23,7 @@ public class SquareGrid implements WeightedGraph {
 
     private Collection<Location> walls = new HashSet<>(); // Set of Locations which are unpassable
     private Collection<Location> towers = new HashSet<>(); // Set of Towers which also are unpassable
-    private Set<Location> forrests = new HashSet<>(); // Set of Location which are harder to navigate
+    private Collection<Location> forrests = new HashSet<>(); // Set of Location which are harder to navigate
 
 
     public SquareGrid(int width, int height) {
@@ -73,7 +72,9 @@ public class SquareGrid implements WeightedGraph {
         return walls;
     }
 
-    public Set<Location> getForrests() { // Extra method not currently in use
-        return forrests;
-    }
+// --Commented out by Inspection START (01/05/15 13:41):
+//    public Set<Location> getForrests() { // Extra method not currently in use
+//        return forrests;
+//    }
+// --Commented out by Inspection STOP (01/05/15 13:41)
 }

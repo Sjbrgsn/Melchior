@@ -21,7 +21,8 @@ public class BasicTower extends AbstractTower {
 
     @Override
     public void fire() {
-        controller.spawnProjectile(getLocation(), nearestEnemy, 0.8,
+        double projSpeed = 0.8;
+        controller.spawnProjectile(getLocation(), nearestEnemy, projSpeed,
                 (int) (baseDamage * (1 + (double) getUpgradeLevel()/2)), range);
 
         SoundHandler.getInstance().playProjectileFired();

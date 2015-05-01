@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 
 import static controllers.GameConstants.*;
 
@@ -222,7 +223,7 @@ public class GameFrame extends JFrame {
         }
         StringBuilder sb = new StringBuilder();
         sb.append("Score \t Name");
-        java.util.List<HighscoreEntry> scores = highscoreList.getScoreList();
+        List<HighscoreEntry> scores = highscoreList.getScoreList();
         for (int i = 0; i < scores.size(); i++){
             sb.append("\n").append(i + 1).append(": ").append(scores.get(i).getScore()).append(" \t ").append(scores.get(i).getName());
         }

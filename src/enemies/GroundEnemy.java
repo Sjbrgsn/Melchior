@@ -9,8 +9,6 @@ import pathfinding.Path;
 public class GroundEnemy extends AbstractEnemy{
     private static final double MOVEMENT_SPEED = 0.1;
 
-    private double size = 0.8;
-
     public GroundEnemy(Path path, int difficultly) {
         super(path, difficultly, MOVEMENT_SPEED);
     }

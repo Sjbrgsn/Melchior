@@ -2,7 +2,6 @@ package towers;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by acrux on 2015-03-10.
@@ -18,7 +17,7 @@ public class Projectile {
     private double distanceTraveled = 0;
     private int range;
 
-    private double radius = 0.2;
+    private double radius = 0.2; // Easier to monitor if field, default radius
 
     public Projectile(double speed, int damage, double x, double y, double targetX, double targetY, int range) {
         this.damage = damage;

@@ -12,7 +12,7 @@ public class PlagueTower extends AbstractTower{
     private final static int RANGE = 2;
     private final static int UPGRADE_COST = 100;
 
-    private int damage = 5;
+    private int damage = 5; // Easier to monitor if field, default damage
 
     public PlagueTower(GameController controller) {
         super(controller, COOLDOWN, RANGE, UPGRADE_COST);

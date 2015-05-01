@@ -18,6 +18,7 @@ public abstract class AbstractEnemy implements Enemy {
     private List<EnemyListener> listeners;
 
     protected double movementSpeed = 0.1; // Default speed
+    protected double size = 0.8; // Default size
     protected double x, y;
 
     protected Location target;
@@ -77,8 +78,7 @@ public abstract class AbstractEnemy implements Enemy {
         return health;
     }
 
-    @Override
-    public boolean isAlive() {
+    private boolean isAlive() {
         return 0 < health;
     }
 

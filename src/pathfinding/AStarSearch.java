@@ -43,7 +43,7 @@ public class AStarSearch {
 
             Location current = frontier.dequeue(); // Continue with the Location with the lowest priority value
             if (current.equals(goal)){
-                //break;
+                //break; // Break if A*, else Dijkstra's like
             }
 
             for (Location next : graph.neighbors(current)){

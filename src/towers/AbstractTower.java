@@ -12,7 +12,7 @@ import pathfinding.Location;
 public abstract class AbstractTower implements Tower{
     private Location location = null;
     private int upgradeLevel = 0;
-    protected int upgradeCost = 50;
+    protected int upgradeCost = 50; // Default upgrade cost
 
     protected int cooldown = 100;
     protected int currentCooldown = 0;
@@ -43,7 +43,7 @@ public abstract class AbstractTower implements Tower{
         }
     }
     @Override public int sell() {
-        return (int)(upgradeCost * 0.75);
+        return (int)(upgradeCost * 0.75); // 25% loss on sell
     }
 
     @Override public void upgrade() {
@@ -60,7 +60,6 @@ public abstract class AbstractTower implements Tower{
         return location;
     }
 
-    @Override
     public int getUpgradeLevel() {
         return upgradeLevel;
     }

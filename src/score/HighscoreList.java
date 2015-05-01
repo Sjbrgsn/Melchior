@@ -11,7 +11,7 @@ import java.util.List;
  * Created by acrux on 2015-03-26.
  */
 public class HighscoreList {
-    private ArrayList<HighscoreEntry> scoreList = null;
+    private List<HighscoreEntry> scoreList = null;
 
     public HighscoreList() {
         File file = new File(GameConstants.HIGHSCORE_PATH);
@@ -61,14 +61,14 @@ public class HighscoreList {
             for (HighscoreEntry entry : highscoreEntries) {
                 System.out.println("Recovered " + entry.getName());
             }
-            scoreList = (ArrayList<HighscoreEntry>) highscoreEntries;
+            scoreList = (List<HighscoreEntry>) highscoreEntries;
         }
         catch(ClassNotFoundException | IOException ex){
             ex.printStackTrace();
         }
     }
 
-    public ArrayList<HighscoreEntry> getScoreList(){
+    public List<HighscoreEntry> getScoreList(){
         return scoreList;
     }
 }

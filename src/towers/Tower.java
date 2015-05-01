@@ -13,7 +13,7 @@ public interface Tower {
     public void upgrade();
 
     public int getUpgradeCost();
-    public int getUpgradeLevel();
+
     public Location getLocation();
     public void setLocation(Location location);
 }

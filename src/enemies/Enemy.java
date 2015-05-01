@@ -8,8 +8,6 @@ public interface Enemy {
 
     public int getMaximumHealth();
 
-    public boolean isAlive();
-
     public void moveStep();
 
     public void takeDamage(int damage);
