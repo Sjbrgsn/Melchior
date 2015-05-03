@@ -77,7 +77,7 @@ public class AStarSearch {
 
             // If there exists no path between start and goal
             if (current == null){
-                throw new PathNotFoundException(null);
+                throw new PathNotFoundException();
             }
         }
         return new Path(pathMap, start);
