@@ -18,7 +18,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -32,7 +34,7 @@ import java.util.Map;
 public class GameComponent extends JComponent{
 
     /**
-     * Default grid size (px)
+     * Default grid SIZE (px)
      */
     public static final int GRID_SIZE = 640;
     private int cellSize;
@@ -44,8 +46,8 @@ public class GameComponent extends JComponent{
     private Iterable<Projectile> projectiles;
 
     private GameController controller;
-    private ImageIcon background;
-    private ImageIcon plagueTowerImage;
+    private ImageIcon background = null;
+    private ImageIcon plagueTowerImage = null;
     private Map<Direction, Image> enemyImageMap = new EnumMap<>(Direction.class);
 
     private List<Image> basicTowerImages = new ArrayList<>();
@@ -69,17 +71,28 @@ public class GameComponent extends JComponent{
         setupBindings();
     }
 
+    /**
+     * Attempts to load images using resource stream returning a new ImageIcon,
+     * throws FileNotFoundException if image does not exist.
+     * Can also throw a general IOException.
+     */
+    private ImageIcon createImageIcon(String path) throws IOException, FileNotFoundException {
+        try (InputStream imageStream = getClass().getResourceAsStream(path)) {
+            if (imageStream != null) {
+                return new ImageIcon(ImageIO.read(imageStream));
+            }
+        }
+        throw new FileNotFoundException("failed loading " + path);
+    }
+
     private void setupImageMappings() {
-
-        background = new ImageIcon(getClass().getClassLoader().getResource("images/snow.png"));
-        plagueTowerImage = new ImageIcon(getClass().getClassLoader().getResource("images/plague_tower.png"));
-
-        // Failed to load images
-        assert background != null : plagueTowerImage != null;
 
         try {
 
-            int enemyImageSize = 40; // Size of subimage in spritesheet for enemy
+            background = createImageIcon("/images/snow.png");
+            plagueTowerImage = createImageIcon("/images/plague_tower.png");
+
+            final int enemyImageSize = 40; // Size of subimage in spritesheet for enemy
             BufferedImage enemyImage = ImageIO.read(getClass().getResourceAsStream("/images/easy_enemy.png"));
             enemyImageMap.put(Direction.UP, enemyImage.getSubimage(enemyImageSize, 0, enemyImageSize, enemyImageSize));
             enemyImageMap.put(Direction.LEFT, enemyImage.getSubimage(0, enemyImageSize, enemyImageSize, enemyImageSize));
@@ -88,30 +101,30 @@ public class GameComponent extends JComponent{
 
             BufferedImage flagImage = ImageIO.read(getClass().getResourceAsStream("/images/flag.png"));
             // Dimensions of subimage in spritesheet for the flag
-            int flagImageWidth = 20;
-            int flagImageHeight = 21;
-            int flagImageCount = 5;
+            final int flagImageWidth = 20;
+            final int flagImageHeight = 21;
+            final int flagImageCount = 5;
             for (int i = 0; i < flagImageCount; i++) {
                 flagImages.add(flagImage.getSubimage(i * flagImageWidth, 0, flagImageWidth, flagImageHeight));
             }
 
             BufferedImage basicTowerImage = ImageIO.read(getClass().getResourceAsStream("/images/basic_tower.png"));
             // Dimensions of subimage in spritesheet for basic tower
-            int towerImageCount = 7;
-            int towerImageWidth = 40;
-            int towerImageHeight = 42;
+            final int towerImageCount = 7;
+            final int towerImageWidth = 40;
+            final int towerImageHeight = 42;
             for (int i = 0; i < towerImageCount; i++) {
                 basicTowerImages.add(basicTowerImage.getSubimage(i * towerImageWidth, 0, towerImageWidth, towerImageHeight));
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Failed to load some images
+            JOptionPane.showMessageDialog(this, "Failed to load images resources");
+            System.exit(0);
         }
     }
 
     private void setupBindings() {
-
-
         // Mouse events
         addMouseListener(new MouseListener() {
             @Override

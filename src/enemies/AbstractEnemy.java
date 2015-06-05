@@ -15,10 +15,11 @@ public abstract class AbstractEnemy implements Enemy {
     private int health;
     private int maximumHealth;
     private int killReward;
+    private final static double REWARD_RATIO = 0.2; // Arbitary reward ratio
+    protected final static double SIZE = 0.8; // Default SIZE
     private List<EnemyListener> listeners;
 
-    protected double movementSpeed = 0.1; // Default speed
-    protected double size = 0.8; // Default size
+    protected double movementSpeed; // Default speed
     protected double x, y;
 
     protected Location target;
@@ -34,7 +35,7 @@ public abstract class AbstractEnemy implements Enemy {
         listeners = new ArrayList<>();
 
         maximumHealth = health;
-        killReward = maximumHealth / 5;
+        killReward = (int) (maximumHealth * REWARD_RATIO);
 
         setPosition(currentPath.getStartLocation());
 

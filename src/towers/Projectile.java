@@ -17,7 +17,7 @@ public class Projectile {
     private double distanceTraveled = 0;
     private int range;
 
-    private double radius = 0.2; // Easier to monitor if field, default radius
+    private final static double RADIUS = 0.2; // Easier to monitor if field, default RADIUS
 
     public Projectile(double speed, int damage, double x, double y, double targetX, double targetY, int range) {
         this.damage = damage;
@@ -71,6 +71,6 @@ public class Projectile {
     }
 
     public double getRadius() {
-        return radius;
+        return RADIUS;
     }
 }

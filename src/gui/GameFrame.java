@@ -93,7 +93,7 @@ public class GameFrame extends JFrame {
 
     private void createStatusPanel(int health, int cash) {
 
-        Color backgroundColor = new Color(69, 69, 69); // Some fancy color
+        final Color backgroundColor = new Color(69, 69, 69); // Some fancy color
 
         JPanel panel = new JPanel();
         panel.setBackground(backgroundColor);
@@ -171,8 +171,8 @@ public class GameFrame extends JFrame {
             BufferedImage soundButtons = ImageIO.read(getClass().getResourceAsStream("/images/buttons.png"));
 
             // Size of sound and music buttons
-            int buttonHeight = 56;
-            int buttonWidth = 64;
+            final int buttonHeight = 56;
+            final int buttonWidth = 64;
 
             Icon musicEnabled = new ImageIcon(soundButtons.getSubimage(buttonWidth, 0, buttonWidth, buttonHeight));
             Icon musicDisabled = new ImageIcon(soundButtons.getSubimage(0, 0, buttonWidth, buttonHeight));
@@ -214,7 +214,7 @@ public class GameFrame extends JFrame {
     }
 
     public void launchHighScore(int score){
-        String name = new JOptionPane().showInputDialog(this, "Your score is " + score);
+        String name = JOptionPane.showInputDialog(this, "Your score is " + score);
         System.out.println("Highscore: " + name + " " + "score: " + score);
         HighscoreList highscoreList = new HighscoreList();
         if (name != null && !name.isEmpty()) {

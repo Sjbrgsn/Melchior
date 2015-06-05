@@ -6,6 +6,6 @@ package pathfinding;
  */
 public class PathNotFoundException extends Exception{
 
-    public PathNotFoundException() {}
-    
+    public PathNotFoundException() {
+    }
 }

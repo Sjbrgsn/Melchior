@@ -42,10 +42,9 @@ public final class GameConstants {
         boolean resizable = true;
 
         Properties prop = new Properties();
-        InputStream input = null;
 
-        try {
-            input = new FileInputStream("constants.properties");
+
+        try (InputStream input = new FileInputStream("constants.properties")) {
             prop.load(input);
 
             delay = Integer.parseInt(prop.getProperty("ENEMY_SPAWN_DELAY"));
@@ -63,16 +62,6 @@ public final class GameConstants {
 
         }catch (IOException e){
             e.printStackTrace();
-
-
-        }finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
 
         ENEMY_SPAWN_MAX_DELAY = delay;

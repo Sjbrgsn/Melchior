@@ -11,6 +11,7 @@ public class BasicTower extends AbstractTower {
     private final static int COOLDOWN = 20;
     private final static int RANGE = 3; // Range at which enemies can be engaged
     private final static int UPGRADE_COST = 50;
+    private final static double PROJECTILE_SPEED = 0.8; // Speed of projectile
 
     private int baseDamage;
 
@@ -21,10 +22,8 @@ public class BasicTower extends AbstractTower {
 
     @Override
     public void fire() {
-        double projSpeed = 0.8;
-        controller.spawnProjectile(getLocation(), nearestEnemy, projSpeed,
+        controller.spawnProjectile(getLocation(), nearestEnemy, PROJECTILE_SPEED,
                 (int) (baseDamage * (1 + (double) getUpgradeLevel()/2)), range);
-
         SoundHandler.getInstance().playProjectileFired();
     }
 }

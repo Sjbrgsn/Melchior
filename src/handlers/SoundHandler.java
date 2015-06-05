@@ -5,6 +5,7 @@ import controllers.GameConstants;
 import javax.sound.sampled.*;
 import javax.sound.sampled.DataLine.Info;
 import javax.sound.sampled.FloatControl.Type;
+import javax.swing.*;
 import java.io.IOException;
 
 /**
@@ -28,9 +29,14 @@ public class SoundHandler {
             int size = (int) (af.getFrameSize() * audioInputStream.getFrameLength());
             byte[] audio = new byte[size];
             Info info = new Info(Clip.class, af, size);
-            audioInputStream.read(audio, 0, size); // Needed to load in the audio
 
-            double shotVolume = 0.3; // Volume reduction
+
+            // Failed loading sound effect resource
+            if (audioInputStream.read(audio, 0, size) == 0) {
+                new IOException("Failed loading sound effect resource").printStackTrace();
+            }
+
+            final double shotVolume = 0.3; // Volume reduction
             float dB = (float) (Math.log(shotVolume) / Math.log(10.0) * 20.0); // Convert into dB
 
             for (int i = 0; i < shotClipSize; i++) {

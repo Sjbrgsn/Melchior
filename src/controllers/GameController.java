@@ -36,7 +36,7 @@ public class GameController implements EnemyListener, ProjectileListener{
     private SquareGrid grid;
 
     private Location defaultStart = new Location(0, 0);
-    private Location defaultEnd = new Location(19, 19); // Right bottom most corner in 20x20 grid
+    private Location defaultEnd = new Location(GRID_SIZE - 1, GRID_SIZE - 1); // Right bottom most corner
     private Path path = null;
 
     private ArrayList<Enemy> enemies;
@@ -60,6 +60,7 @@ public class GameController implements EnemyListener, ProjectileListener{
     public GameController() {
 
         grid = new SquareGrid(GRID_SIZE, GRID_SIZE);
+
 
         path = calcualtePath();
         assert path != null; // Path should be possible given an empty grid
@@ -263,6 +264,8 @@ public class GameController implements EnemyListener, ProjectileListener{
                 cash += tower.sell();
                 grid.removeTower(tower.getLocation());
                 path = calcualtePath();
+
+                assert path != null; // Removing a tower should never break pathfinding
                 gameComponent.setPath(path);
                 break;
             }

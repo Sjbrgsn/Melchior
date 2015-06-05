@@ -50,6 +50,6 @@ public class GroundEnemy extends AbstractEnemy{
 
     @Override
     public double getSize() {
-        return size;
+        return SIZE;
     }
 }
