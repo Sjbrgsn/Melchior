@@ -33,7 +33,7 @@ public class SoundHandler {
 
             // Failed loading sound effect resource
             if (audioInputStream.read(audio, 0, size) != size) {
-                throw IOException("Failed loading sound effect resource");
+                throw new IOException("Failed loading sound effect resource");
             }
 
             final double shotVolume = 0.3; // Volume reduction

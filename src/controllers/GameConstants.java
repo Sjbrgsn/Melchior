@@ -60,7 +60,7 @@ public final class GameConstants {
 
             resizable = Boolean.parseBoolean(prop.getProperty("RESIZABLE"));
 
-        }catch (IOException e){
+        } catch (IOException e){
             e.printStackTrace();
         }
 

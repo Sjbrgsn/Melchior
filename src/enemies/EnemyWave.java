@@ -35,7 +35,7 @@ public class EnemyWave implements Iterable<Enemy>{
             @Override
             public Enemy next() {
                 if (enemyCount <= 0) {
-                    throw new NoSuchElementException(); // No need for additional information
+                    throw new NoSuchElementException();
                 }
                 Random rnd = new Random();
                 Enemy enemy = new GroundEnemy(path, ((points / enemyCount) - points / (enemyCount * 2) + rnd.nextInt(points/(enemyCount + 1))));
